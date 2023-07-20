@@ -1,0 +1,34 @@
+---
+layout: base.njk
+pagination:
+  data: collections.projects
+  size: 9
+  alias: projects
+---
+
+<section class="flex column flex-align-center container medium" id="projects-header">
+    <h2>Projects</h2>
+    <p>Browse these projects to learn more about my previous work.</p>
+</section>
+
+<hr class="flex container medium" />
+
+<section class="flex container column half-padded" id="projects">
+    {% for proj in projects %}
+        {% if (loop.index % 3 == 1) %}
+            <div class="flex container project-row">
+        {% endif %}
+        <div class="flex project">
+            <a href="{{proj.url}}" class="flex column">
+                <img src="/assets/projects/icons/{{proj.data.icon}}" class="icon" alt="{{proj.data.title}}" />
+                <div class="flex column info">
+                    <h3>{{proj.data.title}}</h3>
+                    <p>{{proj.data.blurb}}</p>
+                </div>
+            </a>
+        </div>
+        {% if (loop.index % 3 == 0) %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</section>

@@ -1,0 +1,211 @@
+---
+layout: base.njk
+---
+
+<section class="flex container column" id="intro">
+    <div class="flex avatar-container">
+        <img src="assets/images/avatar.webp" class="intro-avatar" alt="Picture of me">
+        <div class="flex column">
+            <h1>Zerebos</h1>
+            <p>{{about.title}}</p>
+        </div>
+    </div>
+    <div class="flex column blurb">
+        <p>{{about.blurb | safe}}</p>
+    </div>
+    <div class="flex column profile">
+        <p>{{about.byline | safe}}</p>
+    </div>
+</section>
+
+
+<section class="flex" id="marquee">
+    <div class="flex">
+        {% for label, value in github.stats %}
+            <div class="stat">
+                <div class="label">{{label}}</div>
+                <div class="value">{{value | numLocale}}</div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+const containerElem = document.querySelector('#marquee');
+let leftSideOfContainer = containerElem.getBoundingClientRect().left;
+window.addEventListener("resize", () => leftSideOfContainer = containerElem.getBoundingClientRect().left);
+const listElem = document.querySelector('#marquee > div');
+let currentLeftValue = 0;
+let start = undefined;
+let previous = undefined;
+
+// Kick off for the animation function.
+window.requestAnimationFrame(animationLoop);
+
+/* 
+Looks at first item in the list and checks if it goes out of the visible area 
+by comparing the right position of the first list item to the left position 
+of the containing element. 
+*/
+function animationLoop(timestamp) {
+    if (!start) start = timestamp;
+    if (!previous) previous = timestamp;
+    if (timestamp == start || timestamp == previous) return window.requestAnimationFrame(animationLoop);
+    const elapsed = timestamp - previous;
+    previous = timestamp;
+    // console.log({previous, timestamp, elapsed})
+    const count = Math.floor(elapsed / 50);
+    const currentItems = listElem.querySelectorAll('.stat');
+    const firstItem = currentItems[0];
+    const secondItem = currentItems[1];
+    const leftSideOfSecondItem = secondItem.getBoundingClientRect().left;
+
+    if(Math.round(leftSideOfSecondItem) <= leftSideOfContainer) {
+        currentLeftValue = 0;
+        listElem.appendChild(firstItem);
+        window.requestAnimationFrame(animationLoop);
+    }
+
+    listElem.style.transform = `translateX(${currentLeftValue}px)`;
+    currentLeftValue = currentLeftValue - ((1/25) * elapsed);
+    window.requestAnimationFrame(animationLoop);
+}
+</script>
+
+
+<section class="flex container column half-padded" id="projects">
+    <div class="flex container heading">
+        <h2>Featured Projects</h2>
+        <a href="/projects">All Projects ▸</a>
+    </div>
+    {% for proj in collections.projects %}
+        {% if (loop.index == 1) or (loop.index == 4) %}
+            <div class="flex container project-row">
+        {% endif %}
+        <div class="flex project">
+            <a href="{{proj.url}}" class="flex column">
+                <img src="assets/projects/icons/{{proj.data.icon}}" class="icon" alt="{{proj.data.title}}" />
+                <div class="flex column info">
+                    <h3>{{proj.data.title}}</h3>
+                    <p>{{proj.data.blurb}}</p>
+                </div>
+            </a>
+        </div>
+        {% if (loop.index == 3) or (loop.index == 6) %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</section>
+
+
+<section class="flex container half-padded" id="contact">
+    <form action="https://api.staticforms.xyz/submit" method="post" id="contactform" class="flex">
+        <div class="flex column left">
+            <label for="name">Name</label>
+            <input class="text-input" type="text" name="name" placeholder="John Smith" required>
+            <label for="filter">Spam Filter </canvas></label>
+            <input class="text-input" type="text" name="filter" placeholder="Spam Filter" required>
+            <div id="captcha-wrap"><canvas id="captcha"></canvas></div>
+            <label for="email">Email</label>
+            <input class="text-input" type="email" name="email" placeholder="jsmith@bigcompany.com" required>
+            <label for="subject">Subject</label>
+            <input class="text-input" type="text" name="subject" placeholder="I want to hire you!" required>
+            <button class="btn btn-primary" type="Submit">Send Message</button>
+        </div>
+        <div class="flex column right">
+            <label for="message">Message</label>
+            <textarea class="text-input" name="message" cols="20" rows="7" placeholder="I have a great job opportunity for you..." required></textarea>
+            
+        </div>
+    </form>
+</section>
+
+<script>
+    let captchaCode;
+    const CAPTCHA_LENGTH = 6;
+    const captchaChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    function createCaptcha() {
+        const captcha = [];
+        for (var i = 0; i < CAPTCHA_LENGTH; i++) {
+            const index = Math.floor(Math.random() * captchaChars.length + 1); // Get the next character from the array
+            if (captcha.indexOf(captchaChars[index]) == -1) captcha.push(captchaChars[index]);
+            else i--;
+        }
+        const canv = document.getElementById("captcha");
+        canv.width = 85;
+        canv.height = 28;
+        const ctx = canv.getContext("2d");
+        ctx.font = "20px Georgia, serif";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillText(captcha.join(""), 0, 20);
+        captchaCode = captcha.join("");
+    }
+
+    /** @type {HTMLFormElement} */
+    const contactForm = document.getElementById("contactform");
+    const submitButton = contactForm.querySelector("button");
+    contactForm.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const submittedCode = contactForm.elements.namedItem("filter").value;
+        if (submittedCode !== captchaCode){
+            submitButton.classList.replace("btn-primary", "btn-danger");
+            submitButton.textContent = "Incorrect Captcha!";
+            submitButton.disabled = true;
+
+            setTimeout(() => {
+                createCaptcha();
+                submitButton.classList.replace("btn-danger", "btn-primary");
+                submitButton.textContent = "Send Message!";
+                submitButton.disabled = false;
+            }, 3000);
+
+            return;
+        }
+
+        try {
+            const payload = {
+                accessKey: "4eb2d4fb-346d-4bc6-82bb-7cb20c09c050",
+                name: contactForm.elements.namedItem("name").value,
+                email: contactForm.elements.namedItem("email").value,
+                subject: contactForm.elements.namedItem("subject").value,
+                message: contactForm.elements.namedItem("message").value,
+                replyTo: "@"
+            };
+            
+            const result = await fetch(contactForm.action, {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            
+            const json = await result.json();
+            if (json.success) {
+                contactForm.reset();
+                submitButton.classList.replace("btn-primary", "btn-success");
+                submitButton.textContent = "Message Sent!";
+            }
+            else {
+                submitButton.classList.replace("btn-primary", "btn-danger");
+                submitButton.textContent = "Could Not Send!";
+                submitButton.disabled = true;
+            }
+            setTimeout(() => {
+                submitButton.classList.replace(json.success ? "btn-success" : "btn-danger", "btn-primary");
+                submitButton.textContent = "Send Message!";
+                submitButton.disabled = false;
+            }, 5000);
+        }
+        catch (error) {
+            submitButton.classList.replace("btn-primary", "btn-danger");
+            submitButton.textContent = "Something Went Wrong!";
+            submitButton.disabled = true;
+            console.error(error);
+        }
+    });
+
+    createCaptcha();
+
+</script>

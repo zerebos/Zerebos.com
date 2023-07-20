@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="Landing page and portfolio for Zerebos">
+
+<!-- Facebook Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="zerebos.com">
+<meta property="og:title" content="Zerebos">
+<meta property="og:description" content="Landing page and portfolio for Zerebos">
+<meta property="og:image" content="https://zerebos.com/assets/images/avatar_banner.webp">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="zerebos.com">
+<meta property="twitter:url" content="zerebos.com">
+<meta name="twitter:title" content="Zerebos">
+<meta name="twitter:description" content="Landing page and portfolio for Zerebos">
+<meta name="twitter:image" content="https://zerebos.com/assets/images/avatar_banner.webp">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#008cbd">
+<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+<meta name="msapplication-TileColor" content="#ffc40d">
+<meta name="msapplication-config" content="/assets/favicon/browserconfig.xml">
+<meta name="theme-color" content="#018BBC">
+
+
+<title>Zerebos</title>
+{# <link rel="preconnect" href="https://fonts.googleapis.com"> #}
+{# <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700" rel="stylesheet"> 
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body class="dark">
+    <div class="gradient-banner"></div>
+    <div class="gradient-banner bottom"></div>
+    <div id="main-wrapper" class="container">
+        <nav id="main-nav" class="collapse">
+            <div class="nav">
+                <a href="/"><img src="/assets/images/z_swipe.png" class="brand" alt="Zerebos Logo" /></a>
+                <ul class="navbar-nav nav">
+                    <li class="nav-item"><a href="/" class="nav-link">home</a></li>
+                    <li class="nav-item"><a href="/projects" class="nav-link">projects</a></li>
+                    <li class="nav-item"><a href="/about" class="nav-link">about</a></li>
+                    <li class="nav-item"><a href="/links" class="nav-link">links</a></li>
+                </ul>
+            </div>
+            <div class="nav-socials">
+                {% for link in links.icons %}
+                    <a href="{{link.href}}" class="{{link.icon | lower}}" target="_blank" rel="noreferrer">
+                        <img src="/assets/icons/{{link.icon | lower}}.svg" class="social-icon" alt="{{link.icon}}" />
+                    </a>
+                {% endfor %}
+                <button id="menuButton" class="expand left" aria-label="Menu">
+                    <img src="/assets/icons/menu.svg" />
+                </button>
+            </div>
+        </nav>
+        {% block content %}
+            {{content | safe}}
+        {% endblock %}
+        <footer class="flex half-padded">
+            <div class="flex no-wrap column container">
+                <div class="flex socials">
+                    {% for label, value in socials %}
+                        <a href="{{value}}" class="{{label | lower}} animate-on-scroll fade-up" target="_blank" rel="noreferrer">
+                            <img src="/assets/socials/{{label | lower}}_small.png" class="social-icon" alt="{{label}}" />
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="flex flex-space-evenly columns">
+                    <div class="flex column links animate-on-scroll fade-up">
+                        <h2>Links</h2>
+                        <ul>
+                            <li><a href="/" class="nav-link active">Home</a></li>
+                            <li><a href="/projects" class="nav-link">Projects</a></li>
+                            <li><a href="/about" class="nav-link">About</a></li>
+                            <li><a href="/links" class="nav-link">links</a></li>
+                        </ul>
+                    </div>
+                    <div class="flex column about animate-on-scroll fade-up">
+                        <h2>About</h2>
+                        <p>This website is completely static and generated from locally cached data and built using an SSG. It is also completely open source! Feel free to take a look at it on <a href="/#" target="_blank">GitHub</a>.</p>
+                    </div>
+                    <div class="flex column credits animate-on-scroll fade-up">
+                        <h2>Credits</h2>
+                        <ul>
+                            <li>Built with &#x2764; using <a href="https://www.11ty.dev/" target="_blank">11ty</a></li>
+                            <li>Contact form using <a href="https://www.staticforms.xyz/" target="_blank">StaticForms</a></li>
+                            <li>Hex background by <a href="https://www.freepik.com/free-vector/abstract-techno-banner-with-hexagonal-design_10412350.htm#query=hex%20pattern&position=11&from_view=search&track=sph" target="_blank">kjpargeter</a></li>
+                            <li>Layout inspired by <a href="https://colorlib.com/wp/template/ronaldo/" target="_blank">Colorlib</a></li>
+                            <li>Material icons from <a href="https://material.io/" target="_blank">Google</a></li>
+                            <li>Testing and input from <a href="https://github.com/ItMeSarah/" target="_blank">ItMeSarah</a></li>
+                            <li>Input from <a href="https://github.com/qwerasd205" target="_blank">Qwerasd</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        const menuButton = document.querySelector("#menuButton");
+        menuButton.addEventListener("click", () => {
+            menuButton.parentElement.parentElement.classList.toggle("expanded");
+        });
+    </script>
+</body>
+</html>

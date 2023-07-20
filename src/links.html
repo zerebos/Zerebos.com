@@ -1,0 +1,50 @@
+---
+layout: base.njk
+---
+
+<div id="links-container">
+<section class="flex container column" id="links-header">
+    <div class="flex column avatar-container">
+        <img src="/assets/images/avatar.webp" class="intro-avatar" alt="Picture of me">
+        <div class="flex column">
+            <h1>Zerebos</h1>
+            <p>{{about.title}}</p>
+        </div>
+    </div>
+    <div class="flex column blurb">
+        <p>
+            {% for blurb in about.current %}
+                {{blurb}}
+                {% if not loop.last %}
+                    <span>✦</span>
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</section>
+
+<section class="flex container" id="links-icons">
+    {% for i in links.icons %}
+        <a href="{{i.href}}" target="_blank" rel="noreferrer"><img src="/assets/icons/{{i.icon}}.svg" /></a>
+    {% endfor %}
+</section>
+
+{% for cat in links.categories %}
+<section class="flex column container listbox">
+    <div class="flex heading">
+        <h2>{{cat.label}}</h2>
+    </div>
+    <div class="flex column list">
+        {% for link in cat.links %}
+            <a class="flex link" href="{{link.href}}" target="_blank" rel="noreferrer">
+                <div class="flex label">
+                    <img src="{{link.icon}}" />
+                    <span>{{link.label}}</span>
+                </div>
+                <div class="flex external"><img src="/assets/icons/external-link.svg" /></div>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+</div>
