@@ -17,7 +17,7 @@
     <div class="flex heading">
         <h2>Stats</h2>
     </div>
-    <div class="flex stats">
+    <div class="flex stats{% if git.license.name %} licensed{% endif %}">
         {% if git.license.name %}<a class="flex column stat" href="https://github.com/{{repo}}/blob/{{git.default_branch}}/LICENSE" target="_blank">{% include "assets/icons/license.svg" %}{{git.license.spdx_id}}</a>{% endif %}
         <a class="flex column stat" href="https://github.com/{{repo}}/commits/" target="_blank">{% include "assets/icons/clock.svg" %}{{git.pushed_at | date}}</a>
         <a class="flex column stat" href="https://github.com/{{repo}}/issues/" target="_blank">{% include "assets/icons/issue.svg" %}{{git.open_issues}}</a>

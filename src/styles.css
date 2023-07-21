@@ -740,6 +740,11 @@ button.expand img {
     #contactform {
         padding: 2rem;
     }
+
+    #contactform .left {
+        flex: 1;
+        order: 2;
+    }
 }
 
 #contactform label {
@@ -931,7 +936,7 @@ section#projects-header {
     margin-top: 90px;
 }
 
-@media screen and (max-width:1000px){
+@media only screen and (max-width:1000px){
     section#project-header,
     section#projects-header,
     section#about-header {
@@ -1223,6 +1228,16 @@ footer p {
 }
 
 
+@media only screen and (max-width: 1000px) {
+    .stats {
+        gap: 0;
+    }
+
+    .stats.licensed {
+        gap: 20px;
+    }
+}
+
 
 
 
@@ -1268,7 +1283,11 @@ footer p {
     .gradient-banner {
         background-size: 100% 25%;
         animation: none;
-        position: absolute;
+        /* position: absolute; */
+    }
+
+    .gradient-banner.bottom {
+        display: none;
     }
 }
 
