@@ -998,6 +998,13 @@ hr {
     text-transform: uppercase;
 }
 
+@media only screen and (max-width: 768px) {
+    #about .banner p, .banner p {
+        padding: 0 15px;
+        text-align: center;
+    }
+}
+
 #about .banner + .paragraph, .banner + section {
     margin-top: 32px;
 }

@@ -68,44 +68,6 @@
         {% block content %}
             {{content | safe}}
         {% endblock %}
-        <footer class="flex half-padded">
-            <div class="flex no-wrap column container">
-                <div class="flex socials">
-                    {% for label, value in socials %}
-                        <a href="{{value}}" class="{{label | lower}} animate-on-scroll fade-up" target="_blank" rel="noreferrer">
-                            <img src="/assets/socials/{{label | lower}}_small.png" class="social-icon" alt="{{label}}" />
-                        </a>
-                    {% endfor %}
-                </div>
-                <div class="flex flex-space-evenly columns">
-                    <div class="flex column links animate-on-scroll fade-up">
-                        <h2>Links</h2>
-                        <ul>
-                            <li><a href="/" class="nav-link active">Home</a></li>
-                            <li><a href="/projects" class="nav-link">Projects</a></li>
-                            <li><a href="/about" class="nav-link">About</a></li>
-                            <li><a href="/links" class="nav-link">links</a></li>
-                        </ul>
-                    </div>
-                    <div class="flex column about animate-on-scroll fade-up">
-                        <h2>About</h2>
-                        <p>This website is completely static and generated from locally cached data and built using an SSG. It is also completely open source! Feel free to take a look at it on <a href="/#" target="_blank">GitHub</a>.</p>
-                    </div>
-                    <div class="flex column credits animate-on-scroll fade-up">
-                        <h2>Credits</h2>
-                        <ul>
-                            <li>Built with &#x2764; using <a href="https://www.11ty.dev/" target="_blank">11ty</a></li>
-                            <li>Contact form using <a href="https://www.staticforms.xyz/" target="_blank">StaticForms</a></li>
-                            <li>Hex background by <a href="https://www.freepik.com/free-vector/abstract-techno-banner-with-hexagonal-design_10412350.htm#query=hex%20pattern&position=11&from_view=search&track=sph" target="_blank">kjpargeter</a></li>
-                            <li>Layout inspired by <a href="https://colorlib.com/wp/template/ronaldo/" target="_blank">Colorlib</a></li>
-                            <li>Material icons from <a href="https://material.io/" target="_blank">Google</a></li>
-                            <li>Testing and input from <a href="https://github.com/ItMeSarah/" target="_blank">ItMeSarah</a></li>
-                            <li>Input from <a href="https://github.com/qwerasd205" target="_blank">Qwerasd</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
     <script>
         const menuButton = document.querySelector("#menuButton");
