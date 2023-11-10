@@ -4,7 +4,7 @@ module.exports = {
         {icon: "instagram", href: "https://instagram.com/IAmZerebos"},
         {icon: "twitter", href: "https://twitter.com/IAmZerebos"},
         {icon: "github", href: "https://github.com/rauenzi"},
-        {icon: "twitch", href: "https://twitch.tv/IAmZerebos"},
+        {icon: "twitch", href: "https://twitch.tv/Zerebos"},
         {icon: "youtube", href: "https://www.youtube.com/@zerebos"},
         
     ],
