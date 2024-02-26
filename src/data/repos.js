@@ -12,5 +12,12 @@ module.exports = [
     "Intelligent-Line-And-Marker-Tracking-Car",
     "BetterDiscord/Installer",
     "BetterDiscord/BetterDiscord",
-    "BetterDiscord/docs"
+    "BetterDiscord/docs",
+    "Trilium-Breadcrumbs",
+    "Trilium-SingleFile",
+    "Trilium-MarkdownPreview",
+    "Trilium-LaTeXPreview",
+    "trilium-types",
+    "trilium-pack",
+    "trilium-etapi"
 ];
