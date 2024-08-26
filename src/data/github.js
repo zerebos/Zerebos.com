@@ -13,7 +13,7 @@ const fetchOptions = {
 module.exports = async function() {
     const repoResults = [];
     for (const repo of repos) {
-        repoResults.push(await cachedFetch(`https://api.github.com/repos/${repo.includes("/") ? repo : "rauenzi/" + repo}`, {
+        repoResults.push(await cachedFetch(`https://api.github.com/repos/${repo.includes("/") ? repo : "zerebos/" + repo}`, {
             duration: "1h", // 1 day
             type: "json", // also supports "text" or "buffer"
             verbose: true,
@@ -23,7 +23,7 @@ module.exports = async function() {
 
     const langResults = {};
     for (const repo of repos) {
-        const fullName = repo.includes("/") ? repo : "rauenzi/" + repo;
+        const fullName = repo.includes("/") ? repo : "zerebos/" + repo;
         try {
             const temp = await cachedFetch(`https://api.github.com/repos/${fullName}/languages`, {
                 duration: "1d", // 1 day
@@ -50,7 +50,7 @@ module.exports = async function() {
 
     const branchResults = {};
     for (const repo of repos) {
-        const fullName = repo.includes("/") ? repo : "rauenzi/" + repo;
+        const fullName = repo.includes("/") ? repo : "zerebos/" + repo;
         try {
             const current = await cachedFetch(`https://api.github.com/repos/${fullName}/branches`, {
                 duration: "1d", // 1 day

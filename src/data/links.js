@@ -3,7 +3,7 @@ module.exports = {
         
         {icon: "instagram", href: "https://instagram.com/IAmZerebos"},
         {icon: "twitter", href: "https://twitter.com/IAmZerebos"},
-        {icon: "github", href: "https://github.com/rauenzi"},
+        {icon: "github", href: "https://github.com/zerebos"},
         {icon: "twitch", href: "https://twitch.tv/Zerebos"},
         {icon: "youtube", href: "https://www.youtube.com/@zerebos"},
         
@@ -13,7 +13,7 @@ module.exports = {
             label: "Featured Projects",
             links: [
                 {label: "BetterDiscord", href: "https://betterdiscord.app/", icon: "https://betterdiscord.app/resources/favicon/favicon-32x32.png"},
-                {label: "Block Catcher", href: "http://rauenzi.github.io/BlockCatcher/", icon: "/assets/projects/icons/blockcatcher.png"}
+                {label: "Block Catcher", href: "http://zerebos.github.io/BlockCatcher/", icon: "/assets/projects/icons/blockcatcher.png"}
             ]
         },
         {

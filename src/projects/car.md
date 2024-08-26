@@ -2,7 +2,7 @@
 title: Self-Driving Car
 blurb: Custom mini-car driving on unknown courses.
 icon: car.webp
-repo: rauenzi/Intelligent-Line-And-Marker-Tracking-Car
+repo: zerebos/Intelligent-Line-And-Marker-Tracking-Car
 layout: project.njk
 banner: /assets/projects/images/car.webp
 ---

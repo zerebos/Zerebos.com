@@ -2,7 +2,7 @@
 title: VHDL Communications
 blurb: TTL, SPI & I2C on an FPGA.
 icon: vhdl.png
-repo:  rauenzi/VHDL-Communications 
+repo:  zerebos/VHDL-Communications 
 layout: project.njk
 banner: /assets/projects/images/vhdl.png
 ---

@@ -2,7 +2,7 @@
 title: Block Catcher
 blurb: A retro style WebGL game.
 icon: blockcatcher.png
-repo:  rauenzi/BlockCatcher
+repo:  zerebos/BlockCatcher
 layout: project.njk
 banner: /assets/projects/images/blockcatcher.png
 ---
@@ -11,7 +11,7 @@ This is a WebGL game in which you must catch as many blocks as possible until ti
 
 ## Demo:
 
-You can play a demo of the game at [http://rauenzi.github.io/BlockCatcher/](http://rauenzi.github.io/BlockCatcher/)
+You can play a demo of the game at [http://zerebos.github.io/BlockCatcher/](http://zerebos.github.io/BlockCatcher/)
 
 ## Controls:
 
