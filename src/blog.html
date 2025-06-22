@@ -1,0 +1,56 @@
+---
+layout: base.njk
+pagination:
+  data: collections.posts
+  size: 10
+  alias: posts
+  reverse: true
+---
+
+<section class="flex column flex-align-center container medium" id="blog-header">
+    <h2>Blog</h2>
+    <p>Development insights, tutorials, and thoughts on open source.</p>
+</section>
+
+<hr class="flex container medium" />
+
+<section class="flex container column" id="blog-posts">
+    {% for post in posts %}
+        <article class="blog-post-preview">
+            <div class="blog-post-meta">
+                <time datetime="{{post.date | date}}">{{post.date | date("en-US", {dateStyle: "medium"})}}</time>
+                {% if post.data.tags %}
+                    <div class="blog-tags">
+                        {% for tag in post.data.tags %}
+                            {% if tag != "posts" %}
+                                <span class="tag">{{tag}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <h3><a href="{{post.url}}">{{post.data.title}}</a></h3>
+            <p class="blog-excerpt">{{post.data.description}}</p>
+            <a href="{{post.url}}" class="read-more">Read more →</a>
+        </article>
+    {% endfor %}
+
+    {% if not posts.length %}
+        <div class="no-posts">
+            <p>No blog posts yet. Check back soon for development insights and tutorials!</p>
+        </div>
+    {% endif %}
+</section>
+
+{% if pagination.href.previous or pagination.href.next %}
+<section class="flex container blog-pagination">
+    <div class="flex pagination-nav">
+        {% if pagination.href.previous %}
+            <a href="{{pagination.href.previous}}" class="btn btn-primary">← Newer Posts</a>
+        {% endif %}
+        {% if pagination.href.next %}
+            <a href="{{pagination.href.next}}" class="btn btn-primary">Older Posts →</a>
+        {% endif %}
+    </div>
+</section>
+{% endif %}

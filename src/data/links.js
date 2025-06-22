@@ -1,12 +1,12 @@
-module.exports = {
+export default {
     icons: [
-        
+
         {icon: "instagram", href: "https://instagram.com/IAmZerebos"},
         {icon: "twitter", href: "https://twitter.com/IAmZerebos"},
         {icon: "github", href: "https://github.com/zerebos"},
         {icon: "twitch", href: "https://twitch.tv/Zerebos"},
         {icon: "youtube", href: "https://www.youtube.com/@zerebos"},
-        
+
     ],
     categories: [
         {

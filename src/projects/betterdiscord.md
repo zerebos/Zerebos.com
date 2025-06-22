@@ -9,6 +9,17 @@ banner: /assets/projects/images/bdbanner.webp
 
 BetterDiscord is a client modification for Discord. This allows you to add plugins and themes to your personal copy of Discord. BetterDiscord also adds a number of other features out of the box.
 
+## Features & Capabilities
+
+### Plugin System
+BetterDiscord provides a robust plugin architecture allowing developers to extend Discord's functionality.
+
+### Theme Engine
+Customize Discord's appearance with CSS-based themes and complete visual overhauls.
+
+### Built-in Enhancements
+Additional features like emote support, better settings, and quality-of-life improvements.
+
 ## In The News
 
  - Article on WIRED by Cecilia D'Anastasio - [BetterDiscord Lets Users Mod the App to Their Heart’s Content](https://www.wired.com/story/betterdiscord-lets-users-mod-chat-app/)
@@ -16,7 +27,7 @@ BetterDiscord is a client modification for Discord. This allows you to add plugi
  - Article on MakeUseOf by Nico Posateri - [How to Set Up and Use BetterDiscord](https://www.makeuseof.com/how-to-set-up-use-betterdiscord/)
  - Article on OnlineTechTips by Emma Collins - [What Is BetterDiscord?](https://www.online-tech-tips.com/software-reviews/what-is-betterdiscord-and-how-to-install-it/)
 
- 
+
 ## BetterDiscord Architecture
 
 BetterDiscord is currently broken up into three packages--the local injector, the preload, and the renderer application. They form this miniature monorepo that is managed by [`pnpm`](https://pnpm.io/).

@@ -1,8 +1,7 @@
-const dotenv = require("dotenv");
-const cachedFetch = require("@11ty/eleventy-fetch");
-const repos = require("./repos");
+import dotenv from "dotenv/config";
+import cachedFetch from "@11ty/eleventy-fetch";
+import repos from "./repos.js";
 
-dotenv.config();
 
 const fetchOptions = {
     headers: {
@@ -10,7 +9,7 @@ const fetchOptions = {
     }
 };
 
-module.exports = async function() {
+export default async function() {
     const repoResults = [];
     for (const repo of repos) {
         repoResults.push(await cachedFetch(`https://api.github.com/repos/${repo.includes("/") ? repo : "zerebos/" + repo}`, {

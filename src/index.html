@@ -42,10 +42,10 @@ let previous = undefined;
 // Kick off for the animation function.
 window.requestAnimationFrame(animationLoop);
 
-/* 
-Looks at first item in the list and checks if it goes out of the visible area 
-by comparing the right position of the first list item to the left position 
-of the containing element. 
+/*
+Looks at first item in the list and checks if it goes out of the visible area
+by comparing the right position of the first list item to the left position
+of the containing element.
 */
 function animationLoop(timestamp) {
     if (!start) start = timestamp;
@@ -98,6 +98,41 @@ function animationLoop(timestamp) {
 </section>
 
 
+<section class="flex container column half-padded" id="latest-posts">
+    <div class="flex container heading">
+        <h2>Latest Posts</h2>
+        <a href="/blog">All Posts ▸</a>
+    </div>
+    {% if collections.posts.length > 0 %}
+        {% for post in collections.posts | reverse %}
+            {% if loop.index <= 3 %}
+                <article class="blog-post-preview">
+                    <div class="blog-post-meta">
+                        <time datetime="{{post.date | date}}">{{post.date | date("en-US", {dateStyle: "medium"})}}</time>
+                        {% if post.data.tags %}
+                            <div class="blog-tags">
+                                {% for tag in post.data.tags %}
+                                    {% if tag != "posts" %}
+                                        <span class="tag">{{tag}}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <h3><a href="{{post.url}}">{{post.data.title}}</a></h3>
+                    <p class="blog-excerpt">{{post.data.description}}</p>
+                    <a href="{{post.url}}" class="read-more">Read more →</a>
+                </article>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="no-posts">
+            <p>Blog posts coming soon! I'll be sharing development insights, tutorials, and lessons learned from my open source projects.</p>
+        </div>
+    {% endif %}
+</section>
+
+
 <section class="flex container half-padded" id="contact">
     <form action="https://api.staticforms.xyz/submit" method="post" id="contactform" class="flex">
         <div class="flex column left">
@@ -115,7 +150,7 @@ function animationLoop(timestamp) {
         <div class="flex column right">
             <label for="message">Message</label>
             <textarea class="text-input" name="message" cols="20" rows="7" placeholder="I have a great job opportunity for you..." required></textarea>
-            
+
         </div>
     </form>
 </section>
@@ -172,7 +207,7 @@ function animationLoop(timestamp) {
                 message: contactForm.elements.namedItem("message").value,
                 replyTo: "@"
             };
-            
+
             const result = await fetch(contactForm.action, {
                 method: "POST",
                 body: JSON.stringify(payload),
@@ -180,7 +215,7 @@ function animationLoop(timestamp) {
                     "Content-Type": "application/json"
                 }
             });
-            
+
             const json = await result.json();
             if (json.success) {
                 contactForm.reset();

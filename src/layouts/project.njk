@@ -28,7 +28,7 @@
         <a class="flex column stat" href="https://github.com/{{repo}}/stargazers/" target="_blank">{% include "assets/icons/star.svg" %}{{git.stargazers_count}}</a>
         <a class="flex column stat" href="https://github.com/{{repo}}/watchers/" target="_blank">{% include "assets/icons/eye.svg" %}{{git.subscribers_count}}</a>
         <a class="flex column stat" href="https://github.com/{{repo}}/network/members/" target="_blank">{% include "assets/icons/fork.svg" %}{{git.forks}}</a>
-        
+
         <a class="flex column stat" href="https://github.com/{{repo}}/brances/" target="_blank">{% include "assets/icons/branch.svg" %}{{branches | length}}</a>
     </div>
 </section>
@@ -54,4 +54,5 @@
     </div>
 </section>
 
+<link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet" />
 {% endblock %}

@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="{{ eleventy.generator }}">
 
-
-<meta name="description" content="Landing page and portfolio for Zerebos">
+<meta name="description" content="{{ site.description }}">
 
 <!-- Facebook Meta Tags -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="zerebos.com">
 <meta property="og:title" content="Zerebos">
-<meta property="og:description" content="Landing page and portfolio for Zerebos">
+<meta property="og:description" content="{{ site.description }}">
 <meta property="og:image" content="https://zerebos.com/assets/images/avatar_banner.webp">
 
 <!-- Twitter Meta Tags -->
@@ -19,7 +19,7 @@
 <meta property="twitter:domain" content="zerebos.com">
 <meta property="twitter:url" content="zerebos.com">
 <meta name="twitter:title" content="Zerebos">
-<meta name="twitter:description" content="Landing page and portfolio for Zerebos">
+<meta name="twitter:description" content="{{ site.description }}">
 <meta name="twitter:image" content="https://zerebos.com/assets/images/avatar_banner.webp">
 
 
@@ -37,7 +37,7 @@
 <title>Zerebos</title>
 {# <link rel="preconnect" href="https://fonts.googleapis.com"> #}
 {# <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #}
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="dark">
@@ -50,6 +50,7 @@
                 <ul class="navbar-nav nav">
                     <li class="nav-item"><a href="/" class="nav-link">home</a></li>
                     <li class="nav-item"><a href="/projects" class="nav-link">projects</a></li>
+                    <li class="nav-item"><a href="/blog" class="nav-link">blog</a></li>
                     <li class="nav-item"><a href="/about" class="nav-link">about</a></li>
                     <li class="nav-item"><a href="/links" class="nav-link">links</a></li>
                 </ul>
@@ -70,10 +71,10 @@
         {% endblock %}
     </div>
     <script>
-        const menuButton = document.querySelector("#menuButton");
-        menuButton.addEventListener("click", () => {
-            menuButton.parentElement.parentElement.classList.toggle("expanded");
-        });
+    const menuButton = document.querySelector("#menuButton");
+    menuButton?.addEventListener("click", () => {
+        menuButton?.parentElement?.parentElement?.classList?.toggle("expanded");
+    });
     </script>
 </body>
 </html>

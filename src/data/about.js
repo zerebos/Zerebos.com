@@ -1,6 +1,7 @@
-const links = require("./links");
+import links from "./links.js";
 
-module.exports = {
+
+export default {
     title: "Engineer, Creator, Educator",
     blurb: "A programmer with a mind that never stops ticking. Never sticks to just one language&mdash;use the right tools for the job. Works on multiple <b>open-source</b> projects. Always looks to do more for the developer community.",
     byline: "Keeping systems running <span>@IBM</span> System Z",
