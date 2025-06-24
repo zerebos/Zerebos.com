@@ -97,7 +97,7 @@ function animationLoop(timestamp) {
     {% endfor %}
 </section>
 
-
+{% import "blog.njk" as blog %}
 <section class="flex container column half-padded" id="latest-posts">
     <div class="flex container heading">
         <h2>Latest Posts</h2>
@@ -106,23 +106,7 @@ function animationLoop(timestamp) {
     {% if collections.posts.length > 0 %}
         {% for post in collections.posts | reverse %}
             {% if loop.index <= 3 %}
-                <article class="blog-post-preview">
-                    <div class="blog-post-meta">
-                        <time datetime="{{post.date | date}}">{{post.date | date("en-US", {dateStyle: "medium"})}}</time>
-                        {% if post.data.tags %}
-                            <div class="blog-tags">
-                                {% for tag in post.data.tags %}
-                                    {% if tag != "posts" %}
-                                        <span class="tag">{{tag}}</span>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <h3><a href="{{post.url}}">{{post.data.title}}</a></h3>
-                    <p class="blog-excerpt">{{post.data.description}}</p>
-                    <a href="{{post.url}}" class="read-more">Read more →</a>
-                </article>
+                {{ blog.preview(post) }}
             {% endif %}
         {% endfor %}
     {% else %}

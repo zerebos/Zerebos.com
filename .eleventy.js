@@ -58,13 +58,13 @@ export default async function (eleventyConfig) {
         return JSON.stringify(json, null, indent);
     });
 
-    eleventyConfig.addFilter("date", (dateTime, format = "en-US") => {
+    eleventyConfig.addFilter("date", (dateTime, format = "en-US", opts = {}) => {
         if (!dateTime) return "";
         const date = new Date(dateTime);
         if (format === "YYYY-MM-DD") {
             return date.toISOString().split('T')[0];
         }
-        return date.toLocaleDateString(format);
+        return date.toLocaleDateString(format, opts);
     });
 
     eleventyConfig.addFilter("absolute", function(url, base = "") {
@@ -89,6 +89,34 @@ export default async function (eleventyConfig) {
         return getBlogPosts(collection);
     });
 
+    // Create collections for each tag
+    eleventyConfig.addCollection("blogTags", function(collection) {
+        let tagSet = new Set();
+        collection.getAll().forEach(function(item) {
+            if (!item.url.includes("blog/")) return; // Only include blog posts
+            if ("tags" in item.data) {
+                let tags = item.data.tags;
+                console.log("Item tags:", tags);
+                tags = tags.filter(function(item) {
+                    switch(item) {
+                        // Filter out non-content tags
+                        case "all":
+                        case "nav":
+                        case "post":
+                        case "posts":
+                            return false;
+                    }
+                    return true;
+                });
+                for (const tag of tags) {
+                    tagSet.add(tag);
+                }
+            }
+        });
+        // Return sorted array of tags
+        return [...tagSet].sort();
+    });
+
     // Virtual Template - Generate dynamic sitemap
     eleventyConfig.addTemplate("sitemap.njk", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -110,7 +138,8 @@ export default async function (eleventyConfig) {
             input: "src",
             output: "dist",
             data: "data",
-            layouts: "layouts"
+            layouts: "layouts",
+            includes: "includes",
         }
     }
 };

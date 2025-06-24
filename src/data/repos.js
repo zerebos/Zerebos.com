@@ -1,12 +1,16 @@
 export default [
     "BetterDiscordAddons",
+    "EnhancedDiscordPlugins",
     "BDPluginLibrary",
     "Nox",
     "discordbot.py",
     "BlockCatcher",
+    "BlockCatcherFX",
     "BBDInstaller",
     "Hangman",
     "TableTennisDB",
+    "Planum",
+    "BoiBot",
     "Object3D-Demo",
     "VHDL-Communications",
     "Intelligent-Line-And-Marker-Tracking-Car",
@@ -19,5 +23,9 @@ export default [
     "Trilium-LaTeXPreview",
     "trilium-types",
     "trilium-pack",
-    "trilium-etapi"
+    "trilium-etapi",
+    "ghostty-config",
+    "trilium.rocks",
+    "dotfiles",
+    "asar.net"
 ];

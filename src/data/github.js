@@ -5,19 +5,24 @@ import repos from "./repos.js";
 
 const fetchOptions = {
     headers: {
-        "Authorization": process.env.GITHUB_TOKEN
+        "Authorization": process.env.GITHUB_TOKEN,
+        "User-Agent": "Zerebos/Eleventy-Portfolio",
     }
 };
 
 export default async function() {
     const repoResults = [];
     for (const repo of repos) {
-        repoResults.push(await cachedFetch(`https://api.github.com/repos/${repo.includes("/") ? repo : "zerebos/" + repo}`, {
-            duration: "1h", // 1 day
-            type: "json", // also supports "text" or "buffer"
-            verbose: true,
-            fetchOptions: fetchOptions
-        }));
+        try {
+            const resp = await cachedFetch(`https://api.github.com/repos/${repo.includes("/") ? repo : "zerebos/" + repo}`, {
+                duration: "1d", // 1 day
+                type: "json", // also supports "text" or "buffer"
+                verbose: true,
+                fetchOptions: fetchOptions
+            });
+            repoResults.push(resp);
+        }
+        catch (e) {}
     }
 
     const langResults = {};

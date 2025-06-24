@@ -1,0 +1,26 @@
+---
+pagination:
+  data: collections.blogTags
+  size: 1
+  alias: tag
+permalink: /blog/tags/{{ tag | slugify }}/
+layout: base.njk
+eleventyComputed:
+  title: "Posts tagged '{{ tag }}'"
+  description: "All blog posts tagged with {{ tag }}"
+---
+
+{% import "blog.njk" as blog %}
+
+<section class="flex column flex-align-center container" id="blog-header">
+    <h1>{{ collections[tag] | length }} Post{{ "s" if collections[tag] | length != 1 }} tagged "{{ tag }}"</h1>
+    {{ blog.tagCloud(collections, collections.blogTags, tag) }}
+</section>
+
+<hr class="flex container medium">
+
+<section class="flex column container" id="blog-posts">
+    {%- for post in collections[tag] | reverse -%}
+        {{ blog.preview(post) }}
+    {%- endfor -%}
+</section>
