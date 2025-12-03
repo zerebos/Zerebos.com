@@ -4,3 +4,5 @@ dist/
 .env
 cwebp.exe
 example.json
+notes/
+src/blog/**/*.md

@@ -103,8 +103,8 @@ function animationLoop(timestamp) {
         <h2>Latest Posts</h2>
         <a href="/blog">All Posts ▸</a>
     </div>
-    {% if collections.posts.length > 0 %}
-        {% for post in collections.posts | reverse %}
+    {% if collections.blog.length > 0 %}
+        {% for post in collections.blog | reverse %}
             {% if loop.index <= 3 %}
                 {{ blog.preview(post) }}
             {% endif %}

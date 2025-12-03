@@ -1,14 +1,16 @@
-import dotenv from "dotenv/config";
+import "dotenv/config";
 import cachedFetch from "@11ty/eleventy-fetch";
 import repos from "./repos.js";
 
 
 const fetchOptions = {
     headers: {
-        "Authorization": process.env.GITHUB_TOKEN,
-        "User-Agent": "Zerebos/Eleventy-Portfolio",
+        "Authorization": `Bearer ${process.env.GITHUB_TOKEN || ""}`,
+        "User-Agent": "@zerebos/Zerebos.com",
     }
 };
+
+console.log(process.env);
 
 export default async function() {
     const repoResults = [];

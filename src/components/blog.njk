@@ -2,11 +2,13 @@
 <article class="blog-post-preview">
     <div class="blog-post-meta">
         <time datetime="{{post.date | date}}">{{post.date | date("en-US", {dateStyle: "medium"})}}</time>
-        {% if post.data.tags %}
+        {% if post.data.blogTags %}
             <div class="blog-tags">
-                {% for tag in post.data.tags %}
+                {% for tag in post.data.blogTags %}
+                    {% if loop.index <= 4 %}
                     {% if tag != "posts" %}
                         <a href="/blog/tags/{{ tag | slugify }}/" class="tag">{{tag}}</a>
+                    {% endif %}
                     {% endif %}
                 {% endfor %}
             </div>
@@ -19,10 +21,10 @@
 {% endmacro %}
 
 
-{% macro tagCloud(collections, tagList, tag) %}
+{% macro tagCloud(collections, tag) %}
 <div class="tag-cloud">
-    {%- for tagItem in tagList -%}
-        {%- set taggedCount = collections[tagItem] | length -%}
+    {%- for tagItem in collections.blogTagsList -%}
+        {%- set taggedCount = collections.blogTagsMap[tagItem] | length -%}
         <a href="/blog/tags/{{ tagItem | slugify }}/" class="tag{{ ' current' if tagItem == tag }}">
             {{ tagItem }} ({{ taggedCount }})
         </a>

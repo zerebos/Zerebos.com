@@ -57,8 +57,8 @@ body {
     max-width: 708px;
     margin: 0 auto;
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 16px;
+    padding-left: 16px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -422,6 +422,7 @@ button.expand img {
 
 #intro, #links-header,
 #about-header,
+#blog-header,
 #projects-header,
 #main-nav + section {
     gap: 18px;
@@ -488,7 +489,7 @@ button.expand img {
 
 #marquee {
     overflow: hidden;
-    margin: 0 15px;
+    margin: 0 16px;
     position: relative;
     height: 64px;
     border-radius: 12px;
@@ -528,17 +529,20 @@ button.expand img {
 }
 
 
-#projects {
+#projects,
+#latest-posts {
     gap: 10px;
 }
 
-#projects .heading {
+#projects .heading,
+#latest-posts .heading {
     justify-content: space-between;
     color: rgba(114, 120, 136, 0.6);
     /* margin-bottom: 10px; */
 }
 
-#projects .heading h2 {
+#projects .heading h2,
+#latest-posts .heading h2 {
     color: rgba(114, 120, 136, 0.6);
     font-size: 14px;
     font-weight: 600;
@@ -546,7 +550,8 @@ button.expand img {
     letter-spacing: 3px;
 }
 
-#projects .heading a {
+#projects .heading a,
+#latest-posts .heading a {
     font-size: 12px;
     background-image: linear-gradient(90deg, #018BBC 0%, #004964 100%);
     -webkit-background-clip: text;
@@ -556,7 +561,8 @@ button.expand img {
     display: inline-block;
 }
 
-#projects .heading a:hover {
+#projects .heading a:hover,
+#latest-posts .heading a:hover {
     animation: huey 3s infinite;
     animation-timing-function: ease;
 }
@@ -926,30 +932,35 @@ textarea.text-input {
 
 section#project-header,
 section#projects-header,
+section#blog-header,
 section#about-header {
     margin-top: 64px;
     margin-bottom: 0;
 }
 
 section#project-header,
-section#projects-header {
+section#projects-header,
+section#blog-header {
     margin-top: 90px;
 }
 
 @media only screen and (max-width:1000px){
     section#project-header,
     section#projects-header,
+    section#blog-header,
     section#about-header {
         margin-top: 32px;
         margin-bottom: 0;
     }
 
     section#project-header,
-    section#projects-header {
+    section#projects-header,
+    section#blog-header {
         margin-top: 32px;
     }
 }
 
+#blog-header h2,
 section#project-header h2,
 #projects-header h2,
 #about-header h2 {
@@ -961,6 +972,7 @@ section#project-header h2,
     -webkit-text-fill-color: transparent;
 }
 
+#blog-header p,
 section#project-header p,
 #projects-header p,
 #about-header p {
@@ -969,6 +981,7 @@ section#project-header p,
     text-align: center;
 }
 
+#blog-header,
 #projects-header {
     text-align: center;
 }
@@ -980,6 +993,7 @@ hr {
     background: radial-gradient(circle at center, rgba(114, 120, 136, 0.6), transparent);
 }
 
+#blog-header + hr,
 #projects-header + hr {
     margin-top: 20px!important;
 }
@@ -1004,7 +1018,7 @@ hr {
 
 @media only screen and (max-width: 768px) {
     #about .banner p, .banner p {
-        padding: 0 15px;
+        padding: 0 16px;
         text-align: center;
     }
 }
@@ -1420,42 +1434,12 @@ footer p {
 
 
 
-
 /* Latest Posts on Homepage */
-#latest-posts {
-    gap: 10px;
-}
-
-#latest-posts .heading {
-    justify-content: space-between;
-    color: rgba(114, 120, 136, 0.6);
-}
-
-#latest-posts .heading h2 {
-    color: rgba(114, 120, 136, 0.6);
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-
-#latest-posts .heading a {
-    font-size: 12px;
-    background-image: linear-gradient(90deg, #018BBC 0%, #004964 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 600;
-    display: inline-block;
-}
-
-#latest-posts .heading a:hover {
-    animation: huey 3s infinite;
-    animation-timing-function: ease;
-}
 
 #latest-posts .blog-post-preview {
     margin-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 #latest-posts .no-posts {

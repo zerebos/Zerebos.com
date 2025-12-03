@@ -1,18 +1,16 @@
 ---
 layout: base.njk
 pagination:
-  data: collections.posts
-  size: 10
+  data: collections.blog
+  size: 3
   alias: posts
-  reverse: true
 ---
 
 {% import "blog.njk" as blog %}
 
-<section class="flex column flex-align-center container" id="blog-header">
+<section class="flex column flex-align-center container medium" id="blog-header">
     <h2>Blog</h2>
     <p>Development insights, tutorials, and thoughts on open source.</p>
-    {{ blog.tagCloud(collections, collections.blogTags, tag) }}
 </section>
 
 <hr class="flex container medium" />
@@ -41,3 +39,9 @@ pagination:
     </div>
 </section>
 {% endif %}
+
+<hr class="flex container medium" />
+
+<section class="flex column flex-align-center container" id="blog-tags">
+    {{ blog.tagCloud(collections) }}
+</section>

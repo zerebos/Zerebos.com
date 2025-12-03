@@ -2,7 +2,7 @@ import {IdAttributePlugin, HtmlBasePlugin} from "@11ty/eleventy";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import {feedPlugin} from "@11ty/eleventy-plugin-rss";
 
-/** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
+/** @param {import("@11ty/eleventy/UserConfig").default} eleventyConfig */
 export default async function (eleventyConfig) {
 
     // Add Eleventy v3 plugins
@@ -29,13 +29,13 @@ export default async function (eleventyConfig) {
         }
     });
 
-    // TODO: Enable Bundle plugin bundles (built-in to Eleventy v3)
-    eleventyConfig.addBundle("css");
+    // TODO: Consider Bundle plugin bundles (built-in to Eleventy v3)
+    // eleventyConfig.addBundle("css");
 
     // Folders to copy to output folder
     eleventyConfig.addPassthroughCopy("assets");
-    eleventyConfig.addPassthroughCopy("src/scripts.js");
-    eleventyConfig.addPassthroughCopy("src/styles.css");
+    // eleventyConfig.addPassthroughCopy("src/scripts.js");
+    // eleventyConfig.addPassthroughCopy("src/styles.css");
 
     eleventyConfig.addFilter("percentOf", (percent, of = 255) => {
         percent = percent / 100;
@@ -67,7 +67,7 @@ export default async function (eleventyConfig) {
         return date.toLocaleDateString(format, opts);
     });
 
-    eleventyConfig.addFilter("absolute", function(url, base = "") {
+    eleventyConfig.addFilter("absolute", function (url, base = "") {
         const filter = eleventyConfig.getFilter("htmlBaseUrl");
         return filter.apply(this, [url, "https://zerebos.com"]);
     });
@@ -85,36 +85,31 @@ export default async function (eleventyConfig) {
         return getProjects(collection);
     });
 
-    eleventyConfig.addCollection("posts", function (collection) {
+    eleventyConfig.addCollection("blog", function (collection) {
         return getBlogPosts(collection);
     });
 
     // Create collections for each tag
-    eleventyConfig.addCollection("blogTags", function(collection) {
+    eleventyConfig.addCollection("blogTagsList", function (collection) {
         let tagSet = new Set();
-        collection.getAll().forEach(function(item) {
-            if (!item.url.includes("blog/")) return; // Only include blog posts
-            if ("tags" in item.data) {
-                let tags = item.data.tags;
-                console.log("Item tags:", tags);
-                tags = tags.filter(function(item) {
-                    switch(item) {
-                        // Filter out non-content tags
-                        case "all":
-                        case "nav":
-                        case "post":
-                        case "posts":
-                            return false;
-                    }
-                    return true;
-                });
-                for (const tag of tags) {
-                    tagSet.add(tag);
-                }
-            }
+        getBlogPosts(collection).forEach(item => {
+            const tags = item.data.blogTags || [];
+            tags.forEach(tag => tagSet.add(tag));
         });
-        // Return sorted array of tags
+
         return [...tagSet].sort();
+    });
+
+    eleventyConfig.addCollection("blogTagsMap", function (collection) {
+        let tagMap = {};
+        getBlogPosts(collection).forEach(item => {
+            const tags = item.data.blogTags || [];
+            tags.forEach(tag => {
+                if (!tagMap[tag]) tagMap[tag] = [];
+                tagMap[tag].push(item);
+            });
+        });
+        return tagMap;
     });
 
     // Virtual Template - Generate dynamic sitemap
@@ -122,7 +117,7 @@ export default async function (eleventyConfig) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for page in collections.all %}
   <url>
-    <loc>{{ page.url | url | absoluteUrl | log }}</loc>
+    <loc>{{ page.url | url | absolute }}</loc>
     <lastmod>{{ page.date.toISOString() }}</lastmod>
   </url>
 {%- endfor %}
@@ -139,7 +134,7 @@ export default async function (eleventyConfig) {
             output: "dist",
             data: "data",
             layouts: "layouts",
-            includes: "includes",
+            includes: "components",
         }
-    }
+    };
 };
