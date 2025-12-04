@@ -10,9 +10,9 @@ const fetchOptions = {
     }
 };
 
-console.log(process.env);
+// console.log(process.env);
 
-export default async function() {
+export default async function () {
     const repoResults = [];
     for (const repo of repos) {
         try {
