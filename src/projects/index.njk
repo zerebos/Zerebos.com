@@ -9,6 +9,8 @@ blurb: "Browse these projects to learn more about my previous work."
 ---
 
 
+{% import "components/paginator.njk" as paginator %}
+
 <section class="flex container column half-padded" id="projects">
     {% for proj in projects %}
         {% if (loop.index % 3 == 1) %}
@@ -28,3 +30,6 @@ blurb: "Browse these projects to learn more about my previous work."
         {% endif %}
     {% endfor %}
 </section>
+
+
+{{ paginator.windowed(page, pagination) }}

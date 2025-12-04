@@ -1,0 +1,48 @@
+{% macro full(page, pagination) %}
+    {% if pagination.href.next or pagination.href.previous %}
+        <ol class="paginator">
+            <li class="nav">{% if page.url != pagination.href.first %}<a href="{{ pagination.href.first }}">«</a>{% else %}«{% endif %}</li>
+            <li class="nav">{% if pagination.href.previous %}<a href="{{ pagination.href.previous }}">‹</a>{% else %}‹{% endif %}</li>
+            {%- for pageEntry in pagination.hrefs %}
+                <li class="page">{% if page.url == pagination.hrefs[ loop.index0 ] %}{{loop.index}}{% else %}<a href="{{ pagination.hrefs[ loop.index0 ] }}">{{loop.index}}</a>{% endif %}</li>
+                {# <li><a href="{{ pagination.hrefs[ loop.index0 ] }}"{% if page.url == pagination.hrefs[ loop.index0 ] %} aria-current="page"{% endif %}>Page {{ loop.index }}</a></li> #}
+            {%- endfor %}
+            <li class="nav">{% if pagination.href.next %}<a href="{{ pagination.href.next }}">›</a>{% else %}›{% endif %}</li>
+            <li class="nav">{% if page.url != pagination.href.last %}<a href="{{ pagination.href.last }}">»</a>{% else %}»{% endif %}</li>
+        </ol>
+    {% endif %}
+{% endmacro %}
+
+{% macro windowed(page, pagination) %}
+{% set paginationArray = paginationHelper(pagination.pageNumber + 1, pagination.pages.length, 1) %}
+{% if pagination.href.next or pagination.href.previous %}
+<nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
+    <a href="{{ pagination.href.previous }}" class="{{ "disabled" if not pagination.href.previous}}">‹ Prev</a>
+    <ul class="page-numbers">
+    {% for page in paginationArray %}
+        {% if page == "..." %}
+            <li class="ellipsis">…</li>
+        {% elseif page == pagination.pageNumber + 1 %}
+            <li class="active"><span>{{ page }}</span></li>
+        {% else %}
+            <li><a href="{{ pagination.hrefs[page - 1] }}">{{ page }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    <a href="{{ pagination.href.next }}" class="{{ "disabled" if not pagination.href.next}}">Next ›</a>
+</nav>
+{% endif %}
+{% endmacro %}
+
+{% macro simple(page, pagination) %}
+    {% if pagination.href.next or pagination.href.previous %}
+        <div class="paginator-simple">
+            {% if pagination.href.previous %}
+                <a href="{{ pagination.href.previous }}" class="btn btn-primary">← Newer Posts</a>
+            {% endif %}
+            {% if pagination.href.next %}
+                <a href="{{ pagination.href.next }}" class="btn btn-primary">Older Posts →</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}

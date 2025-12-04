@@ -72,6 +72,8 @@ export default async function (eleventyConfig) {
         return filter.apply(this, [url, "https://zerebos.com"]);
     });
 
+    eleventyConfig.addNunjucksGlobal("paginationHelper", getPagination);
+
     function getProjects(collectionApi) {
         return collectionApi.getFilteredByGlob("./src/projects/*.md");
     }
@@ -112,6 +114,10 @@ export default async function (eleventyConfig) {
         return tagMap;
     });
 
+    eleventyConfig.addCollection("blogTagsPagination", doublePaginate("blog"));
+
+    console.log(eleventyConfig.collections.blogTagsPagination);
+
     // Virtual Template - Generate dynamic sitemap
     eleventyConfig.addTemplate("sitemap.njk", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -138,3 +144,91 @@ export default async function (eleventyConfig) {
         }
     };
 };
+
+function chunkArray(arr, size) {
+    const chunks = [];
+    for (let i = 0; i < arr.length; i += size) {
+        chunks.push(arr.slice(i, i + size));
+    }
+    return chunks;
+}
+
+const doublePaginate = (postType) => function (collection) {
+    // Get unique list of tags
+    // const tagSet = new Set();
+    // collection.getAllSorted().map(function(item) {
+    //     if ("tags" in item.data) {
+    //         if (!item.data.tags.includes(postType)) return;
+    //         const tags = item.data.tags.filter(tag => !metaTags.includes(tag));
+
+
+    //         // optionally filter things out before you iterate over?
+    //         for (const tag of tags) {
+    //             tagSet.add(tag);
+    //         }
+
+    //     }
+    // });
+    let tagMap = {};
+    collection.getFilteredByGlob("./src/blog/*.md")
+        .sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(item => {
+            const tags = item.data.blogTags || [];
+            tags.forEach(tag => {
+                if (!tagMap[tag]) tagMap[tag] = [];
+                tagMap[tag].push(item);
+            });
+        });
+
+    // Get each item that matches the tag
+    const paginationSize = 3;
+    const paginatedMap = [];
+    // const tagMap = collection[`${postType}TagsMap`];
+    // const tagArray = [...tagSet];
+    for (const tagName in tagMap) {
+        const tagItems = tagMap[tagName];
+        const pagedItems = chunkArray(tagItems, paginationSize);
+        for (let pageNumber = 0, max = pagedItems.length; pageNumber < max; pageNumber++) {
+            const num = pageNumber + 1;
+            paginatedMap.push({
+                tagName: tagName,
+                pageNumber: pageNumber,
+                pageData: pagedItems[pageNumber],
+                href: {
+                    first: `/${postType}/tags/${tagName}/`,
+                    previous: pageNumber - 1 < 0 ? "" : `/${postType}/tags/${tagName}/${num - 1 === 1 ? "" : `${pageNumber - 1}/`}`,
+                    next: pageNumber + 1 >= max ? "" : `/${postType}/tags/${tagName}/${num + 1}/`, // pageNumber < max
+                    last: `/${postType}/tags/${tagName}/${max}/`
+                },
+                hrefs: Array(max).fill().map((e, i) => `/${postType}/tags/${tagName}/${i === 0 ? "" : `${i + 1}/`}`)
+            });
+        }
+    }
+
+    return paginatedMap;
+};
+
+function getPagination(currentPage, totalPages, window = 1) {
+    const pages = [];
+    pages.push(1);
+
+    if (currentPage - window > 2) {
+        pages.push("...");
+    }
+
+    const start = Math.max(2, currentPage - window);
+    const end = Math.min(totalPages - 1, currentPage + window);
+
+    for (let i = start; i <= end; i++) {
+        pages.push(i);
+    }
+
+    if (currentPage + window < totalPages - 1) {
+        pages.push("...");
+    }
+
+    if (totalPages > 1) {
+        pages.push(totalPages);
+    }
+
+    return pages;
+}
