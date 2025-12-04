@@ -5,22 +5,27 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "build": "bun run build:css && bunx eleventy",
-    "serve": "bunx eleventy --serve --port 6767",
+    "build": "bun run build:css && bunx eleventy --config=./eleventy.config.ts",
+    "serve": "bunx eleventy --config=./eleventy.config.ts --serve --port 6767",
     "dev": "bunx concurrently --kill-timeout 100 \"bun run watch:css\" \"bun run serve\"",
-    "debug": "set DEBUG=Eleventy* & bunx eleventy",
+    "debug": "set DEBUG=Eleventy* & bunx eleventy --config=./eleventy.config.ts",
     "build:css": "bunx stylus src/css/index.styl -o dist/styles.css --compress",
     "watch:css": "bunx stylus -w src/css/index.styl -o dist/styles.css --compress"
   },
   "author": "",
   "license": "",
   "devDependencies": {
+    "11ty.ts": "^0.0.6",
     "@11ty/eleventy": "^3.1.2",
     "@11ty/eleventy-fetch": "^5.1.1",
     "@11ty/eleventy-plugin-rss": "^2.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
+    "@types/11ty__eleventy-plugin-rss": "^2.0.0",
+    "@zerebos/eslint-config": "^1.0.1",
+    "@zerebos/eslint-config-typescript": "^1.0.1",
     "concurrently": "^9.2.1",
     "dotenv": "^17.2.3",
+    "eslint": "^9.39.1",
     "stylus": "^0.64.0"
   }
 }
