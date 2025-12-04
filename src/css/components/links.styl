@@ -1,0 +1,38 @@
+a.gradient {
+    gap: 12px;
+    width: min-content;
+    padding: 12px 12px 16px;
+    /* background-color: red; */
+    /* background-size: 0% 0%; */
+    /* background-position: 50% 50%; */
+    /* transition: background-size 500ms ease; */
+    border-radius: 12px;
+    position: relative;
+}
+
+a.gradient:hover {
+    /* background-size: 100% 100%; */
+}
+
+a.gradient::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(90deg, #1B1A26, #23171C);
+    backdrop-filter: blur(12px);
+    transform: scale(90%);
+    transform-origin: 50% 50% 0px;
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
+    border-radius: 12px;
+    opacity: 0;
+    z-index: -1;
+}
+
+a.gradient:hover::after {
+    transform: scale(100%) !important;
+    opacity: 1;
+}

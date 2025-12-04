@@ -1,0 +1,59 @@
+.showcase,
+#projects,
+#latest-posts {
+    gap: 10px;
+}
+
+.showcase .heading,
+#projects .heading,
+#latest-posts .heading {
+    justify-content: space-between;
+    color: rgba(114, 120, 136, 0.6);
+    /* margin-bottom: 10px; */
+}
+
+.showcase .heading h2,
+#projects .heading h2,
+#latest-posts .heading h2 {
+    color: rgba(114, 120, 136, 0.6);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.showcase .heading a,
+#projects .heading a,
+#latest-posts .heading a {
+    font-size: 12px;
+    background-image: linear-gradient(90deg, #018BBC 0%, #004964 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.showcase .heading a:hover,
+#projects .heading a:hover,
+#latest-posts .heading a:hover {
+    animation: huey 3s infinite;
+    animation-timing-function: ease;
+}
+
+
+// Blog Post Previews
+.showcase .blog-post-preview {
+    margin-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.showcase .no-posts {
+    padding: 24px;
+    text-align: center;
+    background-color: var(--background-secondary);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    border: 1px solid rgba(82, 82, 82, 0.2);
+}

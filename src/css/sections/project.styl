@@ -1,0 +1,49 @@
+.stats-wrap {
+    margin-bottom: 24px;
+    gap: 12px;
+}
+
+.stats {
+    padding-left: 0;
+    white-space: nowrap;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.stats .stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    letter-spacing: -0.09px;
+    color: rgba(236, 237, 238, 0.6);
+    min-width: 70px;
+}
+
+.stats .stat span {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.stats .stat svg {
+    height: 16px;
+    width: 16px;
+    min-width: 16px;
+    color: var(--text-primary);
+}
+
+.stats .stat a {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .stats {
+        gap: 0;
+    }
+
+    .stats.licensed {
+        gap: 20px;
+    }
+}

@@ -25,7 +25,7 @@ layout: base.njk
 
 <section class="flex container" id="links-icons">
     {% for i in links.icons %}
-        <a href="{{i.href}}" target="_blank" rel="noreferrer"><img src="/assets/icons/{{i.icon}}.svg" /></a>
+        <a href="{{i.href}}" target="_blank" rel="noreferrer" class="flex gradient"><img src="/assets/icons/{{i.icon}}.svg" /></a>
     {% endfor %}
 </section>
 
@@ -36,7 +36,7 @@ layout: base.njk
     </div>
     <div class="flex column list">
         {% for link in cat.links %}
-            <a class="flex link" href="{{link.href}}" target="_blank" rel="noreferrer">
+            <a class="flex link gradient" href="{{link.href}}" target="_blank" rel="noreferrer">
                 <div class="flex label">
                     <img src="{{link.icon}}" />
                     <span>{{link.label}}</span>

@@ -1,0 +1,26 @@
+.paginator {
+    justify-content: space-between;
+    padding: 0 16px;
+    margin: 10px 0;
+}
+
+.page-numbers {
+    list-style: none;
+    display: inline-flex;
+    font-size: 1.2em;
+    justify-content: center;
+    gap: 12px;
+}
+
+.page-numbers li {
+    margin: 0 5px;
+}
+
+.paginator a.disabled {
+    pointer-events: none;
+    opacity: 0;
+}
+
+.paginator + hr {
+    margin-top: 20px!important;
+}

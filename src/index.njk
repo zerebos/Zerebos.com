@@ -22,7 +22,7 @@ layout: base.njk
 {% include "partials/marquee.njk" %}
 
 
-<section class="flex container column half-padded" id="projects">
+<section class="flex container column half-padded showcase" id="projects">
     <div class="flex container heading">
         <h2>Featured Projects</h2>
         <a href="/projects">All Projects ▸</a>
@@ -32,7 +32,7 @@ layout: base.njk
             <div class="flex container project-row">
         {% endif %}
         <div class="flex project">
-            <a href="{{proj.url}}" class="flex column">
+            <a href="{{proj.url}}" class="flex column gradient">
                 <img src="assets/projects/icons/{{proj.data.icon}}" class="icon" alt="{{proj.data.title}}" />
                 <div class="flex column info">
                     <h3>{{proj.data.title}}</h3>
@@ -47,7 +47,7 @@ layout: base.njk
 </section>
 
 {% import "components/blog.njk" as blog %}
-<section class="flex container column half-padded" id="latest-posts">
+<section class="flex container column half-padded showcase" id="latest-posts">
     <div class="flex container heading">
         <h2>Latest Posts</h2>
         <a href="/blog">All Posts ▸</a>
