@@ -1,0 +1,14 @@
+{% extends "./base.njk" %}
+
+{% block header %}
+<section class="flex column flex-align-center container" id="page-header">
+    <h2>{{title}}</h2>
+    {% if date %}
+        <p><time datetime="{{date | date}}">{{date | date("en-US", {dateStyle: "long"})}}</time></p>
+    {% endif %}
+    <p>{{blurb}}</p>
+</section>
+
+<hr class="flex container medium" />
+
+{% endblock %}

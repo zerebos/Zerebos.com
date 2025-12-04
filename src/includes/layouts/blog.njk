@@ -1,0 +1,37 @@
+{% extends "./basic.njk" %}
+
+{% import "components/blog.njk" as blog %}
+
+{% block content %}
+
+{% if tag %}
+    {% set posts = collections.blogTagsMap[tag] %}
+{# {% else %}
+    {% set posts = pagination.items %} #}
+{% endif %}
+
+<section class="flex column container" id="blog-posts">
+    {%- for post in posts -%}
+        {{ blog.preview(post) }}
+    {%- endfor -%}
+</section>
+
+{% if (pagination.href.previous or pagination.href.next) and not tag %}
+<section class="flex container blog-pagination">
+    <div class="flex pagination-nav">
+        {% if pagination.href.previous %}
+            <a href="{{pagination.href.previous}}" class="btn btn-primary">← Newer Posts</a>
+        {% endif %}
+        {% if pagination.href.next %}
+            <a href="{{pagination.href.next}}" class="btn btn-primary">Older Posts →</a>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<hr class="flex container medium" />
+
+<section class="flex column flex-align-center container" id="blog-tags">
+    {{ blog.tagCloud(collections) }}
+</section>
+{% endblock %}

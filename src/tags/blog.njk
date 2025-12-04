@@ -4,39 +4,18 @@ pagination:
   size: 1
   alias: tag
 permalink: /blog/tags/{{ tag | slugify }}/
-layout: base.njk
+layout: blog.njk
 eleventyComputed:
-  title: "Posts tagged '{{ tag }}'"
-  description: "All blog posts tagged with {{ tag }}"
+  title: "{{ tag }}"
+  blurb: >
+    {% set participle = "is" %}
+    {% if collections.blogTagsMap[tag] | length != 1 %}
+        {% set participle = "are" %}
+    {% endif %}
+
+    {% set postLabel = "post" %}
+    {% if collections.blogTagsMap[tag] | length != 1 %}
+        {% set postLabel = "posts" %}
+    {% endif %}
+    There {{ participle }} {{ collections.blogTagsMap[tag] | length }} blog {{ postLabel }} with this tag.
 ---
-
-{% import "blog.njk" as blog %}
-
-{% set participle = "has" %}
-{% if collections.blogTagsMap[tag] | length != 1 %}
-    {% set participle = "have" %}
-{% endif %}
-
-{% set postLabel = "post" %}
-{% if collections.blogTagsMap[tag] | length != 1 %}
-    {% set postLabel = "posts" %}
-{% endif %}
-
-<section class="flex column flex-align-center container medium" id="blog-header">
-    <h2>{{tag}}</h2>
-    <p>There {{ participle }} been {{ collections.blogTagsMap[tag] | length }} blog {{ postLabel }} with this tag</p>
-</section>
-
-<hr class="flex container medium">
-
-<section class="flex column container" id="blog-posts">
-    {%- for post in collections.blogTagsMap[tag] -%}
-        {{ blog.preview(post) }}
-    {%- endfor -%}
-</section>
-
-<hr class="flex container medium" />
-
-<section class="flex column flex-align-center container" id="blog-tags">
-    {{ blog.tagCloud(collections) }}
-</section>

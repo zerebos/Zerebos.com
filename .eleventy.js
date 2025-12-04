@@ -133,8 +133,8 @@ export default async function (eleventyConfig) {
             input: "src",
             output: "dist",
             data: "data",
-            layouts: "layouts",
-            includes: "components",
+            layouts: "includes/layouts",
+            includes: "includes",
         }
     };
 };

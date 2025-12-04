@@ -1,22 +1,23 @@
 {% macro preview(post) %}
-<article class="blog-post-preview">
-    <div class="blog-post-meta">
-        <time datetime="{{post.date | date}}">{{post.date | date("en-US", {dateStyle: "medium"})}}</time>
-        {% if post.data.blogTags %}
-            <div class="blog-tags">
-                {% for tag in post.data.blogTags %}
-                    {% if loop.index <= 4 %}
-                    {% if tag != "posts" %}
-                        <a href="/blog/tags/{{ tag | slugify }}/" class="tag">{{tag}}</a>
-                    {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
+<article class="flex no-wrap blog-post-preview">
+    {# {% if post.data.thumbnail or post.data.banner %}
+    <div class="blog-preview-thumbnail">
+        <a href="{{post.url}}">
+            <img src="{{post.data.banner}}" alt="Thumbnail for {{post.data.title}}">
+        </a>
     </div>
-    <h3><a href="{{post.url}}">{{post.data.title}}</a></h3>
-    <p class="blog-excerpt">{{post.data.description}}</p>
-    <a href="{{post.url}}" class="read-more">Read more →</a>
+    {% endif %} #}
+    {# <div class="blog-preview-info"> #}
+        <div class="blog-post-meta">
+            <time datetime="{{post.date | date}}">{{post.date | date("en-US", {dateStyle: "medium"})}}</time>
+            {% if post.data.blogTags %}
+                {{ tagList(post.data.blogTags, 4) }}
+            {% endif %}
+        </div>
+        <h3><a href="{{post.url}}">{{post.data.title}}</a></h3>
+        <p class="blog-excerpt">{{post.data.blurb}}</p>
+        <a href="{{post.url}}" class="read-more">Read more →</a>
+    {# </div> #}
 </article>
 {% endmacro %}
 
@@ -24,10 +25,27 @@
 {% macro tagCloud(collections, tag) %}
 <div class="tag-cloud">
     {%- for tagItem in collections.blogTagsList -%}
-        {%- set taggedCount = collections.blogTagsMap[tagItem] | length -%}
-        <a href="/blog/tags/{{ tagItem | slugify }}/" class="tag{{ ' current' if tagItem == tag }}">
-            {{ tagItem }} ({{ taggedCount }})
-        </a>
+        {{ chip(tagItem, collections) }}
     {%- endfor -%}
 </div>
+{% endmacro %}
+
+
+{% macro tagList(tags, limit, collections) %}
+<div class="flex blog-tags">
+    {%- for tag in tags -%}
+        {% if limit == 0 %}
+            {{ chip(tag, collections) }}
+        {% elif loop.index <= limit %}
+            {{ chip(tag, collections) }}
+        {% endif %}
+    {%- endfor -%}
+</div>
+{% endmacro %}
+
+
+{% macro chip(tagName, collections) %}
+<a href="/blog/tags/{{ tagName | slugify }}/" class="tag">
+    {{ tagName }}{% if collections %} <span class="count text-muted">{{ collections.blogTagsMap[tagName] | length }}</span>{% endif %}
+</a>
 {% endmacro %}

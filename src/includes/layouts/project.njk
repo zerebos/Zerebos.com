@@ -1,4 +1,4 @@
-{% extends "./base.njk" %}
+{% extends "./basic.njk" %}
 
 
 {% set git = github.projects | getElementByKey("full_name", repo) %}
@@ -6,13 +6,6 @@
 {% set branches = github.branches[repo] %}
 
 {% block content %}
-<section class="flex column flex-align-center container medium" id="projects-header">
-    <h2>{{title}}</h2>
-    <p>{{blurb}}</p>
-</section>
-
-<hr class="flex container medium" />
-
 <section class="flex column flex-align-center banner">
     <img src="{{banner}}" alt="{{title}}" />
 </section>
@@ -54,5 +47,5 @@
     </div>
 </section>
 
-<link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet" />
+<link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-vsc-dark-plus.css" rel="stylesheet" />
 {% endblock %}

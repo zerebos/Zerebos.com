@@ -7,7 +7,7 @@
   "scripts": {
     "build": "bun run build:css && bunx eleventy",
     "serve": "bunx eleventy --serve --port 6767",
-    "dev": "bunx concurrently \"bun run watch:css\" \"bun run serve\"",
+    "dev": "bunx concurrently --kill-timeout 100 \"bun run watch:css\" \"bun run serve\"",
     "debug": "set DEBUG=Eleventy* & bunx eleventy",
     "build:css": "bunx stylus src/css/index.styl -o dist/styles.css --compress",
     "watch:css": "bunx stylus -w src/css/index.styl -o dist/styles.css --compress"

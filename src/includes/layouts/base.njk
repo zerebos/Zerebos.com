@@ -66,6 +66,7 @@
                 </button>
             </div>
         </nav>
+        {% block header %}{% endblock %}
         {% block content %}
             {{content | safe}}
         {% endblock %}

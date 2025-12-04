@@ -1,17 +1,13 @@
 ---
-layout: base.njk
+layout: basic.njk
 pagination:
   data: collections.projects
   size: 9
   alias: projects
+title: "Projects"
+blurb: "Browse these projects to learn more about my previous work."
 ---
 
-<section class="flex column flex-align-center container medium" id="projects-header">
-    <h2>Projects</h2>
-    <p>Browse these projects to learn more about my previous work.</p>
-</section>
-
-<hr class="flex container medium" />
 
 <section class="flex container column half-padded" id="projects">
     {% for proj in projects %}

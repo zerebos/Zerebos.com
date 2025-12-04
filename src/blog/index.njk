@@ -1,47 +1,9 @@
 ---
-layout: base.njk
+layout: blog.njk
 pagination:
   data: collections.blog
   size: 3
   alias: posts
+title: "Blog"
+blurb: "Development insights, tutorials, and thoughts on open source."
 ---
-
-{% import "blog.njk" as blog %}
-
-<section class="flex column flex-align-center container medium" id="blog-header">
-    <h2>Blog</h2>
-    <p>Development insights, tutorials, and thoughts on open source.</p>
-</section>
-
-<hr class="flex container medium" />
-
-<section class="flex container column" id="blog-posts">
-    {% for post in posts %}
-        {{ blog.preview(post) }}
-    {% endfor %}
-
-    {% if not posts.length %}
-        <div class="no-posts">
-            <p>No blog posts yet. Check back soon for development insights and tutorials!</p>
-        </div>
-    {% endif %}
-</section>
-
-{% if pagination.href.previous or pagination.href.next %}
-<section class="flex container blog-pagination">
-    <div class="flex pagination-nav">
-        {% if pagination.href.previous %}
-            <a href="{{pagination.href.previous}}" class="btn btn-primary">← Newer Posts</a>
-        {% endif %}
-        {% if pagination.href.next %}
-            <a href="{{pagination.href.next}}" class="btn btn-primary">Older Posts →</a>
-        {% endif %}
-    </div>
-</section>
-{% endif %}
-
-<hr class="flex container medium" />
-
-<section class="flex column flex-align-center container" id="blog-tags">
-    {{ blog.tagCloud(collections) }}
-</section>
