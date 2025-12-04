@@ -5,12 +5,13 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "build": "bun run build:css && bunx eleventy --config=eleventy.config.ts",
-    "serve": "bunx eleventy --config=eleventy.config.ts --serve --port 6767",
-    "dev": "bunx concurrently --kill-timeout 100 \"bun run watch:css\" \"bun run serve\"",
-    "debug": "set DEBUG=Eleventy* & bunx eleventy --config=eleventy.config.ts",
-    "build:css": "bunx stylus src/css/index.styl -o dist/styles.css --compress",
-    "watch:css": "bunx stylus -w src/css/index.styl -o dist/styles.css --compress"
+    "build": "bun run build:css && bun run build:eleventy",
+    "serve": "bunx --bun eleventy --config=eleventy.config.ts --serve --port 6767",
+    "dev": "bunx --bun concurrently --kill-timeout 100 \"bun run watch:css\" \"bun run serve\"",
+    "debug": "set DEBUG=Eleventy* & bun run build:eleventy",
+    "build:eleventy": "bunx --bun eleventy --config=eleventy.config.ts",
+    "build:css": "bunx --bun stylus src/css/index.styl -o dist/styles.css --compress",
+    "watch:css": "bunx --bun stylus -w src/css/index.styl -o dist/styles.css --compress"
   },
   "author": "",
   "license": "",
