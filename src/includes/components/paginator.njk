@@ -17,19 +17,21 @@
 {% set paginationArray = paginationHelper(pagination.pageNumber + 1, pagination.pages.length, 1) %}
 {% if pagination.href.next or pagination.href.previous %}
 <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
-    <a href="{{ pagination.href.previous }}" class="{{ "disabled" if not pagination.href.previous}}">‹ Prev</a>
+    <a href="{{ pagination.href.previous }}" class="gradient{{ " disabled" if not pagination.href.previous}}">‹ Prev</a>
     <ul class="page-numbers">
+    {% if paginationArray | length > 2 %}
     {% for page in paginationArray %}
         {% if page == "..." %}
             <li class="ellipsis">…</li>
         {% elseif page == pagination.pageNumber + 1 %}
-            <li class="active"><span>{{ page }}</span></li>
+            <li><a class="gradient active">{{ page }}</a></li>
         {% else %}
-            <li><a href="{{ pagination.hrefs[page - 1] }}">{{ page }}</a></li>
+            <li><a href="{{ pagination.hrefs[page - 1] }}" class="gradient">{{ page }}</a></li>
         {% endif %}
     {% endfor %}
+    {% endif %}
     </ul>
-    <a href="{{ pagination.href.next }}" class="{{ "disabled" if not pagination.href.next}}">Next ›</a>
+    <a href="{{ pagination.href.next }}" class="gradient{{ " disabled" if not pagination.href.next}}">Next ›</a>
 </nav>
 {% endif %}
 {% endmacro %}

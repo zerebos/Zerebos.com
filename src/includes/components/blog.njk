@@ -45,7 +45,7 @@
 
 
 {% macro chip(tagName, collections) %}
-<a href="/blog/tags/{{ tagName | slugify }}/" class="tag">
+<a href="/blog/tags/{{ tagName | slugify }}/" class="tag gradient">
     {{ tagName }}{% if collections %} <span class="count text-muted">{{ collections.blogTagsMap[tagName] | length }}</span>{% endif %}
 </a>
 {% endmacro %}
