@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    color: unquote('hsl(from var(--text-primary) h s calc(l - 5))');
+    padding: 0;
 }
 
 .project-markdown .content {
@@ -44,11 +46,13 @@
 .project-markdown h3,
 .project-markdown h4,
 .project-markdown h5 {
-    color: rgba(114, 120, 136, 0.6);
+    color: rgba(114, 120, 136, 1.0); // #727888
     font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 3px;
+    border-bottom: 1px dotted rgb(114, 120, 136);
+    padding-bottom: 6px;
 }
 
 .project-markdown h1 {
@@ -123,4 +127,18 @@
 .project-markdown h5 {
     margin: 1rem 0 0 0;
     max-width: 100%;
+}
+
+
+.project-markdown a {
+    text-decoration: dotted underline;
+}
+
+.project-markdown a:hover {
+    text-decoration: solid underline;
+}
+
+.project-markdown strong {
+    font-weight: 600;
+    color: var(--text-heading);
 }

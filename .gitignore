@@ -5,4 +5,4 @@ dist/
 cwebp.exe
 example.json
 notes/
-src/blog/**/*.md
+# src/blog/**/*.md
