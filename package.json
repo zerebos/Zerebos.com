@@ -11,7 +11,10 @@
     "debug": "set DEBUG=Eleventy* & bun run build:eleventy",
     "build:eleventy": "bunx --bun eleventy --config=eleventy.config.ts",
     "build:css": "bunx --bun stylus src/css/index.styl -o dist/styles.css --compress",
-    "watch:css": "bunx --bun stylus -w src/css/index.styl -o dist/styles.css --compress"
+    "watch:css": "bunx --bun stylus -w src/css/index.styl -o dist/styles.css --compress",
+    "wrangler": "wrangler",
+    "deploy": "bun run build && wrangler deploy",
+    "preview": "bun run build && wrangler dev"
   },
   "author": "",
   "license": "",
@@ -22,11 +25,12 @@
     "@11ty/eleventy-plugin-rss": "^2.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@types/11ty__eleventy-plugin-rss": "^2.0.0",
-    "@zerebos/eslint-config": "^1.0.1",
-    "@zerebos/eslint-config-typescript": "^1.0.1",
+    "@zerebos/eslint-config": "^1.0.2",
+    "@zerebos/eslint-config-typescript": "^1.0.3",
     "concurrently": "^9.2.1",
-    "dotenv": "^17.2.3",
-    "eslint": "^9.39.1",
-    "stylus": "^0.64.0"
+    "dotenv": "^17.3.1",
+    "eslint": "^9.39.4",
+    "stylus": "^0.64.0",
+    "wrangler": "^4.72.0"
   }
 }
