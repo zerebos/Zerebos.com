@@ -4,12 +4,19 @@ import about from "../data/about.js";
 ---
 
 <BaseLayout title="About | Zerebos" description="About Zerebos">
-  <section class="flex container column half-padded" id="about">
-    {about.sections.map((section) => (
-      <div class="flex column paragraph">
-        <h2>{section.title}</h2>
+  <div class="flex column" id="about">
+    <section class="flex column flex-align-center banner">
+      <img src={about.banner.url} alt="Hardware Project" />
+      <p class="caption">{about.banner.caption}</p>
+    </section>
+
+    {about.sections.map((section: {title: string; content: string}) => (
+      <section class="flex column paragraph container medium">
+        <div class="flex heading">
+          <h2>{section.title}</h2>
+        </div>
         <p set:html={section.content}></p>
-      </div>
+      </section>
     ))}
-  </section>
+  </div>
 </BaseLayout>

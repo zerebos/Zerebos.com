@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import about from "../data/about.js";
 import site from "../data/site.js";
 import { getCollection } from "astro:content";
+import { getGitHubData } from "../lib/github";
 
 const allProjects = await getCollection("projects");
 const featuredProjects = allProjects.slice(0, 6);
@@ -15,6 +16,9 @@ const allPosts = await getCollection("blog");
 const latestPosts = allPosts
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
+
+const github = await getGitHubData();
+const marqueeStats = Object.entries(github.stats);
 ---
 
 <BaseLayout title={site.name} description={site.description}>
@@ -34,7 +38,20 @@ const latestPosts = allPosts
     </div>
   </section>
 
-  <section class="flex container column half-padded showcase" id="latest-posts">
+  <section class="flex" id="marquee">
+    <div class="flex">
+      {marqueeStats.map(([label, value]) => (
+        <div class="stat">
+          <div class="label">{label}</div>
+          <div class="value">{(value as number).toLocaleString()}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  </section>
+
+  <section class="flex container column half-padded showcase" id="projects">
     <div class="flex container heading">
       <h2>Featured Projects</h2>
       <a href="/projects">All Projects ▸</a>
@@ -96,4 +113,138 @@ const latestPosts = allPosts
       )
     }
   </section>
+
+  <section class="flex container half-padded" id="contact">
+    <form action="https://api.staticforms.xyz/submit" method="post" id="contactform" class="flex">
+      <div class="flex column left">
+        <label for="name">Name</label>
+        <input class="text-input" type="text" name="name" placeholder="John Smith" required />
+        <label for="filter">Spam Filter</label>
+        <input class="text-input" type="text" name="filter" placeholder="Spam Filter" required />
+        <div id="captcha-wrap"><canvas id="captcha"></canvas></div>
+        <label for="email">Email</label>
+        <input class="text-input" type="email" name="email" placeholder="jsmith@bigcompany.com" required />
+        <label for="subject">Subject</label>
+        <input class="text-input" type="text" name="subject" placeholder="I want to hire you!" required />
+        <button class="btn btn-primary" type="submit">Send Message</button>
+      </div>
+      <div class="flex column right">
+        <label for="message">Message</label>
+        <textarea class="text-input" name="message" cols="20" rows="7" placeholder="I have a great job opportunity for you..." required></textarea>
+      </div>
+    </form>
+  </section>
+
+  <script>
+    let captchaCode: string;
+    const CAPTCHA_LENGTH = 6;
+    const captchaChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    function createCaptcha() {
+      const captcha: string[] = [];
+      for (let i = 0; i < CAPTCHA_LENGTH; i++) {
+        const index = Math.floor(Math.random() * captchaChars.length + 1);
+        if (!captcha.includes(captchaChars[index])) captcha.push(captchaChars[index]);
+        else i--;
+      }
+      const canv = document.getElementById("captcha") as HTMLCanvasElement;
+      canv.width = 85;
+      canv.height = 28;
+      const ctx = canv.getContext("2d")!;
+      ctx.font = "20px Georgia, serif";
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillText(captcha.join(""), 0, 20);
+      captchaCode = captcha.join("");
+    }
+    createCaptcha();
+
+    const contactForm = document.getElementById("contactform") as HTMLFormElement;
+    const submitButton = contactForm.querySelector("button")!;
+    contactForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const submittedCode = (contactForm.elements.namedItem("filter") as HTMLInputElement).value;
+      if (submittedCode !== captchaCode) {
+        submitButton.classList.replace("btn-primary", "btn-danger");
+        submitButton.textContent = "Incorrect Captcha!";
+        submitButton.disabled = true;
+        setTimeout(() => {
+          createCaptcha();
+          submitButton.classList.replace("btn-danger", "btn-primary");
+          submitButton.textContent = "Send Message";
+          submitButton.disabled = false;
+        }, 3000);
+        return;
+      }
+      try {
+        const payload = {
+          accessKey: "4eb2d4fb-346d-4bc6-82bb-7cb20c09c050",
+          name: (contactForm.elements.namedItem("name") as HTMLInputElement).value,
+          email: (contactForm.elements.namedItem("email") as HTMLInputElement).value,
+          subject: (contactForm.elements.namedItem("subject") as HTMLInputElement).value,
+          message: (contactForm.elements.namedItem("message") as HTMLTextAreaElement).value,
+          replyTo: "@",
+        };
+        const result = await fetch(contactForm.action, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {"Content-Type": "application/json"},
+        });
+        const json = await result.json() as {success: boolean};
+        if (json.success) {
+          contactForm.reset();
+          submitButton.classList.replace("btn-primary", "btn-success");
+          submitButton.textContent = "Message Sent!";
+        } else {
+          submitButton.classList.replace("btn-primary", "btn-danger");
+          submitButton.textContent = "Could Not Send!";
+          submitButton.disabled = true;
+        }
+        setTimeout(() => {
+          submitButton.classList.replace(json.success ? "btn-success" : "btn-danger", "btn-primary");
+          submitButton.textContent = "Send Message";
+          submitButton.disabled = false;
+        }, 5000);
+      } catch {
+        submitButton.classList.replace("btn-primary", "btn-danger");
+        submitButton.textContent = "Could Not Send!";
+        setTimeout(() => {
+          submitButton.classList.replace("btn-danger", "btn-primary");
+          submitButton.textContent = "Send Message";
+          submitButton.disabled = false;
+        }, 5000);
+      }
+    });
+  </script>
+
+  <script>
+    const containerElem = document.querySelector("#marquee") as HTMLElement;
+    let leftSideOfContainer = containerElem.getBoundingClientRect().left;
+    window.addEventListener("resize", () => {
+      leftSideOfContainer = containerElem.getBoundingClientRect().left;
+    });
+    const listElem = document.querySelector("#marquee > div") as HTMLElement;
+    let currentLeftValue = 0;
+    let start: number | undefined;
+    let previous: number | undefined;
+    window.requestAnimationFrame(animationLoop);
+    function animationLoop(timestamp: number) {
+      if (!start) start = timestamp;
+      if (!previous) previous = timestamp;
+      if (timestamp === start || timestamp === previous) return window.requestAnimationFrame(animationLoop);
+      const elapsed = timestamp - previous;
+      previous = timestamp;
+      const currentItems = listElem.querySelectorAll(".stat");
+      const firstItem = currentItems[0] as HTMLElement;
+      const secondItem = currentItems[1] as HTMLElement;
+      const leftSideOfSecondItem = secondItem.getBoundingClientRect().left;
+      if (Math.round(leftSideOfSecondItem) <= leftSideOfContainer) {
+        currentLeftValue = 0;
+        listElem.appendChild(firstItem);
+        return window.requestAnimationFrame(animationLoop);
+      }
+      listElem.style.transform = `translateX(${currentLeftValue}px)`;
+      currentLeftValue = currentLeftValue - (1 / 25) * elapsed;
+      window.requestAnimationFrame(animationLoop);
+    }
+  </script>
 </BaseLayout>
