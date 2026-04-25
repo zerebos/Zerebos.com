@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
 import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 const toTagSlug = (tag: string) =>
   tag
@@ -10,18 +12,20 @@ const toTagSlug = (tag: string) =>
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((post) => ({
+  return posts.map((post: CollectionEntry<"blog">) => ({
     params: { slug: post.id },
     props: { post }
   }));
 }
 
-const { post } = Astro.props;
+const { post }: { post: CollectionEntry<"blog"> } = Astro.props;
 const { Content } = await render(post);
 const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? "https://zerebos.com").toString();
 ---
 
 <BaseLayout title={`${post.data.title} | Zerebos`} description={post.data.blurb}>
+  <PageHeader title={post.data.title} date={post.data.date} blurb={post.data.blurb} />
+
   {post.data.banner && (
     <section class="flex column flex-align-center banner">
       <img src={post.data.banner} alt={post.data.title} />
@@ -36,7 +40,7 @@ const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? "https://zerebos.co
 
   <section class="flex container blog-navigation">
     <div class="flex blog-tags">
-      {(post.data.blogTags ?? []).map((tag) => (
+      {(post.data.blogTags ?? []).map((tag: string) => (
         <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">
           {tag}
         </a>

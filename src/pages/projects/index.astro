@@ -1,20 +1,24 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
 
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 const pageSize = 9;
-const allProjects = await getCollection("projects");
+const allProjects: CollectionEntry<"projects">[] = await getCollection("projects");
 const totalPages = Math.max(1, Math.ceil(allProjects.length / pageSize));
 const projects = allProjects.slice(0, pageSize);
 
-const projectRows = [];
+const projectRows: CollectionEntry<"projects">[][] = [];
 for (let i = 0; i < projects.length; i += 3) {
   projectRows.push(projects.slice(i, i + 3));
 }
 ---
 
 <BaseLayout title="Projects | Zerebos" description="Browse projects from Zerebos.">
+  <PageHeader title="Projects" blurb="Browse projects from Zerebos." />
+
   <section class="flex container column half-padded" id="projects">
     {
       projectRows.map((row) => (

@@ -1,17 +1,19 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
 import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { getGitHubData } from "../../lib/github";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
-  return projects.map((project) => ({
+  return projects.map((project: CollectionEntry<"projects">) => ({
     params: { slug: project.id },
     props: { project }
   }));
 }
 
-const { project } = Astro.props;
+const { project }: { project: CollectionEntry<"projects"> } = Astro.props;
 const { Content } = await render(project);
 
 const repo = project.data.repo;
@@ -33,6 +35,8 @@ function formatDate(iso: string): string {
 ---
 
 <BaseLayout title={`${project.data.title} | Zerebos`} description={project.data.blurb}>
+  <PageHeader title={project.data.title} blurb={project.data.blurb} />
+
   {project.data.banner && (
     <section class="flex column flex-align-center banner">
       <img src={project.data.banner} alt={project.data.title} />

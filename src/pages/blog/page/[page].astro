@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHeader from "../../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 const toTagSlug = (tag: string) =>
   tag
@@ -11,7 +13,7 @@ const toTagSlug = (tag: string) =>
 export async function getStaticPaths() {
   const pageSize = 3;
   const allPosts = (await getCollection("blog")).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime()
   );
 
   const totalPages = Math.ceil(allPosts.length / pageSize);
@@ -33,10 +35,12 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { posts, page, totalPages } = Astro.props;
+const { posts, page, totalPages }: { posts: CollectionEntry<"blog">[]; page: number; totalPages: number } = Astro.props;
 ---
 
 <BaseLayout title={`Blog - Page ${page} | Zerebos`} description="Development insights, tutorials, and thoughts on open source.">
+  <PageHeader title="Blog" blurb="Development insights, tutorials, and thoughts on open source." />
+
   <section class="flex column container" id="blog-posts">
     {
       posts.map((post) => (
@@ -46,7 +50,7 @@ const { posts, page, totalPages } = Astro.props;
               {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
             </time>
             <div class="flex blog-tags">
-              {(post.data.blogTags ?? []).slice(0, 4).map((tag) => (
+              {(post.data.blogTags ?? []).slice(0, 4).map((tag: string) => (
                 <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">{tag}</a>
               ))}
             </div>

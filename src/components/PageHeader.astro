@@ -1,0 +1,23 @@
+---
+interface Props {
+  title: string;
+  blurb?: string;
+  date?: Date;
+}
+
+const { title, blurb, date } = Astro.props;
+---
+
+<section class="flex column flex-align-center container" id="page-header">
+  <h2>{title}</h2>
+  {date && (
+    <p>
+      <time datetime={date.toISOString()}>
+        {date.toLocaleDateString("en-US", { dateStyle: "long" })}
+      </time>
+    </p>
+  )}
+  {blurb && <p>{blurb}</p>}
+</section>
+
+<hr class="flex container medium" />

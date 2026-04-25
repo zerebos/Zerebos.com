@@ -1,9 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
 import about from "../data/about.js";
 ---
 
 <BaseLayout title="About | Zerebos" description="About Zerebos">
+  <PageHeader title="About Me" blurb="For those that want to know a little more." />
+
   <div class="flex column" id="about">
     <section class="flex column flex-align-center banner">
       <img src={about.banner.url} alt="Hardware Project" />
