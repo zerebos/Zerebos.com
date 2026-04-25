@@ -1,8 +1,11 @@
 ---
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import BlogPostPreview from "../../../../components/BlogPostPreview.astro";
+import TagList from "../../../../components/TagList.astro";
 import PageHeader from "../../../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { getOrderedTags, getTagBlurb, getTagCounts } from "../../../../lib/blog";
 
 type BlogEntry = CollectionEntry<"blog">;
 
@@ -64,26 +67,18 @@ export async function getStaticPaths() {
 }
 
 const { tagSlug, tagName, posts, page, totalPages, totalPosts }: Props = Astro.props;
+const allPosts = (await getCollection("blog")).sort(
+  (a: BlogEntry, b: BlogEntry) => b.data.date.getTime() - a.data.date.getTime()
+);
+const tagCounts = getTagCounts(allPosts);
+const tagBlurb = getTagBlurb(totalPosts);
 ---
 
-<BaseLayout title={`${tagName} - Page ${page} | Zerebos Blog`} description={`There are ${totalPosts} blog posts with this tag.`}>
-  <PageHeader title={tagName} blurb={`There are ${totalPosts} blog posts with this tag.`} />
+<BaseLayout title={`${tagName} - Page ${page} | Zerebos Blog`} description={tagBlurb}>
+  <PageHeader title={tagName} blurb={tagBlurb} />
 
   <section class="flex column container" id="blog-posts">
-    {
-      posts.map((post) => (
-        <article class="flex no-wrap blog-post-preview">
-          <div class="blog-post-meta">
-            <time datetime={post.data.date.toISOString().slice(0, 10)}>
-              {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
-            </time>
-          </div>
-          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
-          <p class="blog-excerpt">{post.data.blurb}</p>
-          <a href={`/blog/${post.id}/`} class="read-more">Read more →</a>
-        </article>
-      ))
-    }
+    {posts.map((post) => <BlogPostPreview post={post} />)}
   </section>
 
   <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
@@ -104,4 +99,10 @@ const { tagSlug, tagName, posts, page, totalPages, totalPosts }: Props = Astro.p
       Next ›
     </a>
   </nav>
+
+  <hr class="flex container medium" />
+
+  <section class="flex column flex-align-center container" id="blog-tags">
+    <TagList tags={getOrderedTags(tagCounts).map(([tag]) => tag)} tagCounts={tagCounts} wrapperClass="tag-cloud" />
+  </section>
 </BaseLayout>

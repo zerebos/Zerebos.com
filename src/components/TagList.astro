@@ -1,0 +1,28 @@
+---
+import { toTagSlug } from "../lib/blog";
+
+interface Props {
+  tags: string[];
+  limit?: number;
+  tagCounts?: Map<string, number>;
+  wrapperClass?: string;
+}
+
+const {
+  tags,
+  limit = 0,
+  tagCounts,
+  wrapperClass = "flex blog-tags"
+} = Astro.props;
+
+const visibleTags = limit > 0 ? tags.slice(0, limit) : tags;
+---
+
+<div class={wrapperClass}>
+  {visibleTags.map((tag) => (
+    <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">
+      {tag}
+      {tagCounts?.has(tag) && <span class="count text-muted">{tagCounts.get(tag)}</span>}
+    </a>
+  ))}
+</div>

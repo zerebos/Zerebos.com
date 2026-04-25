@@ -1,20 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogPostPreview from "../components/BlogPostPreview.astro";
 import about from "../data/about.js";
 import site from "../data/site.js";
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { getGitHubData } from "../lib/github";
 
-const allProjects = await getCollection("projects");
+const allProjects: CollectionEntry<"projects">[] = await getCollection("projects");
 const featuredProjects = allProjects.slice(0, 6);
-const featuredRows = [];
+const featuredRows: CollectionEntry<"projects">[][] = [];
 for (let i = 0; i < featuredProjects.length; i += 3) {
   featuredRows.push(featuredProjects.slice(i, i + 3));
 }
 
-const allPosts = await getCollection("blog");
+const allPosts: CollectionEntry<"blog">[] = await getCollection("blog");
 const latestPosts = allPosts
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 
 const github = await getGitHubData();
@@ -47,8 +49,6 @@ const marqueeStats = Object.entries(github.stats);
         </div>
       ))}
     </div>
-  </section>
-
   </section>
 
   <section class="flex container column half-padded showcase" id="projects">
@@ -94,18 +94,7 @@ const marqueeStats = Object.entries(github.stats);
     </div>
     {
       latestPosts.length > 0 ? (
-        latestPosts.map((post) => (
-          <article class="flex no-wrap blog-post-preview">
-            <div class="blog-post-meta">
-              <time datetime={post.data.date.toISOString().slice(0, 10)}>
-                {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
-              </time>
-            </div>
-            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
-            <p class="blog-excerpt">{post.data.blurb}</p>
-            <a href={`/blog/${post.id}/`} class="read-more">Read more →</a>
-          </article>
-        ))
+        latestPosts.map((post) => <BlogPostPreview post={post} />)
       ) : (
         <div class="no-posts">
           <p>Blog posts coming soon.</p>
@@ -217,34 +206,45 @@ const marqueeStats = Object.entries(github.stats);
   </script>
 
   <script>
-    const containerElem = document.querySelector("#marquee") as HTMLElement;
-    let leftSideOfContainer = containerElem.getBoundingClientRect().left;
-    window.addEventListener("resize", () => {
-      leftSideOfContainer = containerElem.getBoundingClientRect().left;
-    });
-    const listElem = document.querySelector("#marquee > div") as HTMLElement;
-    let currentLeftValue = 0;
-    let start: number | undefined;
-    let previous: number | undefined;
-    window.requestAnimationFrame(animationLoop);
-    function animationLoop(timestamp: number) {
-      if (!start) start = timestamp;
-      if (!previous) previous = timestamp;
-      if (timestamp === start || timestamp === previous) return window.requestAnimationFrame(animationLoop);
-      const elapsed = timestamp - previous;
-      previous = timestamp;
-      const currentItems = listElem.querySelectorAll(".stat");
-      const firstItem = currentItems[0] as HTMLElement;
-      const secondItem = currentItems[1] as HTMLElement;
-      const leftSideOfSecondItem = secondItem.getBoundingClientRect().left;
-      if (Math.round(leftSideOfSecondItem) <= leftSideOfContainer) {
-        currentLeftValue = 0;
-        listElem.appendChild(firstItem);
-        return window.requestAnimationFrame(animationLoop);
-      }
-      listElem.style.transform = `translateX(${currentLeftValue}px)`;
-      currentLeftValue = currentLeftValue - (1 / 25) * elapsed;
+    const containerElem = document.querySelector("#marquee") as HTMLElement | null;
+    const listElem = document.querySelector("#marquee > div") as HTMLElement | null;
+    const SPEED = 40;
+
+    if (containerElem && listElem) {
+      const marqueeList = listElem;
+      let currentLeftValue = 0;
+      let previous: number | undefined;
+
       window.requestAnimationFrame(animationLoop);
+
+      function animationLoop(timestamp: number) {
+        if (previous === undefined) {
+          previous = timestamp;
+          window.requestAnimationFrame(animationLoop);
+          return;
+        }
+
+        const elapsed = timestamp - previous;
+        previous = timestamp;
+        const firstItem = marqueeList.firstElementChild as HTMLElement | null;
+
+        if (!firstItem) {
+          return;
+        }
+
+        currentLeftValue -= (SPEED * elapsed) / 1000;
+
+        const gap = Number.parseFloat(window.getComputedStyle(marqueeList).gap || "0");
+        const firstItemWidth = firstItem.getBoundingClientRect().width + gap;
+
+        if (-currentLeftValue >= firstItemWidth) {
+          currentLeftValue += firstItemWidth;
+          marqueeList.appendChild(firstItem);
+        }
+
+        marqueeList.style.transform = `translateX(${currentLeftValue}px)`;
+        window.requestAnimationFrame(animationLoop);
+      }
     }
   </script>
 </BaseLayout>

@@ -1,14 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
+import TagList from "../../components/TagList.astro";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-
-const toTagSlug = (tag: string) =>
-  tag
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+import { getTagCounts } from "../../lib/blog";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -21,6 +17,7 @@ export async function getStaticPaths() {
 const { post }: { post: CollectionEntry<"blog"> } = Astro.props;
 const { Content } = await render(post);
 const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? "https://zerebos.com").toString();
+const tagCounts = getTagCounts(await getCollection("blog"));
 ---
 
 <BaseLayout title={`${post.data.title} | Zerebos`} description={post.data.blurb}>
@@ -39,13 +36,7 @@ const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? "https://zerebos.co
   </section>
 
   <section class="flex container blog-navigation">
-    <div class="flex blog-tags">
-      {(post.data.blogTags ?? []).map((tag: string) => (
-        <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">
-          {tag}
-        </a>
-      ))}
-    </div>
+    <TagList tags={post.data.blogTags ?? []} tagCounts={tagCounts} />
 
     <div class="flex column blog-share">
       <span>Share this post:</span>

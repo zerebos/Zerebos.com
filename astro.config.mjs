@@ -5,6 +5,9 @@ export default defineConfig({
     site: "https://zerebos.com",
     output: "static",
     integrations: [sitemap()],
+    markdown: {
+        smartypants: false
+    },
     build: {
         format: "directory"
     }

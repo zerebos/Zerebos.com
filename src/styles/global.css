@@ -1279,6 +1279,33 @@ a.gradient:hover::after {
     overflow-x: auto;
     width: 100%;
     border-radius: 12px;
+    border: 1px solid rgba(82, 82, 82, 0.35);
+    padding: 1rem 1.25rem;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 8px 20px -12px;
+}
+
+.project-markdown pre code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.project-markdown pre.astro-code {
+    background-color: #1b1d26 !important;
+}
+
+.project-markdown pre.astro-code code {
+    display: block;
+    min-width: max-content;
+}
+
+.project-markdown :not(pre) > code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.95em;
+    background: rgba(27, 29, 38, 0.9);
+    border: 1px solid rgba(82, 82, 82, 0.35);
+    border-radius: 6px;
+    padding: 0.15rem 0.35rem;
 }
 
 .project-markdown h1,
