@@ -78,7 +78,9 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
           </button>
         </div>
       </nav>
-      <slot />
+      <main id="content">
+        <slot />
+      </main>
     </div>
     <script>
       const menuButton = document.querySelector("#menuButton");
