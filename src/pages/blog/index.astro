@@ -1,10 +1,80 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+
+const pageSize = 3;
+const allPosts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const totalPages = Math.max(1, Math.ceil(allPosts.length / pageSize));
+const posts = allPosts.slice(0, pageSize);
+
+const tagCounts = new Map<string, number>();
+for (const post of allPosts) {
+  for (const tag of post.data.blogTags ?? []) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+
+const toTagSlug = (tag: string) =>
+  tag
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+const orderedTags = [...tagCounts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
 <BaseLayout title="Blog | Zerebos" description="Development insights, tutorials, and thoughts on open source.">
-  <section class="flex container column" id="page-header">
-    <h2>Blog</h2>
-    <p>Astro page scaffolded. Blog collection migration is next.</p>
+  <section class="flex column container" id="blog-posts">
+    {
+      posts.map((post) => (
+        <article class="flex no-wrap blog-post-preview">
+          <div class="blog-post-meta">
+            <time datetime={post.data.date.toISOString().slice(0, 10)}>
+              {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
+            </time>
+            <div class="flex blog-tags">
+              {(post.data.blogTags ?? []).slice(0, 4).map((tag) => (
+                <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">{tag}</a>
+              ))}
+            </div>
+          </div>
+          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+          <p class="blog-excerpt">{post.data.blurb}</p>
+          <a href={`/blog/${post.id}/`} class="read-more">Read more →</a>
+        </article>
+      ))
+    }
+  </section>
+
+  {
+    totalPages > 1 && (
+      <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
+        <a href="#" class="gradient disabled">‹ Prev</a>
+        <ul class="page-numbers">
+          <li><a class="gradient active">1</a></li>
+          {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => (
+            <li><a href={`/blog/page/${page}/`} class="gradient">{page}</a></li>
+          ))}
+        </ul>
+        <a href="/blog/page/2/" class="gradient">Next ›</a>
+      </nav>
+    )
+  }
+
+  <hr class="flex container medium" />
+
+  <section class="flex column flex-align-center container" id="blog-tags">
+    <div class="tag-cloud">
+      {
+        orderedTags.map(([tag, count]) => (
+          <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">
+            {tag} <span class="count text-muted">{count}</span>
+          </a>
+        ))
+      }
+    </div>
   </section>
 </BaseLayout>

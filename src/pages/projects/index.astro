@@ -1,10 +1,54 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+
+const pageSize = 9;
+const allProjects = await getCollection("projects");
+const totalPages = Math.max(1, Math.ceil(allProjects.length / pageSize));
+const projects = allProjects.slice(0, pageSize);
+
+const projectRows = [];
+for (let i = 0; i < projects.length; i += 3) {
+  projectRows.push(projects.slice(i, i + 3));
+}
 ---
 
 <BaseLayout title="Projects | Zerebos" description="Browse projects from Zerebos.">
-  <section class="flex container column" id="page-header">
-    <h2>Projects</h2>
-    <p>Astro page scaffolded. Project collection migration is next.</p>
+  <section class="flex container column half-padded" id="projects">
+    {
+      projectRows.map((row) => (
+        <div class="flex container project-row">
+          {row.map((project) => (
+            <div class="flex project">
+              <a href={`/projects/${project.id}/`} class="flex column gradient">
+                {project.data.icon && (
+                  <img src={`/assets/projects/icons/${project.data.icon}`} class="icon" alt={project.data.title} />
+                )}
+                <div class="flex column info">
+                  <h3>{project.data.title}</h3>
+                  <p>{project.data.blurb}</p>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      ))
+    }
   </section>
+
+  {
+    totalPages > 1 && (
+      <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
+        <a href="#" class="gradient disabled">‹ Prev</a>
+        <ul class="page-numbers">
+          <li><a class="gradient active">1</a></li>
+          {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => (
+            <li><a href={`/projects/page/${page}/`} class="gradient">{page}</a></li>
+          ))}
+        </ul>
+        <a href="/projects/page/2/" class="gradient">Next ›</a>
+      </nav>
+    )
+  }
 </BaseLayout>

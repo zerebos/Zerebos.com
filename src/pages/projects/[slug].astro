@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${project.data.title} | Zerebos`} description={project.data.blurb}>
+  {project.data.banner && (
+    <section class="flex column flex-align-center banner">
+      <img src={project.data.banner} alt={project.data.title} />
+    </section>
+  )}
+
+  <section class="flex column container project-markdown">
+    <div class="flex heading">
+      <h2>Description</h2>
+    </div>
+    <div class="flex column content">
+      <Content />
+    </div>
+  </section>
+
+  <link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-vsc-dark-plus.css" rel="stylesheet" />
+</BaseLayout>

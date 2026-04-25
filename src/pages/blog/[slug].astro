@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+const toTagSlug = (tag: string) =>
+  tag
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? "https://zerebos.com").toString();
+---
+
+<BaseLayout title={`${post.data.title} | Zerebos`} description={post.data.blurb}>
+  {post.data.banner && (
+    <section class="flex column flex-align-center banner">
+      <img src={post.data.banner} alt={post.data.title} />
+    </section>
+  )}
+
+  <section class="flex column container blog-content project-markdown">
+    <div class="flex column content">
+      <Content />
+    </div>
+  </section>
+
+  <section class="flex container blog-navigation">
+    <div class="flex blog-tags">
+      {(post.data.blogTags ?? []).map((tag) => (
+        <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">
+          {tag}
+        </a>
+      ))}
+    </div>
+
+    <div class="flex column blog-share">
+      <span>Share this post:</span>
+      <div class="flex share-links" id="links-icons">
+        <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(post.data.title)}`} target="_blank" rel="noreferrer">
+          <img src="/assets/icons/twitter.svg" alt="Share on X" />
+        </a>
+        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noreferrer">
+          <img src="/assets/icons/linkedin.svg" alt="Share on LinkedIn" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-vsc-dark-plus.css" rel="stylesheet" />
+</BaseLayout>

@@ -2,6 +2,19 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import about from "../data/about.js";
 import site from "../data/site.js";
+import { getCollection } from "astro:content";
+
+const allProjects = await getCollection("projects");
+const featuredProjects = allProjects.slice(0, 6);
+const featuredRows = [];
+for (let i = 0; i < featuredProjects.length; i += 3) {
+  featuredRows.push(featuredProjects.slice(i, i + 3));
+}
+
+const allPosts = await getCollection("blog");
+const latestPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 ---
 
 <BaseLayout title={site.name} description={site.description}>
@@ -23,11 +36,64 @@ import site from "../data/site.js";
 
   <section class="flex container column half-padded showcase" id="latest-posts">
     <div class="flex container heading">
-      <h2>Astro migration started</h2>
-      <a href="/blog">Blog ▸</a>
+      <h2>Featured Projects</h2>
+      <a href="/projects">All Projects ▸</a>
     </div>
-    <div class="no-posts">
-      <p>Phase 1 bootstrap is complete. Next step is porting project and blog collections from Eleventy to Astro content collections.</p>
+    {
+      featuredProjects.length > 0 ? (
+        featuredRows.map((row) => (
+          <div class="flex container project-row">
+            {row.map((project) => (
+              <div class="flex project">
+                <a href={`/projects/${project.id}/`} class="flex column gradient">
+                  {project.data.icon && (
+                    <img
+                      src={`/assets/projects/icons/${project.data.icon}`}
+                      class="icon"
+                      alt={project.data.title}
+                    />
+                  )}
+                  <div class="flex column info">
+                    <h3>{project.data.title}</h3>
+                    <p>{project.data.blurb}</p>
+                  </div>
+                </a>
+              </div>
+            ))}
+          </div>
+        ))
+      ) : (
+        <div class="no-posts">
+          <p>Projects coming soon.</p>
+        </div>
+      )
+    }
+  </section>
+
+  <section class="flex container column half-padded showcase" id="latest-posts">
+    <div class="flex container heading">
+      <h2>Latest Posts</h2>
+      <a href="/blog">All Posts ▸</a>
     </div>
+    {
+      latestPosts.length > 0 ? (
+        latestPosts.map((post) => (
+          <article class="flex no-wrap blog-post-preview">
+            <div class="blog-post-meta">
+              <time datetime={post.data.date.toISOString().slice(0, 10)}>
+                {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
+              </time>
+            </div>
+            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            <p class="blog-excerpt">{post.data.blurb}</p>
+            <a href={`/blog/${post.id}/`} class="read-more">Read more →</a>
+          </article>
+        ))
+      ) : (
+        <div class="no-posts">
+          <p>Blog posts coming soon.</p>
+        </div>
+      )
+    }
   </section>
 </BaseLayout>

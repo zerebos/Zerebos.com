@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const toTagSlug = (tag: string) =>
+  tag
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+export async function getStaticPaths() {
+  const pageSize = 3;
+  const allPosts = (await getCollection("blog")).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+
+  const totalPages = Math.ceil(allPosts.length / pageSize);
+  const paths = [];
+
+  for (let page = 2; page <= totalPages; page++) {
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    paths.push({
+      params: { page: String(page) },
+      props: {
+        posts: allPosts.slice(start, end),
+        page,
+        totalPages
+      }
+    });
+  }
+
+  return paths;
+}
+
+const { posts, page, totalPages } = Astro.props;
+---
+
+<BaseLayout title={`Blog - Page ${page} | Zerebos`} description="Development insights, tutorials, and thoughts on open source.">
+  <section class="flex column container" id="blog-posts">
+    {
+      posts.map((post) => (
+        <article class="flex no-wrap blog-post-preview">
+          <div class="blog-post-meta">
+            <time datetime={post.data.date.toISOString().slice(0, 10)}>
+              {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
+            </time>
+            <div class="flex blog-tags">
+              {(post.data.blogTags ?? []).slice(0, 4).map((tag) => (
+                <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">{tag}</a>
+              ))}
+            </div>
+          </div>
+          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+          <p class="blog-excerpt">{post.data.blurb}</p>
+          <a href={`/blog/${post.id}/`} class="read-more">Read more →</a>
+        </article>
+      ))
+    }
+  </section>
+
+  <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
+    <a href={page === 2 ? "/blog/" : `/blog/page/${page - 1}/`} class="gradient">‹ Prev</a>
+    <ul class="page-numbers">
+      <li><a href="/blog/" class={`gradient ${page === 1 ? "active" : ""}`}>1</a></li>
+      {
+        Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((pageNumber) => (
+          <li>
+            <a href={`/blog/page/${pageNumber}/`} class={`gradient ${page === pageNumber ? "active" : ""}`}>
+              {pageNumber}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href={page < totalPages ? `/blog/page/${page + 1}/` : "#"} class={`gradient ${page >= totalPages ? "disabled" : ""}`}>
+      Next ›
+    </a>
+  </nav>
+</BaseLayout>

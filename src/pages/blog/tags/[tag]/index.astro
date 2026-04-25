@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const pageSize = 3;
+  const toTagSlug = (tag: string) =>
+    tag
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+  const allPosts = (await getCollection("blog")).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+
+  const tags = new Map<string, { tagName: string; posts: typeof allPosts }>();
+
+  for (const post of allPosts) {
+    for (const tag of post.data.blogTags ?? []) {
+      const slug = toTagSlug(tag);
+      if (!tags.has(slug)) {
+        tags.set(slug, { tagName: tag, posts: [] as typeof allPosts });
+      }
+      tags.get(slug)!.posts.push(post);
+    }
+  }
+
+  return [...tags.entries()].map(([tagSlug, value]) => ({
+    params: { tag: tagSlug },
+    props: {
+      tagSlug,
+      tagName: value.tagName,
+      posts: value.posts.slice(0, pageSize),
+      totalPages: Math.max(1, Math.ceil(value.posts.length / pageSize)),
+      totalPosts: value.posts.length
+    }
+  }));
+}
+
+const { tagSlug, tagName, posts, totalPages, totalPosts } = Astro.props;
+---
+
+<BaseLayout title={`${tagName} | Zerebos Blog`} description={`There are ${totalPosts} blog posts with this tag.`}>
+  <section class="flex column container" id="page-header">
+    <h2>{tagName}</h2>
+    <p>There are {totalPosts} blog posts with this tag.</p>
+  </section>
+
+  <section class="flex column container" id="blog-posts">
+    {
+      posts.map((post) => (
+        <article class="flex no-wrap blog-post-preview">
+          <div class="blog-post-meta">
+            <time datetime={post.data.date.toISOString().slice(0, 10)}>
+              {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
+            </time>
+          </div>
+          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+          <p class="blog-excerpt">{post.data.blurb}</p>
+          <a href={`/blog/${post.id}/`} class="read-more">Read more →</a>
+        </article>
+      ))
+    }
+  </section>
+
+  {
+    totalPages > 1 && (
+      <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
+        <a href="#" class="gradient disabled">‹ Prev</a>
+        <ul class="page-numbers">
+          <li><a class="gradient active">1</a></li>
+          {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => (
+            <li><a href={`/blog/tags/${tagSlug}/${page}/`} class="gradient">{page}</a></li>
+          ))}
+        </ul>
+        <a href={`/blog/tags/${tagSlug}/2/`} class="gradient">Next ›</a>
+      </nav>
+    )
+  }
+</BaseLayout>
