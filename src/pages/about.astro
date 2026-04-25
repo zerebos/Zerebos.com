@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import about from "../data/about.js";
+---
+
+<BaseLayout title="About | Zerebos" description="About Zerebos">
+  <section class="flex container column half-padded" id="about">
+    {about.sections.map((section) => (
+      <div class="flex column paragraph">
+        <h2>{section.title}</h2>
+        <p set:html={section.content}></p>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

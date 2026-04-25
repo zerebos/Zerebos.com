@@ -5,16 +5,19 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "build": "bun run build:css && bun run build:eleventy",
-    "serve": "bunx --bun eleventy --config=eleventy.config.ts --serve --port 6767",
-    "dev": "bunx --bun concurrently --kill-timeout 100 \"bun run watch:css\" \"bun run serve\"",
-    "debug": "set DEBUG=Eleventy* & bun run build:eleventy",
+    "build": "bun run build:astro",
+    "dev": "bun run dev:astro",
+    "preview": "bun run preview:astro",
+    "build:astro": "bunx --bun astro build",
+    "dev:astro": "bunx --bun astro dev --port 6767",
+    "preview:astro": "bunx --bun astro preview --port 6767",
+    "serve:eleventy": "bunx --bun eleventy --config=eleventy.config.ts --serve --port 6767",
+    "dev:eleventy": "bunx --bun concurrently --kill-timeout 100 \"bun run serve:eleventy\"",
+    "debug:eleventy": "set DEBUG=Eleventy* & bun run build:eleventy",
     "build:eleventy": "bunx --bun eleventy --config=eleventy.config.ts",
-    "build:css": "bunx --bun stylus src/css/index.styl -o dist/styles.css --compress",
-    "watch:css": "bunx --bun stylus -w src/css/index.styl -o dist/styles.css --compress",
     "wrangler": "wrangler",
     "deploy": "bun run build && wrangler deploy",
-    "preview": "bun run build && wrangler dev"
+    "preview:wrangler": "bun run build && wrangler dev"
   },
   "author": "",
   "license": "",
@@ -24,13 +27,14 @@
     "@11ty/eleventy-fetch": "^5.1.1",
     "@11ty/eleventy-plugin-rss": "^2.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
+    "@astrojs/check": "^0.9.8",
     "@types/11ty__eleventy-plugin-rss": "^2.0.0",
     "@zerebos/eslint-config": "^1.0.2",
     "@zerebos/eslint-config-typescript": "^1.0.3",
+    "astro": "^6.1.9",
     "concurrently": "^9.2.1",
     "dotenv": "^17.3.1",
     "eslint": "^9.39.4",
-    "stylus": "^0.64.0",
     "wrangler": "^4.72.0"
   }
 }

@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import about from "../data/about.js";
+import site from "../data/site.js";
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <section class="flex container column" id="intro">
+    <div class="flex avatar-container">
+      <img src="/assets/images/avatar.webp" class="intro-avatar" alt="Picture of me" />
+      <div class="flex column">
+        <h1>Zerebos</h1>
+        <p>{about.title}</p>
+      </div>
+    </div>
+    <div class="flex column blurb">
+      <p set:html={about.blurb}></p>
+    </div>
+    <div class="flex column profile">
+      <p set:html={about.byline}></p>
+    </div>
+  </section>
+
+  <section class="flex container column half-padded showcase" id="latest-posts">
+    <div class="flex container heading">
+      <h2>Astro migration started</h2>
+      <a href="/blog">Blog ▸</a>
+    </div>
+    <div class="no-posts">
+      <p>Phase 1 bootstrap is complete. Next step is porting project and blog collections from Eleventy to Astro content collections.</p>
+    </div>
+  </section>
+</BaseLayout>

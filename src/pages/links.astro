@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import links from "../data/links.js";
+---
+
+<BaseLayout title="Links | Zerebos" description="Social links and project links for Zerebos">
+  <section class="flex container column" id="links-header">
+    <div class="flex avatar-container">
+      <img src="/assets/images/avatar.webp" class="intro-avatar" alt="Picture of me" />
+      <div class="flex column">
+        <h1>Links</h1>
+      </div>
+    </div>
+  </section>
+
+  <section id="links-container" class="container">
+    <div class="flex listbox column">
+      {links.categories.map((category) => (
+        <div class="list column">
+          <h2>{category.label}</h2>
+          {category.links.map((link) => (
+            <a class="gradient outline link" href={link.href} target="_blank" rel="noreferrer">
+              <span class="label flex">
+                <img src={link.icon} alt={link.label} />
+                <span>{link.label}</span>
+              </span>
+              <img class="external" src="/assets/icons/external.svg" alt="External link" />
+            </a>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
