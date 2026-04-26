@@ -30,7 +30,7 @@ export default async function (eleventyConfig: EleventyConfig) {
         markdownTemplateEngine: "njk",
         dir: {
             input: "src",
-            output: "dist",
+            output: "build",
             data: "data",
             layouts: "includes/layouts",
             includes: "includes",
