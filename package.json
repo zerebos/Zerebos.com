@@ -19,7 +19,8 @@
     "watch:css": "bunx --bun stylus -w src/css/index.styl -o build/styles.css --compress",
     "wrangler": "wrangler",
     "deploy": "bun run build && wrangler deploy",
-    "preview:wrangler": "bun run build && wrangler dev"
+    "preview:wrangler": "bun run build && wrangler dev",
+    "generate-types": "wrangler types"
   },
   "author": "",
   "license": "",
@@ -37,10 +38,14 @@
     "concurrently": "^9.2.1",
     "dotenv": "^17.3.1",
     "eslint": "^9.39.4",
-    "wrangler": "^4.72.0"
+    "wrangler": "^4.85.0"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.2.1",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
