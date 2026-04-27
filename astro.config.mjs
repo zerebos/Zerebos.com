@@ -16,7 +16,10 @@ export default defineConfig({
     }],
 
     markdown: {
-        smartypants: false
+        smartypants: false,
+        shikiConfig: {
+            theme: "dark-plus",
+        },
     },
 
     build: {
