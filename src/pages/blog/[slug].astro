@@ -8,16 +8,16 @@ import { getTagCounts } from "../../lib/blog";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
+  const tagCounts = getTagCounts(posts);
   return posts.map((post: CollectionEntry<"blog">) => ({
     params: { slug: post.id },
-    props: { post }
+    props: { post, tagCounts }
   }));
 }
 
-const { post }: { post: CollectionEntry<"blog"> } = Astro.props;
+const { post, tagCounts }: { post: CollectionEntry<"blog">; tagCounts: ReturnType<typeof getTagCounts> } = Astro.props;
 const { Content } = await render(post);
 const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? "https://zerebos.com").toString();
-const tagCounts = getTagCounts(await getCollection("blog"));
 ---
 
 <BaseLayout title={`${post.data.title} | Zerebos`} description={post.data.blurb}>
