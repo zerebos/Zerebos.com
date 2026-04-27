@@ -5,15 +5,26 @@ import links from "../data/links";
 interface Props {
   title?: string;
   description?: string;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  publishedTime?: Date;
+  author?: string;
 }
 
 const {
   title = "Zerebos",
-  description = "Landing page and portfolio for Zerebos"
+  description = "Landing page and portfolio for Zerebos",
+  ogType = "website",
+  ogImage,
+  publishedTime,
+  author,
 } = Astro.props;
 
 const siteUrl = Astro.site ?? new URL("https://zerebos.com");
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const resolvedOgImage = ogImage
+  ? new URL(ogImage, siteUrl).toString()
+  : "https://zerebos.com/assets/images/avatar_banner.webp";
 ---
 
 <!doctype html>
@@ -23,18 +34,20 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://zerebos.com/assets/images/avatar_banner.webp" />
+    <meta property="og:image" content={resolvedOgImage} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+    {author && <meta property="article:author" content={author} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:domain" content="zerebos.com" />
     <meta property="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://zerebos.com/assets/images/avatar_banner.webp" />
+    <meta name="twitter:image" content={resolvedOgImage} />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
