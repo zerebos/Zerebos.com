@@ -5,8 +5,7 @@ import TagList from "../../../../components/TagList.astro";
 import PageHeader from "../../../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getOrderedTags, getTagBlurb, getTagCounts } from "../../../../lib/blog";
-import { toSlug } from "../../../../lib/slug";
+import { buildTagPagination, getOrderedTags, getTagBlurb, getTagCounts } from "../../../../lib/blog";
 
 export async function getStaticPaths() {
   const pageSize = 3;
@@ -15,26 +14,14 @@ export async function getStaticPaths() {
   );
   const tagCounts = getTagCounts(allPosts);
 
-  const tags = new Map<string, { tagName: string; posts: CollectionEntry<"blog">[] }>();
-
-  for (const post of allPosts) {
-    for (const tag of post.data.blogTags ?? []) {
-      const slug = toSlug(tag);
-      if (!tags.has(slug)) {
-        tags.set(slug, { tagName: tag, posts: [] });
-      }
-      tags.get(slug)!.posts.push(post);
-    }
-  }
-
-  return [...tags.entries()].map(([tagSlug, value]) => ({
+  return buildTagPagination(allPosts, pageSize).map(({ tagSlug, tagName, pages, totalPages, totalPosts }) => ({
     params: { tag: tagSlug },
     props: {
       tagSlug,
-      tagName: value.tagName,
-      posts: value.posts.slice(0, pageSize),
-      totalPages: Math.max(1, Math.ceil(value.posts.length / pageSize)),
-      totalPosts: value.posts.length,
+      tagName,
+      posts: pages[0].posts,
+      totalPages,
+      totalPosts,
       tagCounts
     }
   }));

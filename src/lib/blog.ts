@@ -3,6 +3,58 @@ import {toSlug} from "./slug";
 
 type BlogEntry = CollectionEntry<"blog">;
 
+export interface TagPaginationPage<TPost> {
+  page: number;
+  posts: TPost[];
+}
+
+export interface TagPaginationGroup<TPost> {
+  tagSlug: string;
+  tagName: string;
+  posts: TPost[];
+  totalPosts: number;
+  totalPages: number;
+  pages: Array<TagPaginationPage<TPost>>;
+}
+
+export function buildTagPagination(posts: BlogEntry[], pageSize: number): Array<TagPaginationGroup<BlogEntry>> {
+  const tags = new Map<string, {tagName: string; posts: BlogEntry[]}>();
+
+  for (const post of posts) {
+    for (const tag of post.data.blogTags ?? []) {
+      const slug = toSlug(tag);
+      if (!tags.has(slug)) {
+        tags.set(slug, {tagName: tag, posts: []});
+      }
+      tags.get(slug)!.posts.push(post);
+    }
+  }
+
+  return [...tags.entries()].map(([tagSlug, value]) => {
+    const totalPosts = value.posts.length;
+    const totalPages = Math.max(1, Math.ceil(totalPosts / pageSize));
+    const pages: Array<TagPaginationPage<BlogEntry>> = [];
+
+    for (let page = 1; page <= totalPages; page++) {
+      const start = (page - 1) * pageSize;
+      const end = start + pageSize;
+      pages.push({
+        page,
+        posts: value.posts.slice(start, end)
+      });
+    }
+
+    return {
+      tagSlug,
+      tagName: value.tagName,
+      posts: value.posts,
+      totalPosts,
+      totalPages,
+      pages
+    };
+  });
+}
+
 export const toTagSlug = toSlug;
 
 export function getTagCounts(posts: BlogEntry[]): Map<string, number> {
