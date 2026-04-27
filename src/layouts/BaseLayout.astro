@@ -50,6 +50,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+    <link rel="alternate" type="application/rss+xml" title="Zerebos.com Blog" href="/feed.xml" />
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
   </head>
