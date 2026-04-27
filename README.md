@@ -1,3 +1,75 @@
-# [Zerebos.com](https://zerebos.com/)
+# Zerebos.com
 
-This is the landing page and link aggregation for my online persona/pseudonym. It is built using [11ty](https://11ty.dev) and automatically deploys using GitHub Actions.
+Personal website and portfolio for [zerebos.com](https://zerebos.com), including:
+
+- Home page
+- Projects index and project detail pages
+- Blog index, post pages, and tag archives
+- About and links pages
+
+## Stack
+
+- [Astro](https://astro.build/) (static site generation)
+- TypeScript
+- Astro Content Collections for blog and project content
+- Bun for scripts and package management
+- Cloudflare for production and preview deployments
+
+## Local Development
+
+Prerequisites:
+
+- Bun 1.x+
+
+Install dependencies:
+
+```bash
+bun install
+```
+
+Run dev server:
+
+```bash
+bun run dev
+```
+
+Build for production:
+
+```bash
+bun run build
+```
+
+Preview production build locally:
+
+```bash
+bun run preview
+```
+
+## Scripts
+
+- `bun run dev`: Start Astro dev server
+- `bun run build`: Build Astro static output to `dist/`
+- `bun run preview`: Preview the built site locally
+- `bun run deploy`: Build and deploy via Wrangler (manual deployment path)
+
+## Content
+
+- Blog posts: `src/content/blog/`
+- Project entries: `src/content/projects/`
+- Collection schema: `src/content.config.ts`
+
+## Deployment
+
+Deployments are no longer handled by GitHub Actions.
+
+The site now deploys through Cloudflare's automated Workers/Pages build pipeline:
+
+- Every push triggers an automated build/deploy pipeline.
+- Every pull request gets an automatic preview release.
+
+Cloudflare serves the generated static output from `dist/`.
+
+## Notes
+
+- The repository previously used Eleventy during migration.
+- Astro is now the primary and active site build system.
