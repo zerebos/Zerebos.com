@@ -74,7 +74,7 @@ Thank you for the years of support, chaos, creativity, and patience. I don't thi
 ---
 
 <center>
-Here’s to the next chapter of <a href="https://betterdiscord.app/" target="_blank">BetterDiscord</a>.
+Here’s to the next chapter of <a href="https://betterdiscord.app/" target="_blank" rel="noopener noreferrer">BetterDiscord</a>.
 <br />
 I can’t wait to see what the new team builds next.
 <br /><br />

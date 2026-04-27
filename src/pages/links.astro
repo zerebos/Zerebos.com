@@ -28,7 +28,7 @@ import about from "../data/about.js";
 
     <section class="flex container" id="links-icons">
       {links.icons.map((icon: {icon: string; href: string}) => (
-        <a href={icon.href} target="_blank" rel="noreferrer" class="flex gradient">
+        <a href={icon.href} target="_blank" rel="noopener noreferrer" class="flex gradient">
           <img src={`/assets/icons/${icon.icon}.svg`} alt={icon.icon} />
         </a>
       ))}
@@ -41,7 +41,7 @@ import about from "../data/about.js";
         </div>
         <div class="flex column list">
           {category.links.map((link) => (
-            <a class="flex link gradient outline" href={link.href} target="_blank" rel="noreferrer">
+            <a class="flex link gradient outline" href={link.href} target="_blank" rel="noopener noreferrer">
               <div class="flex label">
                 <img src={link.icon} alt={link.label} />
                 <span>{link.label}</span>

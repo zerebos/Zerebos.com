@@ -1,5 +1,5 @@
 import type {CollectionEntry} from "astro:content";
-import {toSlug} from "./slug.ts";
+import {toSlug} from "./slug";
 
 type BlogEntry = CollectionEntry<"blog">;
 
