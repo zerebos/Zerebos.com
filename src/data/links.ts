@@ -1,3 +1,24 @@
+interface IconLink {
+    icon: string;
+    href: string;
+}
+
+interface CategoryLink {
+    label: string;
+    href: string;
+    icon: string;
+}
+
+interface LinkCategory {
+    label: string;
+    links: CategoryLink[];
+}
+
+interface LinksData {
+    icons: IconLink[];
+    categories: LinkCategory[];
+}
+
 export default {
     icons: [
 
@@ -24,4 +45,4 @@ export default {
             ]
         }
     ]
-};
+} satisfies LinksData;

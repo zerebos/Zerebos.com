@@ -52,4 +52,4 @@ const jssucks = [
 ];
 
 
-export default [...betterdiscord, ...personal, ...jssucks];
+export default [...betterdiscord, ...personal, ...jssucks] satisfies string[];
