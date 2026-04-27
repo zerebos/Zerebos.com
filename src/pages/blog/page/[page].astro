@@ -60,7 +60,7 @@ const tagCounts = getTagCounts(allPosts);
         ))
       }
     </ul>
-    <a href={page < totalPages ? `/blog/page/${page + 1}/` : "#"} class={`gradient ${page >= totalPages ? "disabled" : ""}`}>
+    <a href={page < totalPages ? `/blog/page/${page + 1}/` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
       Next ›
     </a>
   </nav>

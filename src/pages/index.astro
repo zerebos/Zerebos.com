@@ -132,7 +132,7 @@ const marqueeStats = Object.entries(github.stats);
     function createCaptcha() {
       const captcha: string[] = [];
       for (let i = 0; i < CAPTCHA_LENGTH; i++) {
-        const index = Math.floor(Math.random() * captchaChars.length + 1);
+        const index = Math.floor(Math.random() * captchaChars.length);
         if (!captcha.includes(captchaChars[index])) captcha.push(captchaChars[index]);
         else i--;
       }

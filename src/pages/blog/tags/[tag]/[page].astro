@@ -6,6 +6,7 @@ import PageHeader from "../../../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getOrderedTags, getTagBlurb, getTagCounts } from "../../../../lib/blog";
+import { toSlug } from "../../../../lib/slug";
 
 type BlogEntry = CollectionEntry<"blog">;
 
@@ -20,11 +21,6 @@ interface Props {
 
 export async function getStaticPaths() {
   const pageSize = 3;
-  const toTagSlug = (tag: string) =>
-    tag
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
 
   const allPosts: BlogEntry[] = (await getCollection("blog")).sort(
     (a: BlogEntry, b: BlogEntry) => b.data.date.getTime() - a.data.date.getTime()
@@ -34,7 +30,7 @@ export async function getStaticPaths() {
 
   for (const post of allPosts) {
     for (const tag of post.data.blogTags ?? []) {
-      const slug = toTagSlug(tag);
+      const slug = toSlug(tag);
       if (!tags.has(slug)) {
         tags.set(slug, { tagName: tag, posts: [] });
       }
@@ -95,7 +91,7 @@ const tagBlurb = getTagBlurb(totalPosts);
         ))
       }
     </ul>
-    <a href={page < totalPages ? `/blog/tags/${tagSlug}/${page + 1}/` : "#"} class={`gradient ${page >= totalPages ? "disabled" : ""}`}>
+    <a href={page < totalPages ? `/blog/tags/${tagSlug}/${page + 1}/` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
       Next ›
     </a>
   </nav>

@@ -5,7 +5,8 @@ import TagList from "../../../../components/TagList.astro";
 import PageHeader from "../../../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getOrderedTags, getTagBlurb, getTagCounts, toTagSlug } from "../../../../lib/blog";
+import { getOrderedTags, getTagBlurb, getTagCounts } from "../../../../lib/blog";
+import { toSlug } from "../../../../lib/slug";
 
 export async function getStaticPaths() {
   const pageSize = 3;
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
 
   for (const post of allPosts) {
     for (const tag of post.data.blogTags ?? []) {
-      const slug = toTagSlug(tag);
+      const slug = toSlug(tag);
       if (!tags.has(slug)) {
         tags.set(slug, { tagName: tag, posts: [] });
       }

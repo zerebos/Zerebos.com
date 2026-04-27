@@ -1,5 +1,5 @@
 ---
-import { toTagSlug } from "../lib/blog";
+import { toSlug } from "../lib/slug";
 
 interface Props {
   tags: string[];
@@ -20,7 +20,7 @@ const visibleTags = limit > 0 ? tags.slice(0, limit) : tags;
 
 <div class={wrapperClass}>
   {visibleTags.map((tag) => (
-    <a href={`/blog/tags/${toTagSlug(tag)}/`} class="tag gradient">
+    <a href={`/blog/tags/${toSlug(tag)}/`} class="tag gradient">
       {tag}
       {tagCounts?.has(tag) && <span class="count text-muted">{tagCounts.get(tag)}</span>}
     </a>

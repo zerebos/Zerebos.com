@@ -85,14 +85,14 @@ function formatDate(iso: string): string {
     </section>
   )}
 
-  {langs && Object.keys(langs).length > 0 && (
+  {git && langs && Object.keys(langs).length > 0 && (
     <section class="flex column stats-wrap">
       <div class="flex heading">
         <h2>Languages</h2>
       </div>
       <div class="flex stats">
         {Object.entries(langs).map(([lang, percent]) => (
-          <a class="flex column stat gradient" href={`https://github.com/${repo}/search?l=${encodeURIComponent(lang.toLowerCase())}`} target="_blank" rel="noopener noreferrer">
+          <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/search?l=${encodeURIComponent(lang.toLowerCase())}`} target="_blank" rel="noopener noreferrer">
             <span>{lang}</span>{percent}%
           </a>
         ))}

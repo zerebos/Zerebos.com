@@ -1,12 +1,9 @@
-import type { CollectionEntry } from "astro:content";
+import type {CollectionEntry} from "astro:content";
+import {toSlug} from "./slug.ts";
 
 type BlogEntry = CollectionEntry<"blog">;
 
-export const toTagSlug = (tag: string) =>
-  tag
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+export const toTagSlug = toSlug;
 
 export function getTagCounts(posts: BlogEntry[]): Map<string, number> {
   const tagCounts = new Map<string, number>();
@@ -20,7 +17,7 @@ export function getTagCounts(posts: BlogEntry[]): Map<string, number> {
   return tagCounts;
 }
 
-export function getOrderedTags(tagCounts: Map<string, number>): [string, number][] {
+export function getOrderedTags(tagCounts: Map<string, number>): Array<[string, number]> {
   return [...tagCounts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 }
 

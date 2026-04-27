@@ -44,7 +44,7 @@ for (let i = 0; i < projects.length; i += 3) {
   {
     totalPages > 1 && (
       <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
-        <a href="#" class="gradient disabled">‹ Prev</a>
+        <a aria-disabled="true" class="gradient disabled">‹ Prev</a>
         <ul class="page-numbers">
           <li><a class="gradient active">1</a></li>
           {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => (

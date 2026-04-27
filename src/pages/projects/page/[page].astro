@@ -73,7 +73,7 @@ for (let i = 0; i < projects.length; i += 3) {
         ))
       }
     </ul>
-    <a href={page < totalPages ? `/projects/page/${page + 1}/` : "#"} class={`gradient ${page >= totalPages ? "disabled" : ""}`}>
+    <a href={page < totalPages ? `/projects/page/${page + 1}/` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
       Next ›
     </a>
   </nav>
