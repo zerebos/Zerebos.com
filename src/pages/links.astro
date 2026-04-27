@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import links from "../data/links";
-import about from "../data/about";
 ---
 
 <BaseLayout title="Links | Zerebos" description="Social links and project links for Zerebos">
@@ -11,17 +10,14 @@ import about from "../data/about";
         <img src="/assets/images/avatar.webp" class="intro-avatar" alt="Picture of me" />
         <div class="flex column">
           <h1>Zerebos</h1>
-          <p>{about.title}</p>
+          <p>Engineer, Creator, Educator</p>
         </div>
       </div>
       <div class="flex column blurb">
         <p>
-          {about.current.map((item: string, i: number) => (
-            <>
-              {item}
-              {i < about.current.length - 1 && <span> ✦ </span>}
-            </>
-          ))}
+          Creating tools for developers and users <span> ✦ </span>
+          Trying out new libraries <span> ✦ </span>
+          Enjoying the learning journey
         </p>
       </div>
     </section>

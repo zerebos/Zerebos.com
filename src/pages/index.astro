@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPostPreview from "../components/BlogPostPreview.astro";
-import about from "../data/about";
-import site from "../data/site";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getGitHubData } from "../lib/github";
@@ -24,20 +22,26 @@ const github = await getGitHubData();
 const marqueeStats = Object.entries(github.stats);
 ---
 
-<BaseLayout title={site.name} description={site.description}>
+<BaseLayout title="Zerebos" description="Landing page and portfolio for Zerebos">
   <section class="flex container column" id="intro">
     <div class="flex avatar-container">
       <img src="/assets/images/avatar.webp" class="intro-avatar" alt="Picture of me" />
       <div class="flex column">
         <h1>Zerebos</h1>
-        <p>{about.title}</p>
+        <p>Engineer, Creator, Educator</p>
       </div>
     </div>
     <div class="flex column blurb">
-      <p set:html={about.blurb}></p>
+      <p>
+        A programmer with a mind that never stops ticking. Never sticks to just one language, use the
+        right tools for the job. Works on multiple <strong>open-source</strong> projects. Always looks
+        to do more for the developer community.
+      </p>
     </div>
     <div class="flex column profile">
-      <p set:html={about.byline}></p>
+      <p>
+        Keeping systems running <span>@IBM</span> System Z
+      </p>
     </div>
   </section>
 
