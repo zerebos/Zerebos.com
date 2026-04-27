@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import repos from "../data/repos.js";
+import repos from "../data/repos";
 
 const CACHE_DIR = path.resolve(".cache/github");
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 1 day
@@ -54,7 +54,8 @@ function cacheRead<T>(key: string): T | null {
         const stat = fs.statSync(file);
         if (Date.now() - stat.mtimeMs > CACHE_TTL_MS) return null;
         return JSON.parse(fs.readFileSync(file, "utf-8")) as T;
-    } catch {
+    }
+    catch {
         return null;
     }
 }
@@ -63,7 +64,8 @@ function cacheWrite(key: string, data: unknown): void {
     try {
         fs.mkdirSync(CACHE_DIR, {recursive: true});
         fs.writeFileSync(path.join(CACHE_DIR, `${key}.json`), JSON.stringify(data));
-    } catch {
+    }
+    catch {
         // Non-fatal: if we can't write cache, next build will re-fetch
     }
 }
@@ -74,7 +76,7 @@ async function githubFetch<T>(url: string, cacheKey: string): Promise<T | null> 
 
     const token = process.env.GITHUB_TOKEN ?? "";
     const headers: HeadersInit = {"User-Agent": "@zerebos/Zerebos.com"};
-    if (token) headers["Authorization"] = `Bearer ${token}`;
+    if (token) headers.Authorization = `Bearer ${token}`;
 
     try {
         const resp = await fetch(url, {headers});
@@ -82,7 +84,8 @@ async function githubFetch<T>(url: string, cacheKey: string): Promise<T | null> 
         const data = (await resp.json()) as T;
         cacheWrite(cacheKey, data);
         return data;
-    } catch {
+    }
+    catch {
         return null;
     }
 }
