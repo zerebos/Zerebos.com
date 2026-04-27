@@ -5,7 +5,7 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "build": "bun run build:astro",
+    "build": "bun run --bun build:astro",
     "dev": "bun run dev:astro",
     "preview": "bun run preview:astro",
     "build:astro": "bunx --bun astro build",
@@ -31,6 +31,7 @@
     "@11ty/eleventy-plugin-rss": "^2.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@astrojs/check": "^0.9.8",
+    "@astrojs/compiler-rs": "^0.1.10",
     "@types/11ty__eleventy-plugin-rss": "^2.0.0",
     "@zerebos/eslint-config": "^1.0.2",
     "@zerebos/eslint-config-typescript": "^1.0.3",
@@ -41,11 +42,7 @@
     "wrangler": "^4.85.0"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.2.1",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2"
-  },
-  "overrides": {
-    "vite": "^7"
   }
 }
