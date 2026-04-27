@@ -46,6 +46,8 @@ export interface GitHubData {
     };
 }
 
+let gitHubDataPromise: Promise<GitHubData> | null = null;
+
 function cacheRead<T>(key: string): T | null {
     try {
         const file = path.join(CACHE_DIR, `${key}.json`);
@@ -89,43 +91,64 @@ function fullName(repo: string): string {
     return repo.includes("/") ? repo : `zerebos/${repo}`;
 }
 
-export async function getGitHubData(): Promise<GitHubData> {
-    const repoResults: GitHubRepo[] = [];
-    for (const repo of repos) {
-        const name = fullName(repo);
-        const data = await githubFetch<GitHubRepo>(
-            `https://api.github.com/repos/${name}`,
-            `repo-${name.replace("/", "-")}`
-        );
-        if (data) repoResults.push(data);
+function normalizeLanguagePercentages(raw: Record<string, number>): Record<string, number> | null {
+    const sum = Object.values(raw).reduce((a, b) => a + b, 0);
+    if (sum === 0) return null;
+
+    const normalized: Record<string, number> = {};
+    for (const lang in raw) {
+        normalized[lang] = Math.round((raw[lang] / sum) * 100 * 100) / 100;
     }
 
-    const langResults: Record<string, Record<string, number>> = {};
-    for (const repo of repos) {
-        const name = fullName(repo);
-        const raw = await githubFetch<Record<string, number>>(
-            `https://api.github.com/repos/${name}/languages`,
-            `langs-${name.replace("/", "-")}`
-        );
-        if (!raw) continue;
-        const sum = Object.values(raw).reduce((a, b) => a + b, 0);
-        if (sum === 0) continue;
-        const normalized: Record<string, number> = {};
-        for (const lang in raw) {
-            normalized[lang] = Math.round((raw[lang] / sum) * 100 * 100) / 100;
-        }
-        langResults[name] = normalized;
-    }
+    return normalized;
+}
 
-    const branchResults: Record<string, string[]> = {};
-    for (const repo of repos) {
-        const name = fullName(repo);
-        const data = await githubFetch<Array<{name: string;}>>(
-            `https://api.github.com/repos/${name}/branches`,
-            `branches-${name.replace("/", "-")}`
-        );
-        if (data) branchResults[name] = data.map(b => b.name);
-    }
+async function buildGitHubData(): Promise<GitHubData> {
+    const repoNames = repos.map(fullName);
+
+    const repoResults = (await Promise.all(
+        repoNames.map(async (name) => {
+            const data = await githubFetch<GitHubRepo>(
+                `https://api.github.com/repos/${name}`,
+                `repo-${name.replace("/", "-")}`
+            );
+            return data;
+        })
+    )).filter((repo): repo is GitHubRepo => repo !== null);
+
+    const languageEntries = await Promise.all(
+        repoNames.map(async (name) => {
+            const raw = await githubFetch<Record<string, number>>(
+                `https://api.github.com/repos/${name}/languages`,
+                `langs-${name.replace("/", "-")}`
+            );
+            if (!raw) return null;
+
+            const normalized = normalizeLanguagePercentages(raw);
+            if (!normalized) return null;
+
+            return [name, normalized] as const;
+        })
+    );
+
+    const langResults: Record<string, Record<string, number>> = Object.fromEntries(
+        languageEntries.filter((entry): entry is readonly [string, Record<string, number>] => entry !== null)
+    );
+
+    const branchEntries = await Promise.all(
+        repoNames.map(async (name) => {
+            const data = await githubFetch<Array<{name: string;}>>(
+                `https://api.github.com/repos/${name}/branches`,
+                `branches-${name.replace("/", "-")}`
+            );
+            if (!data) return null;
+            return [name, data.map((branch) => branch.name)] as const;
+        })
+    );
+
+    const branchResults: Record<string, string[]> = Object.fromEntries(
+        branchEntries.filter((entry): entry is readonly [string, string[]] => entry !== null)
+    );
 
     return {
         repos,
@@ -141,9 +164,17 @@ export async function getGitHubData(): Promise<GitHubData> {
             watchers: repoResults.reduce((a, b) => a + b.watchers_count, 0),
             subscribers: repoResults.reduce((a, b) => a + b.subscribers_count, 0),
             size: repoResults.reduce((a, b) => a + b.size, 0),
-            topics: new Set(repoResults.flatMap(r => r.topics)).size,
-            languages: new Set(repoResults.map(r => r.language).filter(Boolean)).size,
-            licenses: new Set(repoResults.map(r => r.license?.key ?? "None")).size,
+            topics: new Set(repoResults.flatMap((r) => r.topics)).size,
+            languages: new Set(repoResults.map((r) => r.language).filter(Boolean)).size,
+            licenses: new Set(repoResults.map((r) => r.license?.key ?? "None")).size,
         },
     };
+}
+
+export async function getGitHubData(): Promise<GitHubData> {
+    if (!gitHubDataPromise) {
+        gitHubDataPromise = buildGitHubData();
+    }
+
+    return gitHubDataPromise;
 }
