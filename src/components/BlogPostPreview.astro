@@ -17,7 +17,7 @@ const { post, tagLimit = 4 } = Astro.props;
     </time>
     {post.data.blogTags && <TagList tags={post.data.blogTags} limit={tagLimit} />}
   </div>
-  <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+  <h3><a href={`/blog/${post.id}`}>{post.data.title}</a></h3>
   <p class="blog-excerpt">{post.data.blurb}</p>
-  <a href={`/blog/${post.id}/`} class="read-more">Read more →</a>
+  <a href={`/blog/${post.id}`} class="read-more">Read more →</a>
 </article>

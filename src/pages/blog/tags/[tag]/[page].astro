@@ -77,20 +77,20 @@ const tagBlurb = getTagBlurb(totalPosts);
   </section>
 
   <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
-    <a href={page === 2 ? `/blog/tags/${tagSlug}/` : `/blog/tags/${tagSlug}/${page - 1}/`} class="gradient">‹ Prev</a>
+    <a href={page === 2 ? `/blog/tags/${tagSlug}` : `/blog/tags/${tagSlug}/${page - 1}`} class="gradient">‹ Prev</a>
     <ul class="page-numbers">
-      <li><a href={`/blog/tags/${tagSlug}/`} class={`gradient ${page === 1 ? "active" : ""}`}>1</a></li>
+      <li><a href={`/blog/tags/${tagSlug}`} class={`gradient ${page === 1 ? "active" : ""}`}>1</a></li>
       {
         Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((pageNumber) => (
           <li>
-            <a href={`/blog/tags/${tagSlug}/${pageNumber}/`} class={`gradient ${page === pageNumber ? "active" : ""}`}>
+            <a href={`/blog/tags/${tagSlug}/${pageNumber}`} class={`gradient ${page === pageNumber ? "active" : ""}`}>
               {pageNumber}
             </a>
           </li>
         ))
       }
     </ul>
-    <a href={page < totalPages ? `/blog/tags/${tagSlug}/${page + 1}/` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
+    <a href={page < totalPages ? `/blog/tags/${tagSlug}/${page + 1}` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
       Next ›
     </a>
   </nav>

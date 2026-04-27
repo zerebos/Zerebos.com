@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
 const { post, tagCounts }: { post: CollectionEntry<"blog">; tagCounts: ReturnType<typeof getTagCounts> } = Astro.props;
 const { Content } = await render(post);
-const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? "https://zerebos.com").toString();
+const canonical = new URL(`/blog/${post.id}`, Astro.site ?? "https://zerebos.com").toString();
 ---
 
 <BaseLayout title={`${post.data.title} | Zerebos`} description={post.data.blurb}>

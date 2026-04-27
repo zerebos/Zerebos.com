@@ -62,7 +62,7 @@ const marqueeStats = Object.entries(github.stats);
           <div class="flex container project-row">
             {row.map((project) => (
               <div class="flex project">
-                <a href={`/projects/${project.id}/`} class="flex column gradient">
+                <a href={`/projects/${project.id}`} class="flex column gradient">
                   {project.data.icon && (
                     <img
                       src={`/assets/projects/icons/${project.data.icon}`}

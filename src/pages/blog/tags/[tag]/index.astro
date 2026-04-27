@@ -58,10 +58,10 @@ const tagBlurb = getTagBlurb(totalPosts);
         <ul class="page-numbers">
           <li><a class="gradient active">1</a></li>
           {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => (
-            <li><a href={`/blog/tags/${tagSlug}/${page}/`} class="gradient">{page}</a></li>
+            <li><a href={`/blog/tags/${tagSlug}/${page}`} class="gradient">{page}</a></li>
           ))}
         </ul>
-        <a href={`/blog/tags/${tagSlug}/2/`} class="gradient">Next ›</a>
+        <a href={`/blog/tags/${tagSlug}/2`} class="gradient">Next ›</a>
       </nav>
     )
   }

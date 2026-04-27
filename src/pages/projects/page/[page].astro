@@ -43,7 +43,7 @@ for (let i = 0; i < projects.length; i += 3) {
         <div class="flex container project-row">
           {row.map((project) => (
             <div class="flex project">
-              <a href={`/projects/${project.id}/`} class="flex column gradient">
+              <a href={`/projects/${project.id}`} class="flex column gradient">
                 {project.data.icon && (
                   <img src={`/assets/projects/icons/${project.data.icon}`} class="icon" alt={project.data.title} />
                 )}
@@ -60,20 +60,20 @@ for (let i = 0; i < projects.length; i += 3) {
   </section>
 
   <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
-    <a href={page === 2 ? "/projects/" : `/projects/page/${page - 1}/`} class="gradient">‹ Prev</a>
+    <a href={page === 2 ? "/projects" : `/projects/page/${page - 1}`} class="gradient">‹ Prev</a>
     <ul class="page-numbers">
-      <li><a href="/projects/" class={`gradient ${page === 1 ? "active" : ""}`}>1</a></li>
+      <li><a href="/projects" class={`gradient ${page === 1 ? "active" : ""}`}>1</a></li>
       {
         Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((pageNumber) => (
           <li>
-            <a href={`/projects/page/${pageNumber}/`} class={`gradient ${page === pageNumber ? "active" : ""}`}>
+            <a href={`/projects/page/${pageNumber}`} class={`gradient ${page === pageNumber ? "active" : ""}`}>
               {pageNumber}
             </a>
           </li>
         ))
       }
     </ul>
-    <a href={page < totalPages ? `/projects/page/${page + 1}/` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
+    <a href={page < totalPages ? `/projects/page/${page + 1}` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
       Next ›
     </a>
   </nav>
