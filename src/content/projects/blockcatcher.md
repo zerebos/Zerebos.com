@@ -4,7 +4,6 @@ title: Block Catcher
 blurb: A retro style WebGL game.
 icon: blockcatcher.png
 repo:  zerebos/BlockCatcher
-layout: project.njk
 banner: /assets/projects/images/blockcatcher.png
 ---
 

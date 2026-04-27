@@ -4,7 +4,6 @@ title: BetterDiscord
 blurb: The Discord customization project.
 icon: betterdiscord.png
 repo: BetterDiscord/BetterDiscord
-layout: project.njk
 banner: /assets/projects/images/bdbanner.webp
 ---
 
