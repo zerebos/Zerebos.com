@@ -6,6 +6,7 @@ import PageHeader from "../../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getOrderedTags, getTagCounts } from "../../../lib/blog";
+import { buildPagination } from "../../../lib/pagination";
 
 export async function getStaticPaths() {
   const pageSize = 3;
@@ -14,16 +15,14 @@ export async function getStaticPaths() {
   );
   const tagCounts = getTagCounts(allPosts);
 
-  const totalPages = Math.ceil(allPosts.length / pageSize);
+  const { totalPages, pages } = buildPagination(allPosts, pageSize);
   const paths = [];
 
   for (let page = 2; page <= totalPages; page++) {
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
     paths.push({
       params: { page: String(page) },
       props: {
-        posts: allPosts.slice(start, end),
+        posts: pages[page - 1].items,
         page,
         totalPages,
         tagCounts

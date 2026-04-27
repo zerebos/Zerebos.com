@@ -18,7 +18,7 @@ export interface TagPaginationGroup<TPost> {
 }
 
 export function buildTagPagination(posts: BlogEntry[], pageSize: number): Array<TagPaginationGroup<BlogEntry>> {
-  const tags = new Map<string, {tagName: string; posts: BlogEntry[]}>();
+  const tags = new Map<string, {tagName: string; posts: BlogEntry[];}>();
 
   for (const post of posts) {
     for (const tag of post.data.blogTags ?? []) {

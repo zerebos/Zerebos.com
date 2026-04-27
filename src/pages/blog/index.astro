@@ -7,13 +7,14 @@ import PageHeader from "../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getOrderedTags, getTagCounts } from "../../lib/blog";
+import { buildPagination } from "../../lib/pagination";
 
 const pageSize = 3;
 const allPosts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
   (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime()
 );
-const totalPages = Math.max(1, Math.ceil(allPosts.length / pageSize));
-const posts = allPosts.slice(0, pageSize);
+const { totalPages, pages } = buildPagination(allPosts, pageSize);
+const posts = pages[0].items;
 
 const tagCounts = getTagCounts(allPosts);
 ---
