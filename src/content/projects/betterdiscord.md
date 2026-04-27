@@ -2,9 +2,9 @@
 order: 1
 title: BetterDiscord
 blurb: The Discord customization project.
-icon: betterdiscord.png
+icon: ../../assets/projects/icons/betterdiscord.png
 repo: BetterDiscord/BetterDiscord
-banner: /assets/projects/images/bdbanner.webp
+banner: ../../assets/projects/images/bdbanner.webp
 ---
 
 BetterDiscord is a client modification for Discord. This allows you to add plugins and themes to your personal copy of Discord. BetterDiscord also adds a number of other features out of the box.

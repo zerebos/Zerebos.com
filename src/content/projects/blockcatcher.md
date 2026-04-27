@@ -2,9 +2,9 @@
 order: 2
 title: Block Catcher
 blurb: A retro style WebGL game.
-icon: blockcatcher.png
+icon: ../../assets/projects/icons/blockcatcher.png
 repo:  zerebos/BlockCatcher
-banner: /assets/projects/images/blockcatcher.png
+banner: ../../assets/projects/images/blockcatcher.png
 ---
 
 You can play a demo of the game at [http://zerebos.github.io/BlockCatcher/](http://zerebos.github.io/BlockCatcher/)

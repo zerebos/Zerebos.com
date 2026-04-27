@@ -3,7 +3,7 @@ title: "Passing the Torch: The Future of BetterDiscord"
 blurb: "A personal update about my transition out of BetterDiscord’s leadership, the incredible people stepping up, and what comes next for both the project and myself."
 date: 2025-12-04T14:58:00
 blogTags: ["betterdiscord", "discord", "open-source", "community"]
-banner: /assets/blog/betterdiscord.webp
+banner: ../../assets/blog/betterdiscord.webp
 ---
 
 If you had told me years ago that a side project I started as a fork to scratch an itch would become a foundation for a massive, chaotic, brilliant community of modders and tinkerers... I probably would've laughed and gone back to debugging my janky plugins. Yet here we are. And today, I want to share that I'll be stepping back from leading [the BetterDiscord project](https://betterdiscord.app/).

@@ -1,10 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPostPreview from "../components/BlogPostPreview.astro";
+import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getGitHubData } from "../lib/github";
 import { getOrderedProjects } from "../lib/projects";
+import avatarImage from "../assets/images/avatar.webp";
 
 const allProjects: CollectionEntry<"projects">[] = await getOrderedProjects();
 const featuredProjects = allProjects.slice(0, 6);
@@ -25,7 +27,14 @@ const marqueeStats = Object.entries(github.stats);
 <BaseLayout title="Zerebos" description="Landing page and portfolio for Zerebos">
   <section class="flex container column" id="intro">
     <div class="flex avatar-container">
-      <img src="/assets/images/avatar.webp" class="intro-avatar" alt="Picture of me" />
+      <Image
+        src={avatarImage}
+        class="intro-avatar"
+        alt="Picture of me"
+        widths={[96, 192]}
+        sizes="96px"
+        loading="eager"
+      />
       <div class="flex column">
         <h1>Zerebos</h1>
         <p>Engineer, Creator, Educator</p>
@@ -69,10 +78,12 @@ const marqueeStats = Object.entries(github.stats);
               <div class="flex project">
                 <a href={`/projects/${project.id}`} class="flex column gradient">
                   {project.data.icon && (
-                    <img
-                      src={`/assets/projects/icons/${project.data.icon}`}
+                    <Image
+                      src={project.data.icon}
                       class="icon"
                       alt={project.data.title}
+                      widths={[64, 128]}
+                      sizes="(max-width: 768px) 48px, 64px"
                     />
                   )}
                   <div class="flex column info">

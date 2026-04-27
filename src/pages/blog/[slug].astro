@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import TagList from "../../components/TagList.astro";
+import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getTagCounts } from "../../lib/blog";
@@ -32,7 +33,12 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? "https://zerebos.com
 
   {post.data.banner && (
     <section class="flex column flex-align-center banner">
-      <img src={post.data.banner} alt={post.data.title} />
+      <Image
+        src={post.data.banner}
+        alt={post.data.title}
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 768px) 92vw, 960px"
+      />
     </section>
   )}
 

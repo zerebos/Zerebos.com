@@ -1,13 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
 import links from "../data/links";
+import avatarImage from "../assets/images/avatar.webp";
 ---
 
 <BaseLayout title="Links | Zerebos" description="Social links and project links for Zerebos">
   <div id="links-container">
     <section class="flex container column" id="links-header">
       <div class="flex column avatar-container">
-        <img src="/assets/images/avatar.webp" class="intro-avatar" alt="Picture of me" />
+        <Image
+          src={avatarImage}
+          class="intro-avatar"
+          alt="Picture of me"
+          widths={[96, 192]}
+          sizes="96px"
+          loading="eager"
+        />
         <div class="flex column">
           <h1>Zerebos</h1>
           <p>Engineer, Creator, Educator</p>

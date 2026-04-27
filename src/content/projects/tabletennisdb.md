@@ -2,9 +2,9 @@
 order: 5
 title: TableTennisDB
 blurb: Table Tennis bot for Discord.
-icon: tabletennisdb.png
+icon: ../../assets/projects/icons/tabletennisdb.png
 repo:  zerebos/TableTennisDB
-banner: /assets/projects/images/tabletennisdb.webp
+banner: ../../assets/projects/images/tabletennisdb.webp
 ---
 
 The main features of this bot include information lookup such as equipment and stats search and world ranking lookup. It also has some more useful features like basic moderation and fun stuff like reactions.

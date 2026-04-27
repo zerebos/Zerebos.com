@@ -1,3 +1,5 @@
+import blockcatcherIcon from "../assets/projects/icons/blockcatcher.png";
+
 interface IconLink {
     icon: string;
     href: string;
@@ -34,7 +36,7 @@ export default {
             label: "Featured Projects",
             links: [
                 {label: "BetterDiscord", href: "https://betterdiscord.app/", icon: "https://betterdiscord.app/resources/favicon/favicon-32x32.png"},
-                {label: "Block Catcher", href: "http://zerebos.github.io/BlockCatcher/", icon: "/assets/projects/icons/blockcatcher.png"}
+                {label: "Block Catcher", href: "http://zerebos.github.io/BlockCatcher/", icon: blockcatcherIcon.src}
             ]
         },
         {

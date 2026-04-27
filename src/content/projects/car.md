@@ -2,9 +2,9 @@
 order: 3
 title: Self-Driving Car
 blurb: Custom mini-car driving on unknown courses.
-icon: car.webp
+icon: ../../assets/projects/icons/car.webp
 repo: zerebos/Intelligent-Line-And-Marker-Tracking-Car
-banner: /assets/projects/images/car.webp
+banner: ../../assets/projects/images/car.webp
 ---
 
 ## Evaluation and Analysis

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
+import { Image } from "astro:assets";
 
 import type { CollectionEntry } from "astro:content";
 import { getOrderedProjects } from "../../lib/projects";
@@ -28,7 +29,13 @@ for (let i = 0; i < projects.length; i += 3) {
             <div class="flex project">
               <a href={`/projects/${project.id}`} class="flex column gradient">
                 {project.data.icon && (
-                  <img src={`/assets/projects/icons/${project.data.icon}`} class="icon" alt={project.data.title} />
+                  <Image
+                    src={project.data.icon}
+                    class="icon"
+                    alt={project.data.title}
+                    widths={[64, 128]}
+                    sizes="(max-width: 768px) 48px, 64px"
+                  />
                 )}
                 <div class="flex column info">
                   <h3>{project.data.title}</h3>

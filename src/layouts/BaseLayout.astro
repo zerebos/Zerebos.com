@@ -1,13 +1,15 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import links from "../data/links";
+import defaultOgImage from "../assets/images/avatar_banner.webp";
 
 interface Props {
   title?: string;
   description?: string;
   ogType?: "website" | "article";
-  ogImage?: string;
+  ogImage?: string | ImageMetadata;
   publishedTime?: Date;
   author?: string;
 }
@@ -23,9 +25,10 @@ const {
 
 const siteUrl = Astro.site ?? new URL("https://zerebos.com");
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const resolvedOgImage = ogImage
-  ? new URL(ogImage, siteUrl).toString()
-  : "https://zerebos.com/assets/images/avatar_banner.webp";
+const ogImagePath = typeof ogImage === "string" ? ogImage : ogImage?.src;
+const resolvedOgImage = ogImagePath
+  ? new URL(ogImagePath, siteUrl).toString()
+  : new URL(defaultOgImage.src, siteUrl).toString();
 ---
 
 <!doctype html>

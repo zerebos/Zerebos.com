@@ -2,9 +2,9 @@
 order: 4
 title: Installer
 blurb: Electron GUI installer for BetterDiscord using Svelte.
-icon: installer.png
+icon: ../../assets/projects/icons/installer.png
 repo: BetterDiscord/Installer
-banner: /assets/projects/images/installer.webp
+banner: ../../assets/projects/images/installer.webp
 ---
 
 
