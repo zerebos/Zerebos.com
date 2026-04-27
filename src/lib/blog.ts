@@ -1,23 +1,17 @@
 import type {CollectionEntry} from "astro:content";
 import {toSlug} from "./slug";
+import {buildPagination, type PaginationResult} from "./pagination";
 
 type BlogEntry = CollectionEntry<"blog">;
 
-export interface TagPaginationPage<TPost> {
-  page: number;
-  posts: TPost[];
-}
-
-export interface TagPaginationGroup<TPost> {
+export interface TagPaginationGroup extends PaginationResult<BlogEntry> {
   tagSlug: string;
   tagName: string;
-  posts: TPost[];
+  posts: BlogEntry[];
   totalPosts: number;
-  totalPages: number;
-  pages: Array<TagPaginationPage<TPost>>;
 }
 
-export function buildTagPagination(posts: BlogEntry[], pageSize: number): Array<TagPaginationGroup<BlogEntry>> {
+export function buildTagPagination(posts: BlogEntry[], pageSize: number): TagPaginationGroup[] {
   const tags = new Map<string, {tagName: string; posts: BlogEntry[];}>();
 
   for (const post of posts) {
@@ -31,31 +25,17 @@ export function buildTagPagination(posts: BlogEntry[], pageSize: number): Array<
   }
 
   return [...tags.entries()].map(([tagSlug, value]) => {
-    const totalPosts = value.posts.length;
-    const totalPages = Math.max(1, Math.ceil(totalPosts / pageSize));
-    const pages: Array<TagPaginationPage<BlogEntry>> = [];
-
-    for (let page = 1; page <= totalPages; page++) {
-      const start = (page - 1) * pageSize;
-      const end = start + pageSize;
-      pages.push({
-        page,
-        posts: value.posts.slice(start, end)
-      });
-    }
-
+    const {totalPages, pages} = buildPagination(value.posts, pageSize);
     return {
       tagSlug,
       tagName: value.tagName,
       posts: value.posts,
-      totalPosts,
+      totalPosts: value.posts.length,
       totalPages,
       pages
     };
   });
 }
-
-export const toTagSlug = toSlug;
 
 export function getTagCounts(posts: BlogEntry[]): Map<string, number> {
   const tagCounts = new Map<string, number>();
