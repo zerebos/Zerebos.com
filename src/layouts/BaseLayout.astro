@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import type { ImageMetadata } from "astro";
 import links from "../data/links";
 import defaultOgImage from "../assets/images/avatar_banner.webp";
@@ -63,6 +64,8 @@ const resolvedOgImage = ogImagePath
     <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml" />
     <meta name="theme-color" content="#018BBC" />
 
+    <ClientRouter />
+
     <Font cssVariable="--font-inter" preload />
 
     <link rel="alternate" type="application/rss+xml" title="Zerebos.com Blog" href="/feed.xml" />
@@ -95,15 +98,20 @@ const resolvedOgImage = ogImagePath
           </button>
         </div>
       </nav>
-      <main id="content">
+      <main id="content" transition:animate="fade">
         <slot />
       </main>
     </div>
     <script>
-      const menuButton = document.querySelector("#menuButton");
-      menuButton?.addEventListener("click", () => {
-        menuButton?.parentElement?.parentElement?.classList?.toggle("expanded");
-      });
+      function bindMenuToggle() {
+        const menuButton = document.querySelector("#menuButton");
+        menuButton?.addEventListener("click", () => {
+          menuButton?.parentElement?.parentElement?.classList?.toggle("expanded");
+        });
+      }
+
+      bindMenuToggle();
+      document.addEventListener("astro:page-load", bindMenuToggle);
     </script>
   </body>
 </html>
