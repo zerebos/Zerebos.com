@@ -1,0 +1,117 @@
+---
+import "../styles/global.css";
+import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import type { ImageMetadata } from "astro";
+import links from "../data/links";
+import defaultOgImage from "../assets/images/avatar_banner.webp";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: "website" | "article";
+  ogImage?: string | ImageMetadata;
+  publishedTime?: Date;
+  author?: string;
+}
+
+const {
+  title = "Zerebos",
+  description = "Landing page and portfolio for Zerebos",
+  ogType = "website",
+  ogImage,
+  publishedTime,
+  author,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL("https://zerebos.com");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImagePath = typeof ogImage === "string" ? ogImage : ogImage?.src;
+const resolvedOgImage = ogImagePath
+  ? new URL(ogImagePath, siteUrl).toString()
+  : new URL(defaultOgImage.src, siteUrl).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOgImage} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+    {author && <meta property="article:author" content={author} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="zerebos.com" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
+    <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#008cbd" />
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#ffc40d" />
+    <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml" />
+    <meta name="theme-color" content="#018BBC" />
+
+    <ClientRouter />
+
+    <Font cssVariable="--font-inter" preload />
+
+    <link rel="alternate" type="application/rss+xml" title="Zerebos.com Blog" href="/feed.xml" />
+    <link rel="canonical" href={canonicalUrl} />
+    <title>{title}</title>
+  </head>
+  <body class="dark">
+    <div class="gradient-banner"></div>
+    <div class="gradient-banner bottom"></div>
+    <div id="main-wrapper" class="container">
+      <nav id="main-nav" class="collapse">
+        <div class="nav">
+          <a href="/"><img src="/assets/images/z_swipe.png" class="brand" alt="Zerebos Logo" /></a>
+          <ul class="navbar-nav nav">
+            <li class="nav-item"><a href="/" class="nav-link">home</a></li>
+            <li class="nav-item"><a href="/projects" class="nav-link">projects</a></li>
+            <li class="nav-item"><a href="/blog" class="nav-link">blog</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link">about</a></li>
+            <li class="nav-item"><a href="/links" class="nav-link">links</a></li>
+          </ul>
+        </div>
+        <div class="nav-socials">
+          {links.icons.map((link) => (
+            <a href={link.href} class={link.icon.toLowerCase()} target="_blank" rel="noopener noreferrer">
+              <img src={`/assets/icons/${link.icon.toLowerCase()}.svg`} class="social-icon" alt={link.icon} />
+            </a>
+          ))}
+          <button id="menuButton" class="expand left" aria-label="Menu">
+            <img src="/assets/icons/menu.svg" alt="Open menu" />
+          </button>
+        </div>
+      </nav>
+      <main id="content" transition:animate="fade">
+        <slot />
+      </main>
+    </div>
+    <script>
+      function bindMenuToggle() {
+        console.log("Binding menu toggle");
+        const menuButton = document.querySelector("#menuButton");
+        menuButton?.addEventListener("click", () => {
+          menuButton?.parentElement?.parentElement?.classList?.toggle("expanded");
+        });
+      }
+
+      document.addEventListener("astro:page-load", bindMenuToggle);
+    </script>
+  </body>
+</html>

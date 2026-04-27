@@ -1,10 +1,14 @@
 node_modules/
 dist/
+build/
+.astro/
 .cache/
+.tmp/
 .env
 cwebp.exe
 example.json
 notes/
+/assets/
 # src/blog/**/*.md
 
 # wrangler files

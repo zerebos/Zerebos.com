@@ -1,0 +1,102 @@
+#intro {
+    gap: 18px;
+    margin-top: 40px;
+    margin-bottom: 24px;
+}
+
+.avatar-container {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+#links-header .avatar-container div {
+    align-items: center;
+}
+
+.intro-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+}
+
+.avatar-container h1 {
+    font-size: 32px;
+    letter-spacing: -1.5px;
+    margin: 0;
+    line-height: 1;
+}
+
+.avatar-container p {
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: -0.18px;
+    margin: 0;
+}
+
+#intro p {
+    margin: 0;
+}
+
+#intro .blurb {
+    font-size: 20px;
+    letter-spacing: -.34px;
+    line-height: 29px;
+}
+
+#intro .profile {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.25px;
+    color: rgba(114, 120, 136, 0.6);
+}
+
+#intro .profile span {
+    background-image: linear-gradient(90deg, #4589FF 0%, #08BDBA 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    display: inline-block;
+}
+
+#marquee {
+    overflow: hidden;
+    margin: 0 16px;
+    position: relative;
+    height: 64px;
+    border-radius: 12px;
+}
+
+#marquee::before,
+#marquee::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 10%;
+    background-image: linear-gradient(to right, #0A0A0D, transparent);
+    z-index: 10;
+}
+
+#marquee::after {
+    left: unset;
+    right: 0;
+    background-image: linear-gradient(to left, #0A0A0D, transparent);
+}
+
+#marquee > div {
+    display: flex;
+    gap: 32px;
+    flex-wrap: nowrap;
+    position: absolute;
+    width: 100%;
+    margin-left: 0;
+}
+
+#marquee .stat {
+    color: var(--text-muted);
+    text-transform: capitalize;
+}

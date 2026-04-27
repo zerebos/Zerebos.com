@@ -1,0 +1,35 @@
+/* Entry point — imports all style partials.
+ *
+ * Import order mirrors the original cascade:
+ *   tokens -> base -> utilities -> sections -> components
+ *
+ * To add new styles, create a partial file and @import it here.
+ */
+
+
+/* Foundation */
+@import "./tokens.css";
+@import "./base.css";
+@import "./utilities.css";
+
+
+/* Sections (page-specific layout) */
+@import "./sections/about.css";
+@import "./sections/contact.css";
+@import "./sections/intro.css";
+@import "./sections/links.css";
+@import "./sections/navigation.css";
+@import "./sections/post.css";
+@import "./sections/projects.css";
+@import "./sections/project.css";
+
+
+/* Components (reusable across pages) */
+@import "./components/background.css";
+@import "./components/banner.css";
+@import "./components/buttons.css";
+@import "./components/heading.css";
+@import "./components/gradient.css";
+@import "./components/markdown.css";
+@import "./components/paginator.css";
+@import "./components/showcase.css";

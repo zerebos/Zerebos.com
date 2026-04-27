@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from "astro:content";
+import TagList from "./TagList.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  tagLimit?: number;
+}
+
+const { post, tagLimit = 4 } = Astro.props;
+---
+
+<article class="flex no-wrap blog-post-preview">
+  <div class="blog-post-meta">
+    <time datetime={post.data.date.toISOString().slice(0, 10)}>
+      {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
+    </time>
+    {post.data.blogTags && <TagList tags={post.data.blogTags} limit={tagLimit} />}
+  </div>
+  <h3><a href={`/blog/${post.id}`}>{post.data.title}</a></h3>
+  <p class="blog-excerpt">{post.data.blurb}</p>
+  <a href={`/blog/${post.id}`} class="read-more">Read more →</a>
+</article>

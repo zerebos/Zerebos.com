@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import links from "../data/links";
+import avatarImage from "../assets/images/avatar.webp";
+---
+
+<BaseLayout title="Links | Zerebos" description="Social links and project links for Zerebos">
+  <div id="links-container">
+    <section class="flex container column" id="links-header">
+      <div class="flex column avatar-container">
+        <Image
+          src={avatarImage}
+          class="intro-avatar"
+          alt="Picture of me"
+          widths={[96, 192]}
+          sizes="96px"
+          loading="eager"
+        />
+        <div class="flex column">
+          <h1>Zerebos</h1>
+          <p>Engineer, Creator, Educator</p>
+        </div>
+      </div>
+      <div class="flex column blurb">
+        <p>
+          Creating tools for developers and users <span> ✦ </span>
+          Trying out new libraries <span> ✦ </span>
+          Enjoying the learning journey
+        </p>
+      </div>
+    </section>
+
+    <section class="flex container" id="links-icons">
+      {links.icons.map((icon: {icon: string; href: string}) => (
+        <a href={icon.href} target="_blank" rel="noopener noreferrer" class="flex gradient">
+          <img src={`/assets/icons/${icon.icon}.svg`} alt={icon.icon} />
+        </a>
+      ))}
+    </section>
+
+    {links.categories.map((category: {label: string; links: {href: string; icon: string; label: string}[]}) => (
+      <section class="flex column container listbox">
+        <div class="flex heading">
+          <h2>{category.label}</h2>
+        </div>
+        <div class="flex column list">
+          {category.links.map((link) => (
+            <a class="flex link gradient outline" href={link.href} target="_blank" rel="noopener noreferrer">
+              <div class="flex label">
+                <img src={link.icon} alt={link.label} />
+                <span>{link.label}</span>
+              </div>
+              <div class="flex external">
+                <img src="/assets/icons/external-link.svg" alt="External link" />
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

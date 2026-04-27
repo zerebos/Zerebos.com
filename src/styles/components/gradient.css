@@ -1,0 +1,44 @@
+/* Interactive gradient card/link — used on project cards, tag links, icon links, etc. */
+a.gradient {
+    gap: 12px;
+    width: min-content;
+    padding: 12px 12px;
+    /* background-color: red; */
+    /* background-size: 0% 0%; */
+    /* background-position: 50% 50%; */
+    /* transition: background-size 500ms ease; */
+    border-radius: 12px;
+    position: relative;
+}
+
+a.gradient.outline {
+    border: 1px solid rgba(82, 82, 82, 0.2);
+}
+
+a.gradient.outline:hover {
+    border-color: transparent;
+}
+
+a.gradient::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(90deg, #1B1A26, #23171C);
+    backdrop-filter: blur(12px);
+    transform: scale(60%);
+    transform-origin: 50% 50% 0px;
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
+    border-radius: 12px;
+    opacity: 0;
+    z-index: -1;
+}
+
+a.gradient.active::after,
+a.gradient:hover::after {
+    transform: scale(100%) !important;
+    opacity: 1;
+}

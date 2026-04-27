@@ -1,0 +1,76 @@
+#links-container .list,
+.stats,
+#links-icons {
+    gap: 8px;
+}
+
+#links-header {
+    gap: 18px;
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+
+#links-header .blurb {
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 1.4;
+    text-align: center;
+}
+
+#links-header .blurb span {
+    color: var(--accent-color);
+}
+
+#links-icons {
+    justify-content: space-around;
+}
+
+#links-icons a {
+    display: flex;
+    padding: 12px;
+}
+
+#links-icons a img {
+    min-width: 24px;
+    height: 24px;
+}
+
+#links-container .listbox {
+    gap: 12px;
+}
+
+#links-container .list {
+    gap: 12px;
+}
+
+#links-container .list .link {
+    width: auto;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+#links-container .list .link::after {
+}
+
+#links-container .list .link:hover {
+}
+
+#links-container .list .link .label {
+    gap: 12px;
+    align-items: center;
+}
+
+#links-container .list .link .label img {
+    width: 20px;
+}
+
+#links-container .list .link .label span {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    color: var(--text-primary);
+}
+
+#links-container .list .link .external {
+    opacity: 0.6;
+}

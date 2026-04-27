@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getGitHubData } from "../../lib/github";
+import { getOrderedProjects } from "../../lib/projects";
+
+export async function getStaticPaths() {
+  const projects = await getOrderedProjects();
+  return projects.map((project: CollectionEntry<"projects">) => ({
+    params: { slug: project.id },
+    props: { project }
+  }));
+}
+
+const { project }: { project: CollectionEntry<"projects"> } = Astro.props;
+const { Content } = await render(project);
+
+const repo = project.data.repo;
+let git = null;
+let langs: Record<string, number> | null = null;
+let branches: string[] | null = null;
+
+if (repo) {
+  const fullName = repo.includes("/") ? repo : `zerebos/${repo}`;
+  const github = await getGitHubData();
+  git = github.projects.find(p => p.full_name === fullName) ?? null;
+  langs = github.languages[fullName] ?? null;
+  branches = github.branches[fullName] ?? null;
+}
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-US", {year: "numeric", month: "short", day: "numeric"});
+}
+---
+
+<BaseLayout title={`${project.data.title} | Zerebos`} description={project.data.blurb} ogImage={project.data.banner}>
+  <PageHeader title={project.data.title} blurb={project.data.blurb} />
+
+  {project.data.banner && (
+    <section class="flex column flex-align-center banner">
+      <Image
+        src={project.data.banner}
+        alt={project.data.title}
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 768px) 92vw, 960px"
+      />
+    </section>
+  )}
+
+  {git && (
+    <section class="flex column stats-wrap">
+      <div class="flex heading">
+        <h2>Stats</h2>
+      </div>
+      <div class={`flex stats${git.license?.name ? " licensed" : ""}`}>
+        {git.license?.name && (
+          <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/blob/${git.default_branch}/LICENSE`} target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            {git.license.spdx_id}
+          </a>
+        )}
+        <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/commits/`} target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          {formatDate(git.pushed_at)}
+        </a>
+        <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/issues/`} target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          {git.open_issues}
+        </a>
+        <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/stargazers/`} target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          {git.stargazers_count}
+        </a>
+        <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/watchers/`} target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          {git.subscribers_count}
+        </a>
+        <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/network/members/`} target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
+          {git.forks}
+        </a>
+        {branches && (
+          <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/branches/`} target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+            {branches.length}
+          </a>
+        )}
+      </div>
+    </section>
+  )}
+
+  {git && langs && Object.keys(langs).length > 0 && (
+    <section class="flex column stats-wrap">
+      <div class="flex heading">
+        <h2>Languages</h2>
+      </div>
+      <div class="flex stats">
+        {Object.entries(langs).map(([lang, percent]) => (
+          <a class="flex column stat gradient" href={`https://github.com/${git.full_name}/search?l=${encodeURIComponent(lang.toLowerCase())}`} target="_blank" rel="noopener noreferrer">
+            <span>{lang}</span>{percent}%
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="flex column container project-markdown">
+    <div class="flex heading">
+      <h2>Description</h2>
+    </div>
+    <div class="flex column content">
+      <Content />
+    </div>
+  </section>
+</BaseLayout>

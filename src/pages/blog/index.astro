@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogPostPreview from "../../components/BlogPostPreview.astro";
+import TagList from "../../components/TagList.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getOrderedTags, getTagCounts } from "../../lib/blog";
+import { buildPagination } from "../../lib/pagination";
+
+const pageSize = 3;
+const allPosts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime()
+);
+const { totalPages, pages } = buildPagination(allPosts, pageSize);
+const posts = pages[0].items;
+
+const tagCounts = getTagCounts(allPosts);
+---
+
+<BaseLayout title="Blog | Zerebos" description="Development insights, tutorials, and thoughts on open source.">
+  <PageHeader title="Blog" blurb="Development insights, tutorials, and thoughts on open source." />
+
+  <section class="flex column container" id="blog-posts">
+    {posts.map((post) => <BlogPostPreview post={post} />)}
+  </section>
+
+  {
+    totalPages > 1 && (
+      <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
+        <a aria-disabled="true" class="gradient disabled">‹ Prev</a>
+        <ul class="page-numbers">
+          <li><a class="gradient active">1</a></li>
+          {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => (
+            <li><a href={`/blog/page/${page}`} class="gradient">{page}</a></li>
+          ))}
+        </ul>
+        <a href="/blog/page/2" class="gradient">Next ›</a>
+      </nav>
+    )
+  }
+
+  <hr class="flex container medium" />
+
+  <section class="flex column flex-align-center container" id="blog-tags">
+    <TagList tags={getOrderedTags(tagCounts).map(([tag]) => tag)} tagCounts={tagCounts} wrapperClass="tag-cloud" />
+  </section>
+</BaseLayout>

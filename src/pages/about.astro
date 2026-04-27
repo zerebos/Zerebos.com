@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { Image } from "astro:assets";
+import aboutBanner from "../assets/images/about.webp";
+---
+
+<BaseLayout title="About | Zerebos" description="About Zerebos">
+  <PageHeader title="About Me" blurb="For those that want to know a little more." />
+
+  <div class="flex column" id="about">
+    <section class="flex column flex-align-center banner">
+      <Image
+        src={aboutBanner}
+        alt="Hardware Project"
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 768px) 92vw, 960px"
+      />
+      <p class="caption">A combined hardware/firmware/software project.</p>
+    </section>
+
+    <section class="flex column paragraph container medium">
+      <div class="flex heading">
+        <h2>Origin</h2>
+      </div>
+      <p>
+        I get asked about this a lot, but the origin of this pseudonym is quite simple. I took the
+        first letter of my real name, <strong>Z</strong>, and combined it with something I thought was
+        cool. At the time, I was really into Greek mythology, so I went with the god Erebus (also
+        spelled Erebos). But it wasn't originally intended to become my online pseudonym, it was a
+        name for my Skyrim character. Using it as a pseudonym came shortly thereafter because I liked
+        it so much!
+        <br /><br />
+        I also get asked about avatar I use. This was much more recent. During my graduate school
+        work, I took a course on computer graphics and AI. So I built my own AI from scratch and
+        trained it on a specific style of imagery. Once I got the AI to the point I thought was
+        acceptable, I prompted it with just my pseudonym <strong>Zerebos</strong> and it came up with
+        this. I've been using it ever since, but I really would like to have one made in the same
+        style by a real artist. So if you happen to be an artist, or know one with this style, please
+        reach out.
+      </p>
+    </section>
+
+    <section class="flex column paragraph container medium">
+      <div class="flex heading">
+        <h2>Current</h2>
+      </div>
+      <p>
+        I work at IBM as a firmware engineer for the System Z mainframes. I specifically work in the
+        recovery area, so when something goes wrong, my code kicks in to try and fix things and get
+        them back to a working state.
+        <br /><br />
+        Outside of that, I work on
+        <a href="https://betterdiscord.app/" target="_blank" rel="noopener noreferrer">BetterDiscord</a>
+        and the ecosystem around it. I run a
+        <a
+          href="https://discord.com/servers/49ers-322620751817736192"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Discord server</a
+        >
+        for the San Francisco 49ers. I
+        <a href="https://x.com/zerebos" target="_blank" rel="noopener noreferrer">tweet</a>, play
+        <a href="https://steamcommunity.com/id/zerebos/" target="_blank" rel="noopener noreferrer"
+          >video games</a
+        >,
+        and occasionally work on side projects that end up on
+        <a href="https://github.com/zerebos" target="_blank" rel="noopener noreferrer">GitHub</a>.
+      </p>
+    </section>
+
+    <section class="flex column paragraph container medium">
+      <div class="flex heading">
+        <h2>Future</h2>
+      </div>
+      <p>
+        I think going forward I might try to get a little more into the content creator space. A lot
+        of my friends have encouraged me to start streaming games because I have funny reactions and
+        commentary. And users from the BetterDiscord world have encouraged me to do development
+        streams. It definitely seems like there's a potential audience, and streaming seems kinda
+        fun. So who knows? Maybe that's in my near future.
+        <br /><br />
+        As for future projects, I don't have anything big cooking at the time of writing. But I'm
+        sure something will come up soon. It usually does when I least expect it.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

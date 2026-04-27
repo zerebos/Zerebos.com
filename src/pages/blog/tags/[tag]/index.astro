@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import BlogPostPreview from "../../../../components/BlogPostPreview.astro";
+import TagList from "../../../../components/TagList.astro";
+import PageHeader from "../../../../components/PageHeader.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { buildTagPagination, getOrderedTags, getTagBlurb, getTagCounts } from "../../../../lib/blog";
+
+export async function getStaticPaths() {
+  const pageSize = 3;
+  const allPosts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime()
+  );
+  const tagCounts = getTagCounts(allPosts);
+
+  return buildTagPagination(allPosts, pageSize).map(({ tagSlug, tagName, pages, totalPages, totalPosts }) => ({
+    params: { tag: tagSlug },
+    props: {
+      tagSlug,
+      tagName,
+      posts: pages[0].items,
+      totalPages,
+      totalPosts,
+      tagCounts
+    }
+  }));
+}
+
+const { tagSlug, tagName, posts, totalPages, totalPosts, tagCounts }: { tagSlug: string; tagName: string; posts: CollectionEntry<"blog">[]; totalPages: number; totalPosts: number; tagCounts: ReturnType<typeof getTagCounts> } = Astro.props;
+const tagBlurb = getTagBlurb(totalPosts);
+---
+
+<BaseLayout title={`${tagName} | Zerebos Blog`} description={tagBlurb}>
+  <PageHeader title={tagName} blurb={tagBlurb} />
+
+  <section class="flex column container" id="blog-posts">
+    {posts.map((post) => <BlogPostPreview post={post} />)}
+  </section>
+
+  {
+    totalPages > 1 && (
+      <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
+        <a aria-disabled="true" class="gradient disabled">‹ Prev</a>
+        <ul class="page-numbers">
+          <li><a class="gradient active">1</a></li>
+          {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => (
+            <li><a href={`/blog/tags/${tagSlug}/${page}`} class="gradient">{page}</a></li>
+          ))}
+        </ul>
+        <a href={`/blog/tags/${tagSlug}/2`} class="gradient">Next ›</a>
+      </nav>
+    )
+  }
+
+  <hr class="flex container medium" />
+
+  <section class="flex column flex-align-center container" id="blog-tags">
+    <TagList tags={getOrderedTags(tagCounts).map(([tag]) => tag)} tagCounts={tagCounts} wrapperClass="tag-cloud" />
+  </section>
+</BaseLayout>
