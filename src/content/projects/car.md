@@ -1,4 +1,5 @@
 ---
+order: 3
 title: Self-Driving Car
 blurb: Custom mini-car driving on unknown courses.
 icon: car.webp

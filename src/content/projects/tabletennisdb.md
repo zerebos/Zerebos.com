@@ -1,4 +1,5 @@
 ---
+order: 5
 title: TableTennisDB
 blurb: Table Tennis bot for Discord.
 icon: tabletennisdb.png

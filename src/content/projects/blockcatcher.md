@@ -1,4 +1,5 @@
 ---
+order: 2
 title: Block Catcher
 blurb: A retro style WebGL game.
 icon: blockcatcher.png

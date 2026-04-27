@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PageHeader from "../../../components/PageHeader.astro";
-import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { getOrderedProjects } from "../../../lib/projects";
 
 export async function getStaticPaths() {
   const pageSize = 9;
-  const allProjects = await getCollection("projects");
+  const allProjects = await getOrderedProjects();
   const totalPages = Math.ceil(allProjects.length / pageSize);
   const paths = [];
 

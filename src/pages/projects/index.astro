@@ -2,11 +2,11 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
 
-import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { getOrderedProjects } from "../../lib/projects";
 
 const pageSize = 9;
-const allProjects: CollectionEntry<"projects">[] = await getCollection("projects");
+const allProjects: CollectionEntry<"projects">[] = await getOrderedProjects();
 const totalPages = Math.max(1, Math.ceil(allProjects.length / pageSize));
 const projects = allProjects.slice(0, pageSize);
 

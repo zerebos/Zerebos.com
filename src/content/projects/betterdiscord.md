@@ -1,4 +1,5 @@
 ---
+order: 1
 title: BetterDiscord
 blurb: The Discord customization project.
 icon: betterdiscord.png

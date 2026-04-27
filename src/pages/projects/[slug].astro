@@ -1,12 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getGitHubData } from "../../lib/github";
+import { getOrderedProjects } from "../../lib/projects";
 
 export async function getStaticPaths() {
-  const projects = await getCollection("projects");
+  const projects = await getOrderedProjects();
   return projects.map((project: CollectionEntry<"projects">) => ({
     params: { slug: project.id },
     props: { project }

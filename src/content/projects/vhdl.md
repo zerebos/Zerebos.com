@@ -1,4 +1,5 @@
 ---
+order: 6
 title: VHDL Communications
 blurb: TTL, SPI & I2C on an FPGA.
 icon: vhdl.png

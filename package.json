@@ -13,7 +13,6 @@
     "preview:astro": "bunx --bun astro preview --port 6767",
     "serve:eleventy": "bunx --bun eleventy --config=eleventy.config.ts --serve --port 6767",
     "dev:eleventy": "bunx --bun concurrently --kill-timeout 100 \"bun run watch:css\" \"bun run serve:eleventy\"",
-    "debug:eleventy": "set DEBUG=Eleventy* & bun run build:eleventy",
     "build:eleventy": "bun run build:css && bunx --bun eleventy --config=eleventy.config.ts",
     "build:css": "bunx --bun stylus src/css/index.styl -o build/styles.css --compress",
     "watch:css": "bunx --bun stylus -w src/css/index.styl -o build/styles.css --compress",
