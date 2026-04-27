@@ -1,0 +1,55 @@
+/* Page header (title + blurb) used on blog, project, about, tag pages */
+section#page-header {
+    gap: 18px;
+    margin-top: 90px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+@media only screen and (max-width:1000px) {
+    section#page-header {
+        margin-top: 32px;
+        margin-bottom: 0;
+    }
+}
+
+#page-header h2 {
+    font-size: 32px;
+    letter-spacing: -0.25px;
+    background-image: linear-gradient(90deg, #4589FF 0%, #08BDBA 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#page-header p {
+    font-size: 18px;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+hr {
+    border: 0;
+    margin: 12px auto 24px auto !important;
+    height: 2px;
+    background: radial-gradient(circle at center, rgba(114, 120, 136, 0.6), transparent);
+}
+
+#page-header + hr {
+    margin-top: 20px !important;
+}
+
+/* Section heading label (small caps, used throughout) */
+.heading {
+    justify-content: center;
+    color: rgba(114, 120, 136, 0.6);
+    /* margin-bottom: 10px; */
+}
+
+.heading h2 {
+    color: rgba(114, 120, 136, 0.6);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}

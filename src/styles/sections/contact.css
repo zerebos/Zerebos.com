@@ -1,0 +1,139 @@
+#contact .heading {
+    justify-content: center;
+    align-items: center;
+}
+
+#contact .heading h2 {
+    font-size: 50px;
+    font-weight: 700;
+}
+
+#contact img.contact-avatar {
+    width: 50%;
+    margin-bottom: 1rem;
+    clip-path: var(--hex-clip);
+}
+
+#contactform #honeypot,
+#contactform #company,
+#contactform [for="company"],
+#contactform [for="honeypot"] {
+    display: none;
+}
+
+#contactform {
+    /* box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15); */
+    margin-bottom: 40px;
+    /* background: var(--background-secondary); */
+    padding: 2rem;
+    gap: 12px;
+    background-color: var(--background-secondary);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    flex: 1;
+}
+
+#contactform .left {
+    gap: 12px;
+    position: relative;
+}
+
+#contactform .right {
+    flex: 1;
+    gap: 12px;
+}
+
+#contactform .right textarea {
+    flex: 1;
+    resize: none;
+}
+
+@media only screen and (max-width:768px) {
+    #contactform {
+        padding: 2rem;
+    }
+
+    #contactform .left {
+        flex: 1;
+        order: 2;
+    }
+}
+
+#contactform label {
+    /* margin-bottom: -10px; */
+    display: none;
+}
+
+/* #contactform .btn {
+    background-color: rgba(var(--accent-rgb), 1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(82, 82, 82, 0.2);
+} */
+
+.text-input {
+    height: 52px;
+    background: var(--background-secondary);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    border-radius: 12px;
+    outline: none;
+    font-size: 16px;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    transition: border-color 0.15s ease-in-out;
+    font-family: inherit;
+    max-width: 100%;
+}
+
+.text-input::placeholder {
+    /* color: #fff; */
+}
+
+.text-input:focus {
+    border-color: var(--accent-color);
+}
+
+textarea.text-input {
+    height: inherit;
+}
+
+#captcha-wrap {
+    pointer-events: none;
+    height: 64px;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%) scaleY(0);
+    background: var(--accent-color);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    padding: 0.375rem 0.75rem;
+    border-radius: 12px 12px 0 0;
+    opacity: 0;
+    transition: top 200ms ease, opacity 200ms ease, transform 200ms ease;
+    display: flex;
+    justify-content: center;
+    transform-origin: 0 100%;
+}
+
+#captcha {
+    pointer-events: none;
+    width: 100px;
+    height: 100%;
+}
+
+.text-input:focus + #captcha-wrap {
+    /* top: 0; */
+    opacity: 1;
+    transform: translateX(-50%) scaleY(100%);
+}
+
+.text-input[name="filter"] {
+    transition: border-radius 200ms ease;
+}
+
+.text-input[name="filter"]:focus {
+    border-radius: 0 0 12px 12px;
+}
