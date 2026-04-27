@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Font } from "astro:assets";
 import links from "../data/links";
 
 interface Props {
@@ -59,9 +60,7 @@ const resolvedOgImage = ogImage
     <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml" />
     <meta name="theme-color" content="#018BBC" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <Font cssVariable="--font-inter" preload />
 
     <link rel="alternate" type="application/rss+xml" title="Zerebos.com Blog" href="/feed.xml" />
     <link rel="canonical" href={canonicalUrl} />
