@@ -5,9 +5,10 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
 import { getOrderedProjects } from "../../../lib/projects";
+import { PROJECTS_PAGE_SIZE } from "../../../lib/config";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-  const pageSize = 9;
+  const pageSize = PROJECTS_PAGE_SIZE;
   const allProjects = await getOrderedProjects();
 
   return paginate(allProjects, { pageSize })
