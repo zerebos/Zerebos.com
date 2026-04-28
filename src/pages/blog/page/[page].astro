@@ -5,38 +5,39 @@ import TagList from "../../../components/TagList.astro";
 import PageHeader from "../../../components/PageHeader.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import type { GetStaticPaths, Page } from "astro";
 import { getOrderedTags, getTagCounts } from "../../../lib/blog";
-import { buildPagination } from "../../../lib/pagination";
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const pageSize = 3;
   const allPosts = (await getCollection("blog")).sort(
     (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime()
   );
   const tagCounts = getTagCounts(allPosts);
 
-  const { totalPages, pages } = buildPagination(allPosts, pageSize);
-  const paths = [];
-
-  for (let page = 2; page <= totalPages; page++) {
-    paths.push({
-      params: { page: String(page) },
+  return paginate(allPosts, { pageSize })
+    .filter((path) => path.params.page !== "1")
+    .map((path) => ({
+      ...path,
       props: {
-        posts: pages[page - 1].items,
-        page,
-        totalPages,
+        ...path.props,
         tagCounts
       }
-    });
-  }
+    }));
+};
 
-  return paths;
+interface Props {
+  page: Page<CollectionEntry<"blog">>;
+  tagCounts: ReturnType<typeof getTagCounts>;
 }
 
-const { posts, page, totalPages, tagCounts }: { posts: CollectionEntry<"blog">[]; page: number; totalPages: number; tagCounts: ReturnType<typeof getTagCounts> } = Astro.props;
+const { page, tagCounts }: Props = Astro.props;
+const posts = page.data;
+const currentPage = page.currentPage;
+const totalPages = page.lastPage;
 ---
 
-<BaseLayout title={`Blog - Page ${page} | Zerebos`} description="Development insights, tutorials, and thoughts on open source.">
+<BaseLayout title={`Blog - Page ${currentPage} | Zerebos`} description="Development insights, tutorials, and thoughts on open source.">
   <PageHeader title="Blog" blurb="Development insights, tutorials, and thoughts on open source." />
 
   <section class="flex column container" id="blog-posts">
@@ -44,20 +45,20 @@ const { posts, page, totalPages, tagCounts }: { posts: CollectionEntry<"blog">[]
   </section>
 
   <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
-    <a href={page === 2 ? "/blog" : `/blog/page/${page - 1}`} class="gradient">‹ Prev</a>
+    <a href={currentPage === 2 ? "/blog" : `/blog/page/${currentPage - 1}`} class="gradient">‹ Prev</a>
     <ul class="page-numbers">
-      <li><a href="/blog" class={`gradient ${page === 1 ? "active" : ""}`}>1</a></li>
+      <li><a href="/blog" class={`gradient ${currentPage === 1 ? "active" : ""}`}>1</a></li>
       {
         Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((pageNumber) => (
           <li>
-            <a href={`/blog/page/${pageNumber}`} class={`gradient ${page === pageNumber ? "active" : ""}`}>
+            <a href={`/blog/page/${pageNumber}`} class={`gradient ${currentPage === pageNumber ? "active" : ""}`}>
               {pageNumber}
             </a>
           </li>
         ))
       }
     </ul>
-    <a href={page < totalPages ? `/blog/page/${page + 1}` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
+    <a href={currentPage < totalPages ? `/blog/page/${currentPage + 1}` : undefined} class={`gradient ${currentPage >= totalPages ? "disabled" : ""}`} aria-disabled={currentPage >= totalPages}>
       Next ›
     </a>
   </nav>
