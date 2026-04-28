@@ -24,9 +24,8 @@ export const namedIcons = {
 
 export type NamedIcon = keyof typeof namedIcons;
 
-export function getIconByName(icon: string) {
-    const normalizedIcon = icon.trim().toLowerCase();
-    return namedIcons[normalizedIcon as NamedIcon];
+export function getIconByName(icon: NamedIcon) {
+    return namedIcons[icon];
 }
 
 export {externalLinkIcon, linkedinIcon, menuIcon, twitterIcon};

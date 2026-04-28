@@ -6,8 +6,7 @@ import avatarImage from "../assets/images/avatar.webp";
 import { externalLinkIcon, getIconByName } from "../lib/icons";
 
 const socialIcons = links.icons
-  .map((icon) => ({ ...icon, asset: getIconByName(icon.icon) }))
-  .filter((icon) => Boolean(icon.asset));
+  .map((icon) => ({ ...icon, asset: getIconByName(icon.icon) }));
 
 const categories = links.categories;
 ---
@@ -41,7 +40,7 @@ const categories = links.categories;
     <section class="flex container" id="links-icons">
       {socialIcons.map((icon) => (
         <a href={icon.href} target="_blank" rel="noopener noreferrer" class="flex gradient">
-          {icon.asset && <Image src={icon.asset} alt={icon.icon} width={24} height={24} />}
+          <Image src={icon.asset} alt={icon.icon} width={24} height={24} />
         </a>
       ))}
     </section>
