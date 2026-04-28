@@ -3,30 +3,25 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PageHeader from "../../../components/PageHeader.astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import type { GetStaticPaths, Page } from "astro";
 import { getOrderedProjects } from "../../../lib/projects";
-import { buildPagination } from "../../../lib/pagination";
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const pageSize = 9;
   const allProjects = await getOrderedProjects();
-  const { totalPages, pages } = buildPagination(allProjects, pageSize);
-  const paths = [];
 
-  for (let page = 2; page <= totalPages; page++) {
-    paths.push({
-      params: { page: String(page) },
-      props: {
-        projects: pages[page - 1].items,
-        page,
-        totalPages
-      }
-    });
-  }
+  return paginate(allProjects, { pageSize })
+    .filter((path) => path.params.page !== "1");
+};
 
-  return paths;
+interface Props {
+  page: Page<CollectionEntry<"projects">>;
 }
 
-const { projects, page, totalPages }: { projects: CollectionEntry<"projects">[]; page: number; totalPages: number } = Astro.props;
+const { page }: Props = Astro.props;
+const projects = page.data;
+const currentPage = page.currentPage;
+const totalPages = page.lastPage;
 
 const projectRows: CollectionEntry<"projects">[][] = [];
 for (let i = 0; i < projects.length; i += 3) {
@@ -34,7 +29,7 @@ for (let i = 0; i < projects.length; i += 3) {
 }
 ---
 
-<BaseLayout title={`Projects - Page ${page} | Zerebos`} description="Browse projects from Zerebos.">
+<BaseLayout title={`Projects - Page ${currentPage} | Zerebos`} description="Browse projects from Zerebos.">
   <PageHeader title="Projects" blurb="Browse these projects to learn more about my previous work." />
 
   <section class="flex container column half-padded" id="projects">
@@ -66,20 +61,20 @@ for (let i = 0; i < projects.length; i += 3) {
   </section>
 
   <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
-    <a href={page === 2 ? "/projects" : `/projects/page/${page - 1}`} class="gradient">‹ Prev</a>
+    <a href={currentPage === 2 ? "/projects" : `/projects/page/${currentPage - 1}`} class="gradient">‹ Prev</a>
     <ul class="page-numbers">
-      <li><a href="/projects" class={`gradient ${page === 1 ? "active" : ""}`}>1</a></li>
+      <li><a href="/projects" class={`gradient ${currentPage === 1 ? "active" : ""}`}>1</a></li>
       {
         Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((pageNumber) => (
           <li>
-            <a href={`/projects/page/${pageNumber}`} class={`gradient ${page === pageNumber ? "active" : ""}`}>
+            <a href={`/projects/page/${pageNumber}`} class={`gradient ${currentPage === pageNumber ? "active" : ""}`}>
               {pageNumber}
             </a>
           </li>
         ))
       }
     </ul>
-    <a href={page < totalPages ? `/projects/page/${page + 1}` : undefined} class={`gradient ${page >= totalPages ? "disabled" : ""}`} aria-disabled={page >= totalPages}>
+    <a href={currentPage < totalPages ? `/projects/page/${currentPage + 1}` : undefined} class={`gradient ${currentPage >= totalPages ? "disabled" : ""}`} aria-disabled={currentPage >= totalPages}>
       Next ›
     </a>
   </nav>

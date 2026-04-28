@@ -5,12 +5,11 @@ import { Image } from "astro:assets";
 
 import type { CollectionEntry } from "astro:content";
 import { getOrderedProjects } from "../../lib/projects";
-import { buildPagination } from "../../lib/pagination";
 
 const pageSize = 9;
 const allProjects: CollectionEntry<"projects">[] = await getOrderedProjects();
-const { totalPages, pages } = buildPagination(allProjects, pageSize);
-const projects = pages[0].items;
+const totalPages = Math.max(1, Math.ceil(allProjects.length / pageSize));
+const projects = allProjects.slice(0, pageSize);
 
 const projectRows: CollectionEntry<"projects">[][] = [];
 for (let i = 0; i < projects.length; i += 3) {
