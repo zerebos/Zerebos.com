@@ -6,6 +6,7 @@ import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getTagCounts } from "../../lib/blog";
+import { linkedinIcon, twitterIcon } from "../../lib/icons";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -55,10 +56,10 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? "https://zerebos.com
       <span>Share this post:</span>
       <div class="flex share-links" id="links-icons">
         <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(post.data.title)}`} target="_blank" rel="noopener noreferrer">
-          <img src="/assets/icons/twitter.svg" alt="Share on X" />
+          <Image src={twitterIcon} alt="Share on X" width={24} height={24} />
         </a>
         <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noopener noreferrer">
-          <img src="/assets/icons/linkedin.svg" alt="Share on LinkedIn" />
+          <Image src={linkedinIcon} alt="Share on LinkedIn" width={24} height={24} />
         </a>
       </div>
     </div>

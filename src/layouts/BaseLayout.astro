@@ -6,6 +6,7 @@ import type { ImageMetadata } from "astro";
 import links from "../data/links";
 import defaultOgImage from "../assets/images/avatar_banner.webp";
 import {Image} from "astro:assets";
+import { getIconByName, menuIcon } from "../lib/icons";
 import zSwipeImage from "../assets/images/z_swipe.png";
 
 interface Props {
@@ -32,6 +33,10 @@ const ogImagePath = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const resolvedOgImage = ogImagePath
   ? new URL(ogImagePath, siteUrl).toString()
   : new URL(defaultOgImage.src, siteUrl).toString();
+const navSocialLinks = links.icons.map((link) => ({
+  ...link,
+  asset: getIconByName(link.icon),
+}));
 ---
 
 <!doctype html>
@@ -98,13 +103,13 @@ const resolvedOgImage = ogImagePath
           </ul>
         </div>
         <div class="nav-socials">
-          {links.icons.map((link) => (
+          {navSocialLinks.map((link) => (
             <a href={link.href} class={link.icon.toLowerCase()} target="_blank" rel="noopener noreferrer">
-              <img src={`/assets/icons/${link.icon.toLowerCase()}.svg`} class="social-icon" alt={link.icon} />
+              {link.asset && <Image src={link.asset} class="social-icon" alt={link.icon} width={18} height={18} />}
             </a>
           ))}
           <button id="menuButton" class="expand left" aria-label="Menu">
-            <img src="/assets/icons/menu.svg" alt="Open menu" />
+            <Image src={menuIcon} alt="Open menu" width={18} height={18} />
           </button>
         </div>
       </nav>

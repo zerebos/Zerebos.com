@@ -3,6 +3,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import links from "../data/links";
 import avatarImage from "../assets/images/avatar.webp";
+import { externalLinkIcon, getIconByName } from "../lib/icons";
+
+const socialIcons = links.icons
+  .map((icon) => ({ ...icon, asset: getIconByName(icon.icon) }))
+  .filter((icon) => Boolean(icon.asset));
+
+const categories = links.categories;
 ---
 
 <BaseLayout title="Links | Zerebos" description="Social links and project links for Zerebos">
@@ -32,14 +39,14 @@ import avatarImage from "../assets/images/avatar.webp";
     </section>
 
     <section class="flex container" id="links-icons">
-      {links.icons.map((icon: {icon: string; href: string}) => (
+      {socialIcons.map((icon) => (
         <a href={icon.href} target="_blank" rel="noopener noreferrer" class="flex gradient">
-          <img src={`/assets/icons/${icon.icon}.svg`} alt={icon.icon} />
+          {icon.asset && <Image src={icon.asset} alt={icon.icon} width={24} height={24} />}
         </a>
       ))}
     </section>
 
-    {links.categories.map((category: {label: string; links: {href: string; icon: string; label: string}[]}) => (
+    {categories.map((category) => (
       <section class="flex column container listbox">
         <div class="flex heading">
           <h2>{category.label}</h2>
@@ -48,11 +55,11 @@ import avatarImage from "../assets/images/avatar.webp";
           {category.links.map((link) => (
             <a class="flex link gradient outline" href={link.href} target="_blank" rel="noopener noreferrer">
               <div class="flex label">
-                <img src={link.icon} alt={link.label} />
+                <Image src={link.icon} alt={link.label} width={20} height={20} />
                 <span>{link.label}</span>
               </div>
               <div class="flex external">
-                <img src="/assets/icons/external-link.svg" alt="External link" />
+                <Image src={externalLinkIcon} alt="External link" width={20} height={20} />
               </div>
             </a>
           ))}

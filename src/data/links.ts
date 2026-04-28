@@ -1,4 +1,8 @@
 import blockcatcherIcon from "../assets/projects/icons/blockcatcher.png";
+import betterdiscordIcon from "../assets/projects/icons/betterdiscord.png";
+import mastodonIcon from "../assets/icons/mastodon.svg";
+import steamIcon from "../assets/icons/steam.svg";
+import type {ImageMetadata} from "astro";
 
 interface IconLink {
     icon: string;
@@ -8,7 +12,7 @@ interface IconLink {
 interface CategoryLink {
     label: string;
     href: string;
-    icon: string;
+    icon: ImageMetadata;
 }
 
 interface LinkCategory {
@@ -35,15 +39,15 @@ export default {
         {
             label: "Featured Projects",
             links: [
-                {label: "BetterDiscord", href: "https://betterdiscord.app/", icon: "https://betterdiscord.app/resources/favicon/favicon-32x32.png"},
-                {label: "Block Catcher", href: "http://zerebos.github.io/BlockCatcher/", icon: blockcatcherIcon.src}
+                {label: "BetterDiscord", href: "https://betterdiscord.app/", icon: betterdiscordIcon},
+                {label: "Block Catcher", href: "http://zerebos.github.io/BlockCatcher/", icon: blockcatcherIcon}
             ]
         },
         {
             label: "Other Socials",
             links: [
-                {label: "Steam", href: "https://steamcommunity.com/id/Zerebos/", icon: "/assets/icons/steam.svg"},
-                {label: "Mastodon", href: "https://mstdn.social/@zerebos", icon: "/assets/icons/mastodon.svg"}
+                {label: "Steam", href: "https://steamcommunity.com/id/Zerebos/", icon: steamIcon},
+                {label: "Mastodon", href: "https://mstdn.social/@zerebos", icon: mastodonIcon}
             ]
         }
     ]
