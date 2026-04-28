@@ -28,6 +28,7 @@ const {
   author,
 } = Astro.props;
 
+const displayTitle = title && title !== SITE_TITLE ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const siteUrl = Astro.site ?? new URL(SITE_URL);
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImagePath = typeof ogImage === "string" ? ogImage : ogImage?.src;
@@ -49,7 +50,7 @@ const navSocialLinks = links.icons.map((link) => ({
 
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={displayTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={resolvedOgImage} />
     {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
@@ -58,7 +59,7 @@ const navSocialLinks = links.icons.map((link) => ({
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:domain" content={SITE_DOMAIN} />
     <meta property="twitter:url" content={canonicalUrl} />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={displayTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={resolvedOgImage} />
 
@@ -78,7 +79,7 @@ const navSocialLinks = links.icons.map((link) => ({
 
     <link rel="alternate" type="application/rss+xml" title={`${SITE_TITLE}.com Blog`} href="/feed.xml" />
     <link rel="canonical" href={canonicalUrl} />
-    <title>{title}</title>
+    <title>{displayTitle}</title>
   </head>
   <body class="dark">
     <div class="gradient-banner"></div>

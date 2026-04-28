@@ -54,7 +54,7 @@ const totalPages = page.lastPage;
 const tagBlurb = getTagBlurb(totalPosts);
 ---
 
-<BaseLayout title={`${tagName} - Page ${currentPage} | Zerebos Blog`} description={tagBlurb}>
+<BaseLayout title={`${tagName} - Page ${currentPage}`} description={tagBlurb}>
   <PageHeader title={tagName} blurb={tagBlurb} />
 
   <section class="flex column container" id="blog-posts">

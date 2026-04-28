@@ -7,7 +7,7 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
 import { getOrderedTags, getTagCounts } from "../../../lib/blog";
-import { BLOG_PAGE_SIZE, BLOG_DESCRIPTION, SITE_TITLE } from "../../../lib/config";
+import { BLOG_PAGE_SIZE, BLOG_DESCRIPTION } from "../../../lib/config";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const pageSize = BLOG_PAGE_SIZE;
@@ -38,7 +38,7 @@ const currentPage = page.currentPage;
 const totalPages = page.lastPage;
 ---
 
-<BaseLayout title={`Blog - Page ${currentPage} | ${SITE_TITLE}`} description={BLOG_DESCRIPTION}>
+<BaseLayout title={`Blog - Page ${currentPage}`} description={BLOG_DESCRIPTION}>
   <PageHeader title="Blog" blurb={BLOG_DESCRIPTION} />
 
   <section class="flex column container" id="blog-posts">

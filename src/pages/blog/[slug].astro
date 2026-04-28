@@ -7,7 +7,7 @@ import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getTagCounts } from "../../lib/blog";
 import { linkedinIcon, twitterIcon } from "../../lib/icons";
-import { SITE_URL, SITE_TITLE } from "../../lib/config";
+import { SITE_URL, PSEUDONYM } from "../../lib/config";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -24,12 +24,12 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
 ---
 
 <BaseLayout
-  title={`${post.data.title} | ${SITE_TITLE}`}
+  title={post.data.title}
   description={post.data.blurb}
   ogType="article"
   publishedTime={post.data.date}
   ogImage={post.data.banner}
-  author={SITE_TITLE}
+  author={PSEUDONYM}
 >
   <PageHeader title={post.data.title} date={post.data.date} blurb={post.data.blurb} />
 
