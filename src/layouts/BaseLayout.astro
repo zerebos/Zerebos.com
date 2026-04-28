@@ -119,13 +119,16 @@ const navSocialLinks = links.icons.map((link) => ({
     </div>
     <script>
       function bindMenuToggle() {
-        console.log("Binding menu toggle");
         const menuButton = document.querySelector("#menuButton");
-        menuButton?.addEventListener("click", () => {
-          menuButton?.parentElement?.parentElement?.classList?.toggle("expanded");
-        });
+        if (!(menuButton instanceof HTMLElement)) return;
+
+        // Reassigning onclick keeps this idempotent across astro:page-load events.
+        menuButton.onclick = () => {
+          menuButton.closest("#main-nav")?.classList.toggle("expanded");
+        };
       }
 
+      bindMenuToggle();
       document.addEventListener("astro:page-load", bindMenuToggle);
     </script>
   </body>
