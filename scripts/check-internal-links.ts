@@ -1,23 +1,41 @@
 import fs from "node:fs";
 import path from "node:path";
 
+interface DistTarget {
+    exists: boolean;
+    filePath: string;
+    isHtml: boolean;
+}
+
+interface Reference {
+    attribute: "href" | "src" | "srcset" | "poster" | "content";
+    value: string;
+}
+
+interface Failure {
+    pageRoute: string;
+    attribute: Reference["attribute"];
+    value: string;
+    reason: string;
+}
+
 const PROJECT_ROOT = process.cwd();
 const DIST_DIR = path.join(PROJECT_ROOT, "dist");
 const SITE_ORIGIN = "https://zerebos.local";
-const HTML_ID_CACHE = new Map();
+const HTML_ID_CACHE = new Map<string, Set<string>>();
 
-function fail(message) {
+function fail(message: string): never {
     console.error(message);
     process.exit(1);
 }
 
-function toPosix(filePath) {
+function toPosix(filePath: string): string {
     return filePath.split(path.sep).join("/");
 }
 
-function walkFiles(dirPath) {
+function walkFiles(dirPath: string): string[] {
     const entries = fs.readdirSync(dirPath, {withFileTypes: true});
-    const files = [];
+    const files: string[] = [];
 
     for (const entry of entries) {
         const entryPath = path.join(dirPath, entry.name);
@@ -35,11 +53,11 @@ function walkFiles(dirPath) {
     return files;
 }
 
-function pathExists(filePath) {
+function pathExists(filePath: string): boolean {
     return fs.existsSync(filePath);
 }
 
-function getHtmlFiles() {
+function getHtmlFiles(): string[] {
     if (!pathExists(DIST_DIR)) {
         fail("dist/ does not exist. Run `bun run build` first or use `bun run check:links`.");
     }
@@ -49,7 +67,7 @@ function getHtmlFiles() {
         .sort();
 }
 
-function distHtmlToRoute(filePath) {
+function distHtmlToRoute(filePath: string): string {
     const relativePath = toPosix(path.relative(DIST_DIR, filePath));
 
     if (relativePath === "index.html") {
@@ -63,7 +81,7 @@ function distHtmlToRoute(filePath) {
     return `/${relativePath.slice(0, -".html".length)}`;
 }
 
-function resolveDistTarget(pathname) {
+function resolveDistTarget(pathname: string): DistTarget {
     const normalizedPath = pathname === "/" ? "" : pathname.replace(/^\/+/, "");
     const directPath = path.join(DIST_DIR, normalizedPath);
 
@@ -101,13 +119,14 @@ function resolveDistTarget(pathname) {
     return {exists: false, filePath: directPath, isHtml: false};
 }
 
-function getHtmlIds(filePath) {
-    if (HTML_ID_CACHE.has(filePath)) {
-        return HTML_ID_CACHE.get(filePath);
+function getHtmlIds(filePath: string): Set<string> {
+    const cachedIds = HTML_ID_CACHE.get(filePath);
+    if (cachedIds) {
+        return cachedIds;
     }
 
     const html = fs.readFileSync(filePath, "utf8");
-    const ids = new Set();
+    const ids = new Set<string>();
     const idPattern = /\s(?:id|name)=(?:"([^"]+)"|'([^']+)')/g;
 
     for (const match of html.matchAll(idPattern)) {
@@ -121,7 +140,7 @@ function getHtmlIds(filePath) {
     return ids;
 }
 
-function shouldSkipReference(rawValue) {
+function shouldSkipReference(rawValue: string): boolean {
     if (!rawValue) {
         return true;
     }
@@ -142,8 +161,8 @@ function shouldSkipReference(rawValue) {
     return false;
 }
 
-function parseAttributes(rawAttributes) {
-    const attributes = new Map();
+function parseAttributes(rawAttributes: string): Map<string, string> {
+    const attributes = new Map<string, string>();
     const attributePattern = /\b([:\w-]+)=(?:"([^"]*)"|'([^']*)')/g;
 
     for (const match of rawAttributes.matchAll(attributePattern)) {
@@ -155,21 +174,21 @@ function parseAttributes(rawAttributes) {
     return attributes;
 }
 
-function addReference(references, attribute, value) {
+function addReference(references: Reference[], attribute: Reference["attribute"], value: string): void {
     if (!shouldSkipReference(value)) {
         references.push({attribute, value});
     }
 }
 
-function addSrcSetReferences(references, value) {
+function addSrcSetReferences(references: Reference[], value: string): void {
     for (const candidate of value.split(",")) {
-        const [source] = candidate.trim().split(/\s+/, 1);
+        const [source = ""] = candidate.trim().split(/\s+/, 1);
         addReference(references, "srcset", source);
     }
 }
 
-function extractReferences(html) {
-    const references = [];
+function extractReferences(html: string): Reference[] {
+    const references: Reference[] = [];
     const tagPattern = /<([a-z][\w:-]*)(\s[^>]*?)?>/gi;
 
     for (const match of html.matchAll(tagPattern)) {
@@ -215,7 +234,7 @@ function extractReferences(html) {
     return references;
 }
 
-function checkReference(pageFilePath, pageRoute, reference, failures) {
+function checkReference(pageFilePath: string, pageRoute: string, reference: Reference, failures: Failure[]): void {
     const rawValue = reference.value.trim();
 
     if (rawValue.startsWith("#")) {
@@ -270,7 +289,7 @@ function checkReference(pageFilePath, pageRoute, reference, failures) {
 
 const htmlFiles = getHtmlFiles();
 let checkedReferences = 0;
-const failures = [];
+const failures: Failure[] = [];
 
 for (const htmlFilePath of htmlFiles) {
     const pageRoute = distHtmlToRoute(htmlFilePath);
