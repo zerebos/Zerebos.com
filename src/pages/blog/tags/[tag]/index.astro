@@ -32,7 +32,7 @@ const { tagSlug, tagName, posts, totalPages, totalPosts, tagCounts }: { tagSlug:
 const tagBlurb = getTagBlurb(totalPosts);
 ---
 
-<BaseLayout title={tagName} description={tagBlurb}>
+<BaseLayout title={`Posts tagged "${tagName}"`} description={tagBlurb}>
   <PageHeader title={tagName} blurb={tagBlurb} />
 
   <section class="flex column container" id="blog-posts">

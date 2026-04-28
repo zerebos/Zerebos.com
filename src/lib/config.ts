@@ -1,5 +1,5 @@
 export const BLOG_PAGE_SIZE = 3;
-export const PROJECTS_PAGE_SIZE = 9;
+export const PROJECTS_PAGE_SIZE = 6;
 
 export const SITE_URL = "https://zerebos.com";
 export const SITE_DOMAIN = "zerebos.com";

@@ -37,7 +37,7 @@ function formatDate(iso: string): string {
 }
 ---
 
-<BaseLayout title={project.data.title} description={project.data.blurb} ogImage={project.data.banner}>
+<BaseLayout title={`${project.data.title} - Project`} description={project.data.blurb} ogImage={project.data.banner}>
   <PageHeader title={project.data.title} blurb={project.data.blurb} />
 
   {project.data.banner && (
