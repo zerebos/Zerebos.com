@@ -7,6 +7,7 @@ import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getTagCounts } from "../../lib/blog";
 import { linkedinIcon, twitterIcon } from "../../lib/icons";
+import { SITE_URL, SITE_TITLE } from "../../lib/config";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -19,16 +20,16 @@ export async function getStaticPaths() {
 
 const { post, tagCounts }: { post: CollectionEntry<"blog">; tagCounts: ReturnType<typeof getTagCounts> } = Astro.props;
 const { Content } = await render(post);
-const canonical = new URL(`/blog/${post.id}`, Astro.site ?? "https://zerebos.com").toString();
+const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString();
 ---
 
 <BaseLayout
-  title={`${post.data.title} | Zerebos`}
+  title={`${post.data.title} | ${SITE_TITLE}`}
   description={post.data.blurb}
   ogType="article"
   publishedTime={post.data.date}
   ogImage={post.data.banner}
-  author="Zerebos"
+  author={SITE_TITLE}
 >
   <PageHeader title={post.data.title} date={post.data.date} blurb={post.data.blurb} />
 

@@ -7,6 +7,7 @@ import links from "../data/links";
 import defaultOgImage from "../assets/images/avatar_banner.webp";
 import {Image} from "astro:assets";
 import { getIconByName, menuIcon } from "../lib/icons";
+import { SITE_URL, SITE_DOMAIN, SITE_TITLE } from "../lib/config";
 import zSwipeImage from "../assets/images/z_swipe.png";
 
 interface Props {
@@ -19,7 +20,7 @@ interface Props {
 }
 
 const {
-  title = "Zerebos",
+  title = SITE_TITLE,
   description = "Landing page and portfolio for Zerebos",
   ogType = "website",
   ogImage,
@@ -27,7 +28,7 @@ const {
   author,
 } = Astro.props;
 
-const siteUrl = Astro.site ?? new URL("https://zerebos.com");
+const siteUrl = Astro.site ?? new URL(SITE_URL);
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImagePath = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const resolvedOgImage = ogImagePath
@@ -55,7 +56,7 @@ const navSocialLinks = links.icons.map((link) => ({
     {author && <meta property="article:author" content={author} />}
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta property="twitter:domain" content="zerebos.com" />
+    <meta property="twitter:domain" content={SITE_DOMAIN} />
     <meta property="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -75,7 +76,7 @@ const navSocialLinks = links.icons.map((link) => ({
 
     <Font cssVariable="--font-inter" preload />
 
-    <link rel="alternate" type="application/rss+xml" title="Zerebos.com Blog" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE_TITLE}.com Blog`} href="/feed.xml" />
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
   </head>

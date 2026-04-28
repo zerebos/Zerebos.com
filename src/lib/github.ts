@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import repos from "../data/repos";
+import {GITHUB_USERNAME} from "./config";
 
 const CACHE_DIR = path.resolve(".cache/github");
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 1 day
@@ -75,7 +76,7 @@ async function githubFetch<T>(url: string, cacheKey: string): Promise<T | null> 
     if (cached !== null) return cached;
 
     const token = process.env.GITHUB_TOKEN ?? "";
-    const headers: HeadersInit = {"User-Agent": "@zerebos/Zerebos.com"};
+    const headers: HeadersInit = {"User-Agent": `@${GITHUB_USERNAME}/Zerebos.com`};
     if (token) headers.Authorization = `Bearer ${token}`;
 
     try {
@@ -91,7 +92,7 @@ async function githubFetch<T>(url: string, cacheKey: string): Promise<T | null> 
 }
 
 function fullName(repo: string): string {
-    return repo.includes("/") ? repo : `zerebos/${repo}`;
+    return repo.includes("/") ? repo : `${GITHUB_USERNAME}/${repo}`;
 }
 
 function normalizeLanguagePercentages(raw: Record<string, number>): Record<string, number> | null {

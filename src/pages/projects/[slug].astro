@@ -5,6 +5,7 @@ import { Image } from "astro:assets";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getGitHubData } from "../../lib/github";
+import { GITHUB_USERNAME, SITE_TITLE } from "../../lib/config";
 import { getOrderedProjects } from "../../lib/projects";
 
 export async function getStaticPaths() {
@@ -24,7 +25,7 @@ let langs: Record<string, number> | null = null;
 let branches: string[] | null = null;
 
 if (repo) {
-  const fullName = repo.includes("/") ? repo : `zerebos/${repo}`;
+  const fullName = repo.includes("/") ? repo : `${GITHUB_USERNAME}/${repo}`;
   const github = await getGitHubData();
   git = github.projects.find(p => p.full_name === fullName) ?? null;
   langs = github.languages[fullName] ?? null;
@@ -36,7 +37,7 @@ function formatDate(iso: string): string {
 }
 ---
 
-<BaseLayout title={`${project.data.title} | Zerebos`} description={project.data.blurb} ogImage={project.data.banner}>
+<BaseLayout title={`${project.data.title} | ${SITE_TITLE}`} description={project.data.blurb} ogImage={project.data.banner}>
   <PageHeader title={project.data.title} blurb={project.data.blurb} />
 
   {project.data.banner && (

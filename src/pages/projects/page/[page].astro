@@ -5,7 +5,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
 import { getOrderedProjects } from "../../../lib/projects";
-import { PROJECTS_PAGE_SIZE } from "../../../lib/config";
+import { PROJECTS_PAGE_SIZE, PROJECTS_DESCRIPTION, SITE_TITLE } from "../../../lib/config";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const pageSize = PROJECTS_PAGE_SIZE;
@@ -30,8 +30,8 @@ for (let i = 0; i < projects.length; i += 3) {
 }
 ---
 
-<BaseLayout title={`Projects - Page ${currentPage} | Zerebos`} description="Browse projects from Zerebos.">
-  <PageHeader title="Projects" blurb="Browse these projects to learn more about my previous work." />
+<BaseLayout title={`Projects - Page ${currentPage} | ${SITE_TITLE}`} description={PROJECTS_DESCRIPTION}>
+  <PageHeader title="Projects" blurb={PROJECTS_DESCRIPTION} />
 
   <section class="flex container column half-padded" id="projects">
     {
