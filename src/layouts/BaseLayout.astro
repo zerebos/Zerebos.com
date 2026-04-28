@@ -5,6 +5,8 @@ import { ClientRouter } from "astro:transitions";
 import type { ImageMetadata } from "astro";
 import links from "../data/links";
 import defaultOgImage from "../assets/images/avatar_banner.webp";
+import {Image} from "astro:assets";
+import zSwipeImage from "../assets/images/z_swipe.png";
 
 interface Props {
   title?: string;
@@ -78,7 +80,15 @@ const resolvedOgImage = ogImagePath
     <div id="main-wrapper" class="container">
       <nav id="main-nav" class="collapse">
         <div class="nav">
-          <a href="/"><img src="/assets/images/z_swipe.png" class="brand" alt="Zerebos Logo" /></a>
+          <a href="/">
+            <Image
+              src={zSwipeImage}
+              class="brand"
+              alt="Zerebos Logo"
+              widths={[32, 64]}
+              sizes="32px"
+            />
+          </a>
           <ul class="navbar-nav nav">
             <li class="nav-item"><a href="/" class="nav-link">home</a></li>
             <li class="nav-item"><a href="/projects" class="nav-link">projects</a></li>
