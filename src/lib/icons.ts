@@ -23,6 +23,7 @@ export const namedIcons = {
 } as const;
 
 export type NamedIcon = keyof typeof namedIcons;
+export type SocialIconName = Exclude<NamedIcon, "external-link" | "menu">;
 
 export function getIconByName(icon: NamedIcon) {
     return namedIcons[icon];

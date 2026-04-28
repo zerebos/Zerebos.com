@@ -3,10 +3,10 @@ import betterdiscordIcon from "../assets/projects/icons/betterdiscord.png";
 import mastodonIcon from "../assets/icons/mastodon.svg";
 import steamIcon from "../assets/icons/steam.svg";
 import type {ImageMetadata} from "astro";
-import type {NamedIcon} from "../lib/icons";
+import type {SocialIconName} from "../lib/icons";
 
 interface IconLink {
-    icon: NamedIcon;
+    icon: SocialIconName;
     href: string;
 }
 
