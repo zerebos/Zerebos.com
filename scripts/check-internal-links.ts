@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from "node:fs";
 import path from "node:path";
 
@@ -19,10 +20,18 @@ interface Failure {
     reason: string;
 }
 
+interface Success {
+    pageRoute: string;
+    attribute: Reference["attribute"];
+    value: string;
+    reason: string;
+}
+
 const PROJECT_ROOT = process.cwd();
 const DIST_DIR = path.join(PROJECT_ROOT, "dist");
 const SITE_ORIGIN = "https://zerebos.local";
 const HTML_ID_CACHE = new Map<string, Set<string>>();
+const VERBOSE = process.argv.includes("--verbose") || process.argv.includes("-v");
 
 function fail(message: string): never {
     console.error(message);
@@ -234,6 +243,14 @@ function extractReferences(html: string): Reference[] {
     return references;
 }
 
+function logSuccess(success: Success): void {
+    if (!VERBOSE) {
+        return;
+    }
+
+    console.log(`+ ${success.pageRoute} [${success.attribute}] ${success.value} -> ${success.reason}`);
+}
+
 function checkReference(pageFilePath: string, pageRoute: string, reference: Reference, failures: Failure[]): void {
     const rawValue = reference.value.trim();
 
@@ -251,7 +268,15 @@ function checkReference(pageFilePath: string, pageRoute: string, reference: Refe
                 value: rawValue,
                 reason: `missing anchor #${fragment} on ${pageRoute}`,
             });
+            return;
         }
+
+        logSuccess({
+            pageRoute,
+            attribute: reference.attribute,
+            value: rawValue,
+            reason: `found anchor #${fragment} on ${pageRoute}`,
+        });
         return;
     }
 
@@ -283,8 +308,26 @@ function checkReference(pageFilePath: string, pageRoute: string, reference: Refe
                 value: rawValue,
                 reason: `missing anchor #${fragment} on ${distHtmlToRoute(target.filePath)}`,
             });
+            return;
         }
+
+        logSuccess({
+            pageRoute,
+            attribute: reference.attribute,
+            value: rawValue,
+            reason: `resolved to ${distHtmlToRoute(target.filePath)} with anchor #${fragment}`,
+        });
+        return;
     }
+
+    logSuccess({
+        pageRoute,
+        attribute: reference.attribute,
+        value: rawValue,
+        reason: target.isHtml
+            ? `resolved to ${distHtmlToRoute(target.filePath)}`
+            : `resolved to ${toPosix(path.relative(DIST_DIR, target.filePath))}`,
+    });
 }
 
 const htmlFiles = getHtmlFiles();

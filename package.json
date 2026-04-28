@@ -12,6 +12,7 @@
     "check": "bunx --bun astro check",
     "check:links": "bun run build && bun run check:links:dist",
     "check:links:dist": "bun scripts/check-internal-links.ts",
+    "check:links:lychee": "lychee --offline dist -b \"https://zerebos.com\"",
     "check:assets": "bun scripts/find-unused-assets.ts",
     "wrangler:dev": "bun run build && wrangler dev",
     "wrangler:types": "wrangler types"

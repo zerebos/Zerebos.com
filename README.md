@@ -53,6 +53,8 @@ bun run preview
 - `bun run check`: Run Astro type/content checks
 - `bun run check:links`: Build the site, then verify built internal links in `dist/`
 - `bun run check:links:dist`: Verify internal links against an existing `dist/` build
+- `bun run check:links:dist -- --verbose`: Print every successful internal reference resolution while checking
+- `bun run check:links:lychee`: Verify internal links using [lychee](https://github.com/lycheeverse/lychee/) if installed.
 - `bun run check:assets`: Report which files under `public/assets/` and `src/assets/` appear unused
 - `bun run deploy`: Build and deploy via Wrangler (manual deployment path)
 
