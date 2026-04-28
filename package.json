@@ -10,6 +10,9 @@
     "preview": "bunx --bun astro preview --port 6767",
     "deploy": "bun run build && wrangler deploy",
     "check": "bunx --bun astro check",
+    "check:links": "bun run build && bun run check:links:dist",
+    "check:links:dist": "bun scripts/check-internal-links.mjs",
+    "check:assets": "bun scripts/find-unused-assets.mjs",
     "wrangler:dev": "bun run build && wrangler dev",
     "wrangler:types": "wrangler types"
   },

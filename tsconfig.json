@@ -25,7 +25,7 @@
   },
   "include": [
     "src/**/*",
-    "tests/**/*",
+    "scripts/*",
     ".astro/*",
     "astro.config.mjs",
     "./worker-configuration.d.ts"
