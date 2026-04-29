@@ -3,20 +3,15 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
-
-name: 🚀 Deploy website on push
+name: 🔍 CI Sanity Checks
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
-    if: false  # Disabled — deployment is handled by Cloudflare Pages auto-deploy via wrangler
+  sanity-check:
+    name: ✅ Check
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
@@ -25,7 +20,7 @@ jobs:
     - name: Setup Bun
       uses: oven-sh/setup-bun@v2
       with:
-        bun-version: 1.3.9
+        bun-version: 1.3.13
 
     - name: Cache Bun dependencies
       uses: actions/cache@v5
@@ -35,18 +30,19 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-bun-
 
-    - name: 🔨 Build Project
-      run: |
-        bun install --frozen-lockfile
-        bun run build
+    - name: 📦 Install dependencies
+      run: bun install --frozen-lockfile
+
+    - name: 🔎 Astro type check
+      run: bun run check
+
+    - name: 🔨 Build
+      run: bun run build
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-      with:
-        server: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        local-dir: ${{ secrets.LOCAL_PATH }}
-        server-dir: ${{ secrets.SERVER_PATH }}
+    - name: 🔗 Check internal links
+      run: bun run check:links:dist
+
+    - name: 🖼️ Check for unused assets
+      run: bun run check:assets
