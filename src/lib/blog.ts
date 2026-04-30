@@ -1,5 +1,4 @@
-import { getCollection } from "astro:content";
-import type {CollectionEntry} from "astro:content";
+import {getCollection, type CollectionEntry} from "astro:content";
 import {toSlug} from "./slug";
 
 type BlogEntry = CollectionEntry<"blog">;
@@ -15,7 +14,7 @@ export function getTagPostGroups(posts: BlogEntry[]): TagPostGroup[] {
   const tags = new Map<string, {tagName: string; posts: BlogEntry[];}>();
 
   for (const post of posts) {
-    for (const tag of post.data.blogTags ?? []) {
+    for (const tag of post.data.tags ?? []) {
       const slug = toSlug(tag);
       if (!tags.has(slug)) {
         tags.set(slug, {tagName: tag, posts: []});
@@ -36,7 +35,7 @@ export function getTagCounts(posts: BlogEntry[]): Map<string, number> {
   const tagCounts = new Map<string, number>();
 
   for (const post of posts) {
-    for (const tag of post.data.blogTags ?? []) {
+    for (const tag of post.data.tags ?? []) {
       tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
     }
   }
@@ -55,7 +54,7 @@ export function getTagBlurb(totalPosts: number): string {
 }
 
 export async function getBlogPosts(): Promise<BlogEntry[]> {
-  return getCollection("blog", ({ data }) => import.meta.env.DEV || !data.draft);
+  return getCollection("blog", ({data}) => import.meta.env.DEV || !data.draft);
 }
 
 export async function getOrderedBlogPosts(): Promise<BlogEntry[]> {

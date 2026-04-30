@@ -25,7 +25,7 @@ export async function GET(context: APIContext) {
             title: post.data.title,
             description: post.data.blurb,
             pubDate: post.data.date,
-            categories: post.data.blogTags,
+            categories: post.data.tags,
             link: `/blog/${post.id}`,
         })),
         customData: `<language>en</language><lastBuildDate>${latestChange.toUTCString()}</lastBuildDate><atom:link href="${new URL("/feed.xml", context.site ?? SITE_URL).toString()}" rel="self" type="application/rss+xml" />`,

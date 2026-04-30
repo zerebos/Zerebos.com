@@ -51,7 +51,7 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
   </section>
 
   <section class="flex container blog-navigation">
-    <TagList tags={post.data.blogTags ?? []} tagCounts={tagCounts} />
+    <TagList tags={post.data.tags ?? []} tagCounts={tagCounts} />
 
     <div class="flex column blog-share">
       <span>Share this post:</span>

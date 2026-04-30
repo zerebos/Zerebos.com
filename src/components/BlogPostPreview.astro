@@ -15,7 +15,7 @@ const { post, tagLimit = 4 } = Astro.props;
     <time datetime={post.data.date.toISOString().slice(0, 10)}>
       {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
     </time>
-    {post.data.blogTags && <TagList tags={post.data.blogTags} limit={tagLimit} />}
+    {post.data.tags && <TagList tags={post.data.tags} limit={tagLimit} />}
   </div>
   <h3><a href={`/blog/${post.id}`}>{post.data.title}</a></h3>
   <p class="blog-excerpt">{post.data.blurb}</p>
