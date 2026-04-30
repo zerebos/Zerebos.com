@@ -1,3 +1,4 @@
+import { getCollection } from "astro:content";
 import type {CollectionEntry} from "astro:content";
 import {toSlug} from "./slug";
 
@@ -51,4 +52,13 @@ export function getTagBlurb(totalPosts: number): string {
   const participle = totalPosts === 1 ? "is" : "are";
   const postLabel = totalPosts === 1 ? "post" : "posts";
   return `There ${participle} ${totalPosts} blog ${postLabel} with this tag.`;
+}
+
+export async function getBlogPosts(): Promise<BlogEntry[]> {
+  return getCollection("blog", ({ data }) => import.meta.env.DEV || !data.draft);
+}
+
+export async function getOrderedBlogPosts(): Promise<BlogEntry[]> {
+  const posts = await getBlogPosts();
+  return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }

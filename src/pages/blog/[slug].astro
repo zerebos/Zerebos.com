@@ -3,14 +3,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import TagList from "../../components/TagList.astro";
 import { Image } from "astro:assets";
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getTagCounts } from "../../lib/blog";
+import { getBlogPosts, getTagCounts } from "../../lib/blog";
 import { linkedinIcon, twitterIcon } from "../../lib/icons";
 import { SITE_URL, PSEUDONYM } from "../../lib/config";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = await getBlogPosts();
   const tagCounts = getTagCounts(posts);
   return posts.map((post: CollectionEntry<"blog">) => ({
     params: { slug: post.id },

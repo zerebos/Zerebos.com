@@ -2,9 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPostPreview from "../components/BlogPostPreview.astro";
 import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getGitHubData } from "../lib/github";
+import { getOrderedBlogPosts } from "../lib/blog";
 import { getOrderedProjects } from "../lib/projects";
 import avatarImage from "../assets/images/avatar.webp";
 
@@ -15,10 +15,8 @@ for (let i = 0; i < featuredProjects.length; i += 3) {
   featuredRows.push(featuredProjects.slice(i, i + 3));
 }
 
-const allPosts: CollectionEntry<"blog">[] = await getCollection("blog");
-const latestPosts = allPosts
-  .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+const allPosts: CollectionEntry<"blog">[] = await getOrderedBlogPosts();
+const latestPosts = allPosts.slice(0, 3);
 
 const github = await getGitHubData();
 const marqueeStats = Object.entries(github.stats);

@@ -9,6 +9,7 @@ const blog = defineCollection({
         blurb: z.string(),
         date: z.coerce.date(),
         updated: z.coerce.date().optional(),
+        draft: z.boolean().default(false),
         blogTags: z.array(z.string()).default([]),
         banner: image().optional()
     })
@@ -20,6 +21,7 @@ const projects = defineCollection({
         order: z.number().int().positive(),
         title: z.string(),
         blurb: z.string(),
+        draft: z.boolean().default(false),
         icon: image().optional(),
         repo: z.string().optional(),
         banner: image().optional()

@@ -4,15 +4,12 @@ import BlogPostPreview from "../../components/BlogPostPreview.astro";
 import TagList from "../../components/TagList.astro";
 import PageHeader from "../../components/PageHeader.astro";
 
-import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getOrderedTags, getTagCounts } from "../../lib/blog";
+import { getOrderedBlogPosts, getOrderedTags, getTagCounts } from "../../lib/blog";
 import { BLOG_PAGE_SIZE, BLOG_DESCRIPTION } from "../../lib/config";
 
 const pageSize = BLOG_PAGE_SIZE;
-const allPosts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
-  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.date.getTime() - a.data.date.getTime()
-);
+const allPosts: CollectionEntry<"blog">[] = await getOrderedBlogPosts();
 const totalPages = Math.max(1, Math.ceil(allPosts.length / pageSize));
 const posts = allPosts.slice(0, pageSize);
 

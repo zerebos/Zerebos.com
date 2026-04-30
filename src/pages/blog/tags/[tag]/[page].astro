@@ -3,10 +3,9 @@ import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import BlogPostPreview from "../../../../components/BlogPostPreview.astro";
 import TagList from "../../../../components/TagList.astro";
 import PageHeader from "../../../../components/PageHeader.astro";
-import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
-import { getOrderedTags, getTagBlurb, getTagCounts, getTagPostGroups } from "../../../../lib/blog";
+import { getOrderedBlogPosts, getOrderedTags, getTagBlurb, getTagCounts, getTagPostGroups } from "../../../../lib/blog";
 import { BLOG_PAGE_SIZE } from "../../../../lib/config";
 
 type BlogEntry = CollectionEntry<"blog">;
@@ -22,9 +21,7 @@ interface Props {
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const pageSize = BLOG_PAGE_SIZE;
 
-  const allPosts: BlogEntry[] = (await getCollection("blog")).sort(
-    (a: BlogEntry, b: BlogEntry) => b.data.date.getTime() - a.data.date.getTime()
-  );
+  const allPosts: BlogEntry[] = await getOrderedBlogPosts();
   const tagCounts = getTagCounts(allPosts);
 
   const paths = [];

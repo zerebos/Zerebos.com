@@ -4,7 +4,7 @@ import type {CollectionEntry} from "astro:content";
 export type ProjectEntry = CollectionEntry<"projects">;
 
 export async function getOrderedProjects(): Promise<ProjectEntry[]> {
-    const projects = await getCollection("projects");
+    const projects = await getCollection("projects", ({data}) => import.meta.env.DEV || !data.draft);
 
     return projects.sort((a, b) => {
         if (a.data.order !== b.data.order) {
