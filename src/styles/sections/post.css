@@ -115,3 +115,7 @@
 .share-links {
     justify-content: space-evenly;
 }
+
+.text-muted {
+    color: var(--text-muted);
+}

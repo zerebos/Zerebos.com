@@ -3,17 +3,25 @@ interface Props {
   title: string;
   blurb?: string;
   date?: Date;
+  updated?: Date;
 }
 
-const { title, blurb, date } = Astro.props;
+const { title, blurb, date, updated } = Astro.props;
 ---
 
 <section class="flex column flex-align-center container" id="page-header">
   <h2>{title}</h2>
   {date && (
     <p>
-      <time datetime={date.toISOString()}>
+      Published <time datetime={date.toISOString()}>
         {date.toLocaleDateString("en-US", { dateStyle: "long" })}
+      </time>
+    </p>
+  )}
+  {updated && (
+    <p class="updated-date">
+      Updated <time datetime={updated.toISOString()}>
+        {updated.toLocaleDateString("en-US", { dateStyle: "long" })}
       </time>
     </p>
   )}
