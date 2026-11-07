@@ -39,6 +39,10 @@ hr {
     margin-top: 20px !important;
 }
 
+#page-subheader {
+    gap: 8px;
+}
+
 /* Section heading label (small caps, used throughout) */
 .heading {
     justify-content: center;

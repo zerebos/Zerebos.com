@@ -42,9 +42,10 @@
 .project-markdown h3,
 .project-markdown h4,
 .project-markdown h5 {
-    color: rgba(114, 120, 136, 1.0);
+    /* color: rgba(114, 120, 136, 1.0); */
+    color: var(--accent-color);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 3px;
     border-bottom: 1px dotted rgb(114, 120, 136);
@@ -52,23 +53,33 @@
 }
 
 .project-markdown h1 {
-    font-size: 18px;
+    font-size: 26px;
 }
 
 .project-markdown h2 {
-    font-size: 16px;
+    font-size: 24px;
 }
 
 .project-markdown h3 {
-    font-size: 14px;
+    font-size: 22px;
 }
 
 .project-markdown h4 {
-    font-size: 12px;
+    font-size: 20px;
 }
 
 .project-markdown h5 {
-    font-size: 12px;
+    font-size: 18px;
+}
+
+.project-markdown h1::before,
+.project-markdown h2::before,
+.project-markdown h3::before,
+.project-markdown h4::before,
+.project-markdown h5::before {
+    content: "#";
+    margin-right: 8px;
+    color: var(--text-muted);
 }
 
 @media only screen and (max-width:500px) {
@@ -134,7 +145,7 @@
 .project-markdown h3,
 .project-markdown h4,
 .project-markdown h5 {
-    margin: 1rem 0 0 0;
+    margin: 2rem 0 0 0;
     max-width: 100%;
 }
 

@@ -16,7 +16,7 @@
 body.dark {
     --text-heading: #fff;
     --text-primary: #ECEDEE;
-    --text-muted: #666;
+    --text-muted: #888;
     --background-main: rgb(10, 10, 13);
     --background-secondary: rgba(28, 22, 47, 0.4);
     /* --background-secondary: rgba(32, 18, 36, 0.4); */
