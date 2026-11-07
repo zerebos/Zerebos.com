@@ -42,6 +42,10 @@ export const personal = [
     "Object3D-Demo",
     "Hangman",
     "Tools-and-Utilities",
+    "lit-cell",
+    "WireMap",
+    "Zerebos.com",
+    "ZackRauen.com",
 ];
 
 
