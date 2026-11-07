@@ -4,27 +4,37 @@ interface Props {
   blurb?: string;
   date?: Date;
   updated?: Date;
+  readingTime?: number;
 }
 
-const { title, blurb, date, updated } = Astro.props;
+const { title, blurb, date, updated, readingTime } = Astro.props;
 ---
 
 <section class="flex column flex-align-center container" id="page-header">
   <h2>{title}</h2>
-  {date && (
-    <p>
-      Published <time datetime={date.toISOString()}>
-        {date.toLocaleDateString("en-US", { dateStyle: "long" })}
-      </time>
-    </p>
-  )}
-  {updated && (
-    <p class="updated-date">
-      Updated <time datetime={updated.toISOString()}>
-        {updated.toLocaleDateString("en-US", { dateStyle: "long" })}
-      </time>
-    </p>
-  )}
+  <div class="flex text-muted" id="page-subheader">
+    {date && (
+      <span>
+        Published <time datetime={date.toISOString()}>
+          {date.toLocaleDateString("en-US", { dateStyle: "long" })}
+        </time>
+      </span>
+    )}
+    {date && updated && <span class="separator">&bull;</span>}
+    {updated && (
+      <span>
+        Updated <time datetime={updated.toISOString()}>
+          {updated.toLocaleDateString("en-US", { dateStyle: "long" })}
+        </time>
+      </span>
+    )}
+    {date && readingTime && readingTime > 0 && <span class="separator">&bull;</span>}
+    {readingTime && readingTime > 0 && (
+      <span>
+        {readingTime} min read
+      </span>
+    )}
+  </div>
   {blurb && <p>{blurb}</p>}
 </section>
 

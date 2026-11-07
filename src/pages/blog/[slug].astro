@@ -5,7 +5,7 @@ import TagList from "../../components/TagList.astro";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getBlogPosts, getTagCounts } from "../../lib/blog";
+import { getBlogPosts, getTagCounts, readingTime } from "../../lib/blog";
 import { linkedinIcon, twitterIcon } from "../../lib/icons";
 import { SITE_URL, PSEUDONYM } from "../../lib/config";
 
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const { post, tagCounts }: { post: CollectionEntry<"blog">; tagCounts: ReturnType<typeof getTagCounts> } = Astro.props;
+const { post }: { post: CollectionEntry<"blog"> } = Astro.props;
 const { Content } = await render(post);
 const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString();
 ---
@@ -31,7 +31,7 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
   ogImage={post.data.banner}
   author={PSEUDONYM}
 >
-  <PageHeader title={post.data.title} date={post.data.date} updated={post.data.updated} blurb={post.data.blurb} />
+  <PageHeader title={post.data.title} date={post.data.date} updated={post.data.updated} blurb={post.data.blurb} readingTime={readingTime(post.body!)} />
 
   {post.data.banner && (
     <section class="flex column flex-align-center banner">
@@ -51,7 +51,7 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
   </section>
 
   <section class="flex container blog-navigation">
-    <TagList tags={post.data.tags ?? []} tagCounts={tagCounts} />
+    <TagList tags={post.data.tags ?? []} />
 
     <div class="flex column blog-share">
       <span>Share this post:</span>

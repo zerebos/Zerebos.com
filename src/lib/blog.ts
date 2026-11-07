@@ -61,3 +61,20 @@ export async function getOrderedBlogPosts(): Promise<BlogEntry[]> {
   const posts = await getBlogPosts();
   return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
+
+export function readingTime(markdown: string): number {
+  // Count images before stripping
+  const images = (markdown.match(/!\[.*?\]\(.*?\)/g) ?? []).length;
+
+  // Strip code and markdown syntax
+  const text = markdown
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`[^`]+`/g, "")
+    .replace(/[#*_\[\]()>!-]/g, "");
+
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const totalSeconds = (words / 238) * 60 + images * 12;
+  const minutes = Math.ceil(totalSeconds / 60);
+  return minutes;
+  // return `${minutes} min read`;
+}
