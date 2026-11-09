@@ -10,7 +10,7 @@ const { project } = Astro.props;
 ---
 
 <div class="flex project" transition:name={`project-card-${project.id}`}>
-  <a href={`/projects/${project.id}`} class="flex column gradient">
+  <a href={`/projects/${project.id}`} class="flex column hover-fill">
     {project.data.icon && (
       <Image
         src={project.data.icon}

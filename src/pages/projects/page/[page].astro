@@ -46,20 +46,20 @@ for (let i = 0; i < projects.length; i += 3) {
   </section>
 
   <nav class="flex no-wrap paginator hybrid" role="navigation" aria-label="Pagination Navigation">
-    <a href={currentPage === 2 ? "/projects" : `/projects/page/${currentPage - 1}`} class="gradient">‹ Prev</a>
+    <a href={currentPage === 2 ? "/projects" : `/projects/page/${currentPage - 1}`} class="hover-fill">‹ Prev</a>
     <ul class="page-numbers">
-      <li><a href="/projects" class={`gradient ${currentPage === 1 ? "active" : ""}`}>1</a></li>
+      <li><a href="/projects" class={`hover-fill ${currentPage === 1 ? "active" : ""}`}>1</a></li>
       {
         Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((pageNumber) => (
           <li>
-            <a href={`/projects/page/${pageNumber}`} class={`gradient ${currentPage === pageNumber ? "active" : ""}`}>
+            <a href={`/projects/page/${pageNumber}`} class={`hover-fill ${currentPage === pageNumber ? "active" : ""}`}>
               {pageNumber}
             </a>
           </li>
         ))
       }
     </ul>
-    <a href={currentPage < totalPages ? `/projects/page/${currentPage + 1}` : undefined} class={`gradient ${currentPage >= totalPages ? "disabled" : ""}`} aria-disabled={currentPage >= totalPages}>
+    <a href={currentPage < totalPages ? `/projects/page/${currentPage + 1}` : undefined} class={`hover-fill ${currentPage >= totalPages ? "disabled" : ""}`} aria-disabled={currentPage >= totalPages}>
       Next ›
     </a>
   </nav>

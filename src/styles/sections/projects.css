@@ -37,7 +37,13 @@
     opacity: 0.6;
 }
 
-#projects .project a.gradient::after {
+#projects .project a {
+    gap: 12px;
+    width: min-content;
+    padding: 12px;
+}
+
+#projects .project a.hover-fill::after {
     transform: scale(90%);
 }
 

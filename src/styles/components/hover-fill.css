@@ -1,25 +1,21 @@
-/* Interactive gradient card/link — used on project cards, tag links, icon links, etc. */
-a.gradient {
-    gap: 12px;
-    width: min-content;
-    padding: 12px 12px;
-    /* background-color: red; */
-    /* background-size: 0% 0%; */
-    /* background-position: 50% 50%; */
-    /* transition: background-size 500ms ease; */
+/*
+ * Hover fill for links: a dark gradient that scales in behind the link on hover, and stays on `.active` links.
+ * Add `.outline` for a subtle border that gives way to the fill. Sizing and padding belong to each link's own rules.
+ */
+a.hover-fill {
     border-radius: var(--border-radius);
     position: relative;
 }
 
-a.gradient.outline {
+a.hover-fill.outline {
     border: 1px solid var(--border-subtle);
 }
 
-a.gradient.outline:hover {
+a.hover-fill.outline:hover {
     border-color: transparent;
 }
 
-a.gradient::after {
+a.hover-fill::after {
     content: "";
     display: block;
     position: absolute;
@@ -37,8 +33,8 @@ a.gradient::after {
     z-index: -1;
 }
 
-a.gradient.active::after,
-a.gradient:hover::after {
+a.hover-fill.active::after,
+a.hover-fill:hover::after {
     transform: scale(100%) !important;
     opacity: 1;
 }

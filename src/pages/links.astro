@@ -40,7 +40,7 @@ const categories = links.categories;
 
     <section class="flex container" id="links-icons">
       {socialIcons.map((icon) => (
-        <a href={icon.href} target="_blank" rel="noopener noreferrer" class="flex gradient">
+        <a href={icon.href} target="_blank" rel="noopener noreferrer" class="flex hover-fill">
           <Image src={icon.asset} alt={icon.icon} width={24} height={24} />
         </a>
       ))}
@@ -53,7 +53,7 @@ const categories = links.categories;
         </div>
         <div class="flex column list">
           {category.links.map((link) => (
-            <a class="flex link gradient outline" href={link.href} target="_blank" rel="noopener noreferrer">
+            <a class="flex link hover-fill outline" href={link.href} target="_blank" rel="noopener noreferrer">
               <div class="flex label">
                 <Image src={link.icon} alt={link.label} width={20} height={20} />
                 <span>{link.label}</span>

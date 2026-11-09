@@ -26,6 +26,7 @@
 
 #links-icons a {
     display: flex;
+    width: min-content;
     padding: 12px;
 }
 
@@ -52,6 +53,7 @@
 }
 
 #links-container .list .link {
+    gap: 12px;
     width: auto;
     justify-content: space-between;
     padding: 12px;

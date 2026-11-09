@@ -32,8 +32,10 @@
     align-items: center;
 }
 
-.paginator a.gradient {
+.paginator a.hover-fill {
     display: inline-flex;
+    gap: 12px;
+    padding: 12px;
     justify-content: center;
     align-items: center;
     width: auto;

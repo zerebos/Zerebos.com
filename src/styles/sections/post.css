@@ -1,6 +1,6 @@
 /* Blog tags */
 .tag,
-.tag.gradient {
+.tag.hover-fill {
     width: auto;
     border: 1px solid var(--border-strong);
     display: inline-block;
@@ -16,11 +16,11 @@
     transition: background-color 0.2s ease;
 }
 
-.tag.gradient::after {
+.tag.hover-fill::after {
     transform: scale(60%);
 }
 
-.tag.gradient:hover {
+.tag.hover-fill:hover {
     border-color: transparent;
 }
 

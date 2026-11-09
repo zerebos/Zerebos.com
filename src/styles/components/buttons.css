@@ -43,12 +43,12 @@
 }
 
 /* TODO: redo this de-duping with the links page */
-.btn.btn-ghost {
+.btn.btn-outline {
     border: 1px solid var(--border-strong);
     color: var(--text-heading);
 }
 
-.btn.btn-ghost:hover {
+.btn.btn-outline:hover {
     border-color: transparent;
     background-image: var(--gradient-hover);
 }
