@@ -1,0 +1,16 @@
+---
+import TagList from "./TagList.astro";
+import { getOrderedTags, type getTagCounts } from "../lib/blog";
+
+interface Props {
+  /** Every tag's post count, from `getTagCounts` */
+  tagCounts: ReturnType<typeof getTagCounts>;
+}
+
+const { tagCounts } = Astro.props;
+---
+
+<section class="flex column tags-section" aria-labelledby="tags-section-label">
+  <span class="side-label" id="tags-section-label">Tags</span>
+  <TagList tags={getOrderedTags(tagCounts).map(([tag]) => tag)} tagCounts={tagCounts} wrapperClass="flex tags-section-list" />
+</section>

@@ -1,11 +1,11 @@
 ---
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import BlogPostPreview from "../../../../components/BlogPostPreview.astro";
-import TagList from "../../../../components/TagList.astro";
+import TagsSection from "../../../../components/TagsSection.astro";
 import PageHeader from "../../../../components/PageHeader.astro";
 import { countLabel } from "../../../../lib/text";
 import type { CollectionEntry } from "astro:content";
-import { getOrderedBlogPosts, getOrderedTags, getTagBlurb, getTagCounts, getTagPostGroups } from "../../../../lib/blog";
+import { getOrderedBlogPosts, getTagBlurb, getTagCounts, getTagPostGroups } from "../../../../lib/blog";
 import { BLOG_PAGE_SIZE } from "../../../../lib/config";
 
 export async function getStaticPaths() {
@@ -54,9 +54,5 @@ const tagBlurb = getTagBlurb(totalPosts);
     )
   }
 
-  <hr class="flex container medium" />
-
-  <section class="flex column flex-align-center container" id="blog-tags">
-    <TagList tags={getOrderedTags(tagCounts).map(([tag]) => tag)} tagCounts={tagCounts} wrapperClass="tag-cloud" />
-  </section>
+  <TagsSection tagCounts={tagCounts} />
 </BaseLayout>

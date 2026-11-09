@@ -22,10 +22,6 @@
     opacity: 0;
 }
 
-.paginator + hr {
-    margin-top: 20px !important;
-}
-
 .paginator .ellipsis {
     display: inline-flex;
     justify-content: center;

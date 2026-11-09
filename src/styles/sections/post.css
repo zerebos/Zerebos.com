@@ -34,12 +34,27 @@
     font-weight: normal;
 }
 
-.tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 1rem;
+/* The "Tags" section at the end of the blog pages, lined up with the page header */
+.tags-section {
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-hairline);
+}
+
+@media only screen and (max-width: 1000px) {
+    .tags-section {
+        margin: 32px 24px 0;
+    }
+}
+
+.tags-section .side-label {
+    padding: 0;
+}
+
+/* the chips' own 2px margin would otherwise inset them from the label */
+.tags-section-list {
+    margin: 0 -2px;
 }
 
 /* Blog post preview card */
@@ -195,4 +210,11 @@
 #blog-posts {
     margin-top: 32px;
     padding: 0;
+}
+
+/* below 1000px the page has no side padding, so the list takes the header's 24px inset */
+@media only screen and (max-width: 1000px) {
+    #blog-posts {
+        padding: 0 24px;
+    }
 }
