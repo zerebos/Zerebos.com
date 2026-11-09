@@ -16,7 +16,7 @@ function updateSideTop() {
 
 function bindSideColumn() {
     observer?.disconnect();
-    side = document.querySelector<HTMLElement>(".post-side");
+    side = document.querySelector<HTMLElement>(".detail-side");
     if (!side) return;
     observer = new ResizeObserver(updateSideTop);
     observer.observe(side);

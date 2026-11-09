@@ -22,7 +22,7 @@ function formatDate(value: Date): string {
 }
 ---
 
-<header class="flex column post-header">
+<header class="flex column detail-header">
   <nav class="flex crumb" aria-label="Breadcrumb">
     <a href="/blog">Blog</a>
     {primaryTag && (
@@ -32,8 +32,8 @@ function formatDate(value: Date): string {
       </>
     )}
   </nav>
-  <h1 class="post-title" transition:name={titleTransitionName}>{title}</h1>
-  <p class="post-blurb">{blurb}</p>
+  <h1 class="detail-title" transition:name={titleTransitionName}>{title}</h1>
+  <p class="detail-blurb">{blurb}</p>
   <div class="flex byline">
     {/* Shares the home and links pages' avatar name, so it morphs from there into the byline */}
     <Image src={avatarImage} transition:name="intro-avatar" alt="" widths={[40, 80]} sizes="40px" />

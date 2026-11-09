@@ -1,13 +1,13 @@
 /*
  * Markdown body for blog posts and project pages, rendered as
- * <section class="project-markdown"><div class="content">…</div></section>.
+ * <section class="markdown"><div class="content">…</div></section>.
  * The body sits directly on the page in 17px prose, with no glass panel.
  *
  * Section headings (h1/h2) get an accent "#" and an accent hairline that fills the rest of the
  * heading's first line. Where the page has room, the "#" hangs in the gutter left of the column.
  * Below 1000px the gutter is narrower than the marker, so the "#" sits inline before the heading.
  */
-.project-markdown {
+.markdown {
     color: var(--text-primary);
     font-size: var(--font-size-markdown);
     line-height: var(--line-height-markdown);
@@ -16,30 +16,30 @@
     overflow-wrap: break-word;
 }
 
-.project-markdown .content {
+.markdown .content {
     display: flow-root;
 }
 
-.project-markdown .content > :first-child {
+.markdown .content > :first-child {
     margin-top: 0;
 }
 
-.project-markdown .content > :last-child {
+.markdown .content > :last-child {
     margin-bottom: 0;
 }
 
-.project-markdown p {
+.markdown p {
     margin: 0 0 1.15em;
 }
 
-.project-markdown :is(h1, h2, h3, h4, h5, h6) {
+.markdown :is(h1, h2, h3, h4, h5, h6) {
     position: relative;
     color: var(--text-heading);
     text-wrap: balance;
 }
 
 /* Section headings */
-.project-markdown :is(h1, h2) {
+.markdown :is(h1, h2) {
     display: flex;
     align-items: flex-start;
     gap: 16px;
@@ -50,7 +50,7 @@
     letter-spacing: -0.5px;
 }
 
-.project-markdown :is(h1, h2)::before {
+.markdown :is(h1, h2)::before {
     content: "#" / "";
     position: absolute;
     right: 100%;
@@ -64,7 +64,7 @@
     transition: color 200ms ease;
 }
 
-.project-markdown :is(h1, h2)::after {
+.markdown :is(h1, h2)::after {
     content: "";
     flex: 1 1 48px;
     min-width: 48px;
@@ -73,12 +73,12 @@
     background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.6), rgba(var(--accent-rgb), 0));
 }
 
-.project-markdown :is(h1, h2):hover::before {
+.markdown :is(h1, h2):hover::before {
     color: var(--accent-color-hover);
 }
 
 /* Subsections and labels */
-.project-markdown h3 {
+.markdown h3 {
     margin: 44px 0 12px;
     font-size: 20px;
     line-height: 1.3;
@@ -86,7 +86,7 @@
     letter-spacing: -0.3px;
 }
 
-.project-markdown :is(h4, h5, h6) {
+.markdown :is(h4, h5, h6) {
     margin: 32px 0 10px;
     font-size: 13px;
     line-height: 1.3;
@@ -97,19 +97,19 @@
 }
 
 /* some project READMEs bold their headings (e.g. `## 🎮 **How to Play**`), which shouldn't change the heading's weight */
-.project-markdown :is(h1, h2, h3, h4, h5, h6) strong {
+.markdown :is(h1, h2, h3, h4, h5, h6) strong {
     font-weight: inherit;
     color: inherit;
 }
 
-.project-markdown .heading-text {
+.markdown .heading-text {
     min-width: 0;
 }
 
 /* Heading links */
 
 /* h1/h2 end with an invisible anchor link that covers the `#` in ::before */
-.project-markdown .anchor {
+.markdown .anchor {
     position: absolute;
     right: 100%;
     top: 0;
@@ -120,19 +120,19 @@
     text-decoration: none;
 }
 
-.project-markdown .anchor:hover {
+.markdown .anchor:hover {
     color: transparent;
     text-decoration: none;
 }
 
-.project-markdown .anchor:focus-visible {
+.markdown .anchor:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
     border-radius: 6px;
 }
 
 /* for h3 the anchor link is visible in the gutter on hover */
-.project-markdown h3 .anchor {
+.markdown h3 .anchor {
     width: auto;
     height: auto;
     margin-right: 12px;
@@ -142,33 +142,33 @@
     transition: opacity 0.3s ease, color 0.3s ease;
 }
 
-.project-markdown h3:hover .anchor,
-.project-markdown h3 .anchor:focus-visible {
+.markdown h3:hover .anchor,
+.markdown h3 .anchor:focus-visible {
     opacity: 1;
 }
 
-.project-markdown h3 .anchor:hover {
+.markdown h3 .anchor:hover {
     color: var(--accent-color);
 }
 
 /* Inline */
-.project-markdown a {
+.markdown a {
     color: var(--accent-color);
     text-decoration: underline dotted;
     text-underline-offset: 3px;
 }
 
-.project-markdown a:hover {
+.markdown a:hover {
     color: var(--accent-color-hover);
     text-decoration-style: solid;
 }
 
-.project-markdown strong {
+.markdown strong {
     font-weight: 600;
     color: var(--text-heading);
 }
 
-.project-markdown :not(pre) > code {
+.markdown :not(pre) > code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 0.9em;
     background: rgba(27, 29, 38, 0.9);
@@ -178,25 +178,25 @@
 }
 
 /* Lists */
-.project-markdown :is(ul, ol) {
+.markdown :is(ul, ol) {
     margin: 0 0 1.15em;
     padding-left: 22px;
 }
 
-.project-markdown ul {
+.markdown ul {
     list-style: disclosure-closed;
 }
 
-.project-markdown li + li {
+.markdown li + li {
     margin-top: 6px;
 }
 
-.project-markdown li::marker {
+.markdown li::marker {
     color: var(--accent-color);
 }
 
 /* Blocks */
-.project-markdown blockquote {
+.markdown blockquote {
     margin: 40px 0;
     padding: 0;
     font-size: 22px;
@@ -206,7 +206,7 @@
     color: var(--text-heading);
 }
 
-.project-markdown blockquote::before {
+.markdown blockquote::before {
     content: "\201C" / "";
     display: block;
     width: fit-content;
@@ -220,11 +220,11 @@
     -webkit-text-fill-color: transparent;
 }
 
-.project-markdown blockquote p {
+.markdown blockquote p {
     margin: 0;
 }
 
-.project-markdown hr {
+.markdown hr {
     border: 0;
     height: 2px;
     width: 60%;
@@ -233,11 +233,11 @@
 }
 
 /* hr right before a section heading would double up with the heading's own line */
-.project-markdown hr:has(+ :is(h1, h2)) {
+.markdown hr:has(+ :is(h1, h2)) {
     display: none;
 }
 
-.project-markdown pre {
+.markdown pre {
     margin: 0 0 1.4em;
     overflow-x: auto;
     border-radius: var(--border-radius);
@@ -247,11 +247,11 @@
 }
 
 /* shiki writes its theme background inline */
-.project-markdown pre.astro-code {
+.markdown pre.astro-code {
     background-color: #1b1d26 !important;
 }
 
-.project-markdown pre code {
+.markdown pre code {
     display: block;
     min-width: max-content;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -260,16 +260,16 @@
 }
 
 /* force a table to scroll horizontally if it overflows */
-.project-markdown .table-wrap {
+.markdown .table-wrap {
     overflow-x: auto;
     margin: 0 0 1.4em;
 }
 
-.project-markdown .table-wrap table {
+.markdown .table-wrap table {
     margin: 0;
 }
 
-.project-markdown table {
+.markdown table {
     width: 100%;
     overflow: hidden;
     margin: 0 0 1.4em;
@@ -283,11 +283,11 @@
 }
 
 /* do left align by default and don't align one already set */
-.project-markdown th:not([align]) {
+.markdown th:not([align]) {
     text-align: left;
 }
 
-.project-markdown th {
+.markdown th {
     padding: 12px 16px;
     font-size: 12px;
     font-weight: 600;
@@ -297,17 +297,17 @@
     border-bottom: 1px solid var(--border-hairline);
 }
 
-.project-markdown td {
+.markdown td {
     padding: 12px 16px;
     border-bottom: 1px solid var(--border-hairline);
     vertical-align: top;
 }
 
-.project-markdown tr:last-child td {
+.markdown tr:last-child td {
     border-bottom: 0;
 }
 
-.project-markdown img {
+.markdown img {
     display: block;
     max-width: 100%;
     height: auto;
@@ -318,7 +318,7 @@
 
 /* No room in the gutter, so the marker moves inline */
 @media only screen and (max-width: 1000px) {
-    .project-markdown :is(h1, h2)::before {
+    .markdown :is(h1, h2)::before {
         position: relative;
         right: auto;
         top: auto;
@@ -327,7 +327,7 @@
         transform: none;
     }
 
-    .project-markdown :is(h1, h2) .anchor {
+    .markdown :is(h1, h2) .anchor {
         right: auto;
         left: 0;
         width: 24px;
@@ -335,29 +335,29 @@
     }
 
     /* No gutter to show it in */
-    .project-markdown h3 .anchor {
+    .markdown h3 .anchor {
         display: none;
     }
 }
 
 @media only screen and (max-width: 600px) {
-    .project-markdown {
+    .markdown {
         --line-height-h2: calc(24px * 1.2);
     }
 
-    .project-markdown :is(h1, h2) {
+    .markdown :is(h1, h2) {
         margin-top: 56px;
         gap: 12px;
         font-size: 24px;
     }
 
-    .project-markdown :is(h1, h2)::before {
+    .markdown :is(h1, h2)::before {
         font-size: 20px;
         margin-top: 4px;
     }
 }
 
-.project-markdown .signoff {
+.markdown .signoff {
     margin-top: 40px;
     padding: 32px;
     text-align: center;
@@ -367,6 +367,6 @@
     border-radius: var(--border-radius);
 }
 
-.project-markdown hr:has(+ .signoff) {
+.markdown hr:has(+ .signoff) {
     display: none;
 }

@@ -23,7 +23,7 @@ const { Content, headings } = await render(project);
 
 const repo = project.data.repo;
 let git = null;
-let langs: Record<string, number> | null = null;
+let languages: Record<string, number> | null = null;
 let branches: string[] | null = null;
 let pulls: number | null = null;
 
@@ -31,14 +31,14 @@ if (repo) {
   const fullName = repo.includes("/") ? repo : `${GITHUB_USERNAME}/${repo}`;
   const github = await getGitHubData();
   git = github.projects.find(p => p.full_name === fullName) ?? null;
-  langs = github.languages[fullName] ?? null;
+  languages = github.languages[fullName] ?? null;
   branches = github.branches[fullName] ?? null;
   pulls = await getOpenPullRequestCount(repo);
 }
 ---
 
 <BaseLayout title={`${project.data.title} - Project`} description={project.data.blurb} ogImage={project.data.banner} size="large">
-  <article class="flex column post-page">
+  <article class="flex column detail-page">
     <ProjectHeader project={project} />
 
     {project.data.banner && (
@@ -52,12 +52,12 @@ if (repo) {
       </div>
     )}
 
-    <div class="post-layout">
-      <aside class="flex column post-side">
-        {git && <RepositoryCard git={git} languages={langs} branches={branches} pulls={pulls} />}
+    <div class="detail-layout">
+      <aside class="flex column detail-side">
+        {git && <RepositoryCard git={git} languages={languages} branches={branches} pulls={pulls} />}
         <ContentsBox label="On this page" headings={headings} />
       </aside>
-      <section class="project-markdown post-body">
+      <section class="markdown detail-body">
         <div class="content">
           <Content />
         </div>

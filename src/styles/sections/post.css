@@ -99,20 +99,20 @@
 }
 
 /* Post page */
-.post-page {
+.detail-page {
     gap: 56px;
     margin-top: 56px;
 }
 
 /* below 1000px the nav floats 24px in from the screen edges so the page lines up with it */
 @media only screen and (max-width: 1000px) {
-    .post-page {
+    .detail-page {
         margin-top: 32px;
         padding: 0 24px;
     }
 }
 
-.post-header {
+.detail-header {
     gap: 20px;
 }
 
@@ -134,7 +134,7 @@
 }
 
 /* shrinks the title's box to its text so the view transition from the preview card moves the text instead of a full-width box */
-.post-title {
+.detail-title {
     width: fit-content;
     max-width: 840px;
     font-size: 48px;
@@ -147,7 +147,7 @@
     -webkit-text-fill-color: transparent;
 }
 
-.post-blurb {
+.detail-blurb {
     max-width: 680px;
     font-size: 20px;
     line-height: 1.45;
@@ -187,10 +187,10 @@
 /*
  * The preview's title is usually one line and the post's wraps to two. Scaled to the morphing box's width, the
  * one-line snapshot grows into a giant line past the end of the new title, so both are drawn at their own size.
- * Project titles also use `.post-title`, but sit deeper in their header and fit on one line, so they keep the default.
+ * Project titles also use `.detail-title`, but sit deeper in their header and fit on one line, so they keep the default.
  */
 .blog-post-preview h3,
-.post-header > .post-title {
+.detail-header > .detail-title {
     view-transition-class: blog-post-title;
 }
 
@@ -202,7 +202,7 @@
 }
 
 @media only screen and (max-width: 640px) {
-    .post-title {
+    .detail-title {
         font-size: 34px;
         letter-spacing: -0.75px;
     }
@@ -222,31 +222,31 @@
  * The side column comes first in the markup, so keyboard and screen reader users reach the contents
  * before the post. Above 1000px it moves to the right and sticks while the post scrolls past.
  */
-.post-layout {
+.detail-layout {
     display: flex;
     flex-direction: column;
     gap: 40px;
 }
 
-.post-side {
+.detail-side {
     gap: 16px;
 }
 
 @media only screen and (min-width: 1001px) {
-    .post-layout {
+    .detail-layout {
         flex-direction: row;
         align-items: flex-start;
         gap: 64px;
     }
 
-    .post-layout > .post-body {
+    .detail-layout > .detail-body {
         flex: 1 1 680px;
         min-width: 0;
         max-width: 680px;
     }
 
     /* `side-column.ts` sets `--side-top`, so a column taller than the window sticks by its bottom edge instead. */
-    .post-layout > .post-side {
+    .detail-layout > .detail-side {
         order: 2;
         flex: 1 1 200px;
         min-width: 0;
@@ -255,7 +255,7 @@
     }
 }
 
-.post-toc {
+.contents-box {
     gap: 12px;
     padding: 20px 12px 12px;
     background: var(--background-secondary);
@@ -274,7 +274,7 @@
     color: var(--text-label);
 }
 
-.post-toc ol {
+.contents-box ol {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -283,7 +283,7 @@
     list-style: none;
 }
 
-.post-toc a {
+.contents-box a {
     display: block;
     padding: 8px 12px;
     border-radius: var(--border-radius);
@@ -292,16 +292,16 @@
     line-height: 1.35;
 }
 
-.post-toc a:hover {
+.contents-box a:hover {
     color: var(--text-heading);
 }
 
-.post-toc a[aria-current="true"] {
+.contents-box a[aria-current="true"] {
     color: var(--text-heading);
 }
 
 /* The accent `#` from the markdown headings hangs left of the current link's text. */
-.post-toc a::before {
+.contents-box a::before {
     content: "#" / "";
     position: absolute;
     left: -4px;
@@ -314,7 +314,7 @@
     pointer-events: none;
 }
 
-.post-toc a[aria-current="true"]::before {
+.contents-box a[aria-current="true"]::before {
     opacity: 1;
 }
 

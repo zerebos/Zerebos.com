@@ -8,14 +8,14 @@ function bindContentsBox() {
     for (const observer of observers) observer.disconnect();
     observers = [];
 
-    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".post-toc a"));
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".contents-box a"));
     const idOf = (link: HTMLAnchorElement) => decodeURIComponent(link.hash.slice(1));
     const headings = links
         .map((link) => document.getElementById(idOf(link)))
         .filter((heading): heading is HTMLElement => heading !== null);
     if (headings.length === 0) return;
 
-    const end = document.querySelector(".post-body .content > :last-child");
+    const end = document.querySelector(".detail-body .content > :last-child");
 
     const update = () => {
         const line = window.innerHeight * 0.3;

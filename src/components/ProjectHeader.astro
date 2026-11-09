@@ -13,7 +13,7 @@ const { title, blurb, icon, repo, website, websiteLabel } = project.data;
 const repoUrl = repo && `https://github.com/${repo.includes("/") ? repo : `${GITHUB_USERNAME}/${repo}`}`;
 ---
 
-<header class="flex column post-header">
+<header class="flex column detail-header">
   <nav class="flex crumb" aria-label="Breadcrumb">
     <a href="/projects">Projects</a>
   </nav>
@@ -24,8 +24,8 @@ const repoUrl = repo && `https://github.com/${repo.includes("/") ? repo : `${GIT
         <Image src={icon} class="project-icon" transition:name={`project-icon-${project.id}`} alt="" widths={[88, 176]} sizes="88px" />
       )}
       <div class="flex column project-heading">
-        <h1 class="post-title" transition:name={`project-title-${project.id}`}>{title}</h1>
-        <p class="post-blurb" transition:name={`project-blurb-${project.id}`}>{blurb}</p>
+        <h1 class="detail-title" transition:name={`project-title-${project.id}`}>{title}</h1>
+        <p class="detail-blurb" transition:name={`project-blurb-${project.id}`}>{blurb}</p>
       </div>
     </div>
     {(website || repoUrl) && (

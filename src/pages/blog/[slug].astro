@@ -33,7 +33,7 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
   author={PSEUDONYM}
   size="large"
 >
-  <article class="flex column post-page">
+  <article class="flex column detail-page">
     <PostHeader
       title={post.data.title}
       blurb={post.data.blurb}
@@ -54,11 +54,11 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
       />
     )}
 
-    <div class="post-layout">
-      <aside class="flex column post-side">
+    <div class="detail-layout">
+      <aside class="flex column detail-side">
         <ContentsBox label="In this post" headings={headings} />
       </aside>
-      <section class="project-markdown post-body">
+      <section class="markdown detail-body">
         <div class="content">
           <Content />
         </div>

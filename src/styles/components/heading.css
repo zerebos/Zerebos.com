@@ -29,7 +29,7 @@ section#page-header {
 }
 
 /* Markdown rules have their own spacing and these `!important` margins would override it */
-hr:not(.project-markdown hr) {
+hr:not(.markdown hr) {
     border: 0;
     margin: 12px auto 24px auto !important;
     height: 2px;
