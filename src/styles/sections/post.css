@@ -203,7 +203,7 @@
 /*
  * Markdown column plus a side column (the contents box, and the repository card on project pages).
  * The side column comes first in the markup, so keyboard and screen reader users reach the contents
- * before the post. Above 1000px it moves to the right, and the contents box sticks while the post scrolls past.
+ * before the post. Above 1000px it moves to the right and sticks while the post scrolls past.
  */
 .post-layout {
     display: flex;
@@ -228,18 +228,13 @@
         max-width: 680px;
     }
 
+    /* `side-column.ts` sets `--side-top`, so a column taller than the window sticks by its bottom edge instead. */
     .post-layout > .post-side {
         order: 2;
         flex: 1 1 200px;
         min-width: 0;
-        align-self: stretch; /* makes it as tall as the post, so the contents box inside has room to stick */
-    }
-
-    .post-side > .post-toc {
         position: sticky;
-        top: 24px;
-        max-height: calc(100vh - 48px); /* force the contents box to stay within the viewport height */
-        overflow-y: auto;
+        top: var(--side-top, 24px);
     }
 }
 
