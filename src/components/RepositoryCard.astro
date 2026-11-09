@@ -102,4 +102,15 @@ const languageRows = Object.entries(languages ?? {});
       </ul>
     </>
   )}
+  {git.topics.length > 0 && (
+    <>
+      <div class="repo-divider"></div>
+      <span class="side-label">Topics</span>
+      <ul class="flex repo-topics">
+        {git.topics.map((topic) => (
+          <li><a class="tag hover-fill" href={`https://github.com/topics/${topic}`} target="_blank" rel="noopener noreferrer">{topic}</a></li>
+        ))}
+      </ul>
+    </>
+  )}
 </section>

@@ -162,3 +162,10 @@
     border-radius: 2px;
     background: var(--gradient-heading);
 }
+
+/* the blog's tag chips, with their 2px margin making up the rest of the labels' 12px inset */
+.repo-topics {
+    margin: 0;
+    padding: 0 10px;
+    list-style: none;
+}
