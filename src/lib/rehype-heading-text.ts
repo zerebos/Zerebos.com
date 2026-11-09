@@ -7,7 +7,7 @@ import type {Element, Root} from "hast";
  * the wrapper, every child node would be its own flex item, and `🎮 **How to Play**` would render as two items
  * with the row's gap between them.
  *
- * TODO: can we do this with CSS only, without wrapping the heading content in a span?
+ * CSS alone can only put the hairline after a heading's last line, and wrapped text would then run under the `#`.
  */
 export default function rehypeHeadingText() {
     return (tree: Root) => {

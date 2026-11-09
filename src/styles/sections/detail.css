@@ -1,0 +1,164 @@
+/* Shared by blog posts and project pages: the page column, header, layout, side column and contents box */
+
+.detail-page {
+    gap: 56px;
+    margin-top: 56px;
+}
+
+/* below 1000px the nav floats 24px in from the screen edges so the page lines up with it */
+@media only screen and (max-width: 1000px) {
+    .detail-page {
+        margin-top: 32px;
+        padding: 0 24px;
+    }
+}
+
+.detail-header {
+    gap: 20px;
+}
+
+.crumb {
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-label);
+}
+
+.crumb a {
+    color: inherit;
+}
+
+.crumb a:hover {
+    color: var(--text-heading);
+}
+
+/* shrinks the title's box to its text so the view transition from the preview card moves the text instead of a full-width box */
+.detail-title {
+    width: fit-content;
+    max-width: 840px;
+    font-size: 48px;
+    line-height: 1.1;
+    letter-spacing: -1.25px;
+    text-wrap: balance;
+    background-image: var(--gradient-heading);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.detail-blurb {
+    max-width: 680px;
+    font-size: 20px;
+    line-height: 1.45;
+    letter-spacing: -0.34px;
+}
+
+@media only screen and (max-width: 640px) {
+    .detail-title {
+        font-size: 34px;
+        letter-spacing: -0.75px;
+    }
+}
+
+/*
+ * Markdown column plus a side column (the contents box, and the repository card on project pages).
+ * The side column comes first in the markup, so keyboard and screen reader users reach the contents
+ * before the post. Above 1000px it moves to the right and sticks while the post scrolls past.
+ */
+.detail-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.detail-side {
+    gap: 16px;
+}
+
+@media only screen and (min-width: 1001px) {
+    .detail-layout {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 64px;
+    }
+
+    .detail-layout > .detail-body {
+        flex: 1 1 680px;
+        min-width: 0;
+        max-width: 680px;
+    }
+
+    /* `aside.ts` sets `--side-top`, so a column taller than the window sticks by its bottom edge instead. */
+    .detail-layout > .detail-side {
+        order: 2;
+        flex: 1 1 200px;
+        min-width: 0;
+        position: sticky;
+        top: var(--side-top, 24px);
+    }
+}
+
+.contents-box {
+    gap: 12px;
+    padding: 20px 12px 12px;
+    background: var(--background-secondary);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
+}
+
+/* Small uppercase label at the top of a side column box */
+.side-label {
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-label);
+}
+
+.contents-box ol {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contents-box a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.contents-box a:hover {
+    color: var(--text-heading);
+}
+
+.contents-box a[aria-current="true"] {
+    color: var(--text-heading);
+}
+
+/* The accent `#` from the markdown headings hangs left of the current link's text. */
+.contents-box a::before {
+    content: "#" / "";
+    position: absolute;
+    left: -4px;
+    width: 12px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--accent-color);
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+}
+
+.contents-box a[aria-current="true"]::before {
+    opacity: 1;
+}
