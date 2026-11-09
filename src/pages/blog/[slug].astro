@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostHeader from "../../components/PostHeader.astro";
 import TagList from "../../components/TagList.astro";
+import ContentsBox from "../../components/ContentsBox.astro";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
@@ -19,7 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { post }: { post: CollectionEntry<"blog"> } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString();
 ---
 
@@ -53,26 +54,27 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
       />
     )}
 
-    <div class="post-body">
-      <section class="project-markdown">
+    <div class="post-layout">
+      <ContentsBox label="In this post" headings={headings} />
+      <section class="project-markdown post-body">
         <div class="content">
           <Content />
         </div>
       </section>
-
-      <footer class="flex post-footer">
-        <TagList tags={post.data.tags ?? []} wrapperClass="flex post-tags" />
-
-        <div class="flex post-share">
-          <span class="share-label">Share</span>
-          <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(post.data.title)}`} target="_blank" rel="noopener noreferrer">
-            <Image src={twitterIcon} alt="Share on X" width={20} height={20} />
-          </a>
-          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noopener noreferrer">
-            <Image src={linkedinIcon} alt="Share on LinkedIn" width={20} height={20} />
-          </a>
-        </div>
-      </footer>
     </div>
+
+    <footer class="flex post-footer">
+      <TagList tags={post.data.tags ?? []} wrapperClass="flex post-tags" />
+
+      <div class="flex post-share">
+        <span class="share-label">Share</span>
+        <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(post.data.title)}`} target="_blank" rel="noopener noreferrer">
+          <Image src={twitterIcon} alt="Share on X" width={20} height={20} />
+        </a>
+        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noopener noreferrer">
+          <Image src={linkedinIcon} alt="Share on LinkedIn" width={20} height={20} />
+        </a>
+      </div>
+    </footer>
   </article>
 </BaseLayout>
