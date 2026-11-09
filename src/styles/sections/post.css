@@ -100,7 +100,6 @@
 
 /* Post page */
 .post-page {
-    flex-wrap: nowrap; /* no wrapping because a wrapping column sizes each child to its content instead of the page width */
     gap: 56px;
     margin-top: 56px;
 }
@@ -213,7 +212,6 @@
 }
 
 .post-side {
-    flex-wrap: nowrap;
     gap: 16px;
 }
 
