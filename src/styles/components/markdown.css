@@ -102,6 +102,55 @@
     color: inherit;
 }
 
+.project-markdown .heading-text {
+    min-width: 0;
+}
+
+/* Heading links */
+
+/* h1/h2 end with an invisible anchor link that covers the `#` in ::before */
+.project-markdown .anchor {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    height: var(--line-height-h2);
+    width: 44px;
+    margin-right: 8px;
+    color: transparent;
+    text-decoration: none;
+}
+
+.project-markdown .anchor:hover {
+    color: transparent;
+    text-decoration: none;
+}
+
+.project-markdown .anchor:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+/* for h3 the anchor link is visible in the gutter on hover */
+.project-markdown h3 .anchor {
+    width: auto;
+    height: auto;
+    margin-right: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.project-markdown h3:hover .anchor,
+.project-markdown h3 .anchor:focus-visible {
+    opacity: 1;
+}
+
+.project-markdown h3 .anchor:hover {
+    color: var(--accent-color);
+}
+
 /* Inline */
 .project-markdown a {
     color: var(--accent-color);
@@ -276,6 +325,18 @@
         flex: none;
         margin: 5px 0 0;
         transform: none;
+    }
+
+    .project-markdown :is(h1, h2) .anchor {
+        right: auto;
+        left: 0;
+        width: 24px;
+        margin: 0;
+    }
+
+    /* No gutter to show it in */
+    .project-markdown h3 .anchor {
+        display: none;
     }
 }
 

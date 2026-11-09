@@ -1,5 +1,8 @@
 import {defineConfig, fontProviders} from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import {rehypeHeadingIds} from "@astrojs/markdown-remark";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeHeadingText from "./src/lib/rehype-heading-text.ts";
 
 export default defineConfig({
     site: "https://zerebos.com",
@@ -17,6 +20,16 @@ export default defineConfig({
 
     markdown: {
         smartypants: false,
+        // ids HAS TO come first so Astro collects each heading's text before the wrapper and the `#` link are added.
+        rehypePlugins: [
+            rehypeHeadingIds,
+            rehypeHeadingText,
+            [rehypeAutolinkHeadings, {
+                behavior: "append",
+                content: {type: "text", value: "#"},
+                properties: {className: ["anchor"], ariaLabel: "Link to this section"},
+            }],
+        ],
         shikiConfig: {
             theme: "dark-plus",
         },
