@@ -243,8 +243,6 @@
     }
 }
 
-/* TODO: consider using the same styling for "active" links as in the links page */
-/* TODO: also consider using a `#` on the selected link */
 .post-toc {
     gap: 12px;
     padding: 20px 12px 12px;
@@ -288,6 +286,24 @@
 
 .post-toc a[aria-current="true"] {
     color: var(--text-heading);
+}
+
+/* The accent `#` from the markdown headings hangs left of the current link's text. */
+.post-toc a::before {
+    content: "#" / "";
+    position: absolute;
+    left: -4px;
+    width: 12px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--accent-color);
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+}
+
+.post-toc a[aria-current="true"]::before {
+    opacity: 1;
 }
 
 .post-footer {
