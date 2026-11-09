@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import { toSlug } from "../lib/slug";
+import { PSEUDONYM } from "../lib/config";
+import avatarImage from "../assets/images/avatar.webp";
+
+interface Props {
+  title: string;
+  blurb: string;
+  date: Date;
+  updated?: Date;
+  readingTime: number;
+  primaryTag?: string;
+  /** Matches the title to the post's preview card, so the browser morphs one into the other */
+  titleTransitionName: string;
+}
+
+const { title, blurb, date, updated, readingTime, primaryTag, titleTransitionName } = Astro.props;
+
+function formatDate(value: Date): string {
+  return value.toLocaleDateString("en-US", { dateStyle: "medium" });
+}
+---
+
+<header class="flex column post-header">
+  <nav class="flex crumb" aria-label="Breadcrumb">
+    <a href="/blog">Blog</a>
+    {primaryTag && (
+      <>
+        <span aria-hidden="true">/</span>
+        <a href={`/blog/tags/${toSlug(primaryTag)}`}>{primaryTag}</a>
+      </>
+    )}
+  </nav>
+  <h1 class="post-title" transition:name={titleTransitionName}>{title}</h1>
+  <p class="post-blurb">{blurb}</p>
+  <div class="flex byline">
+    {/* Shares the home and links pages' avatar name, so it morphs from there into the byline */}
+    <Image src={avatarImage} transition:name="intro-avatar" alt="" widths={[40, 80]} sizes="40px" />
+    <div class="flex column">
+      <span class="byline-name">{PSEUDONYM}</span>
+      <span class="flex text-muted byline-meta">
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        {updated && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time></span>
+          </>
+        )}
+        {readingTime > 0 && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{readingTime} min read</span>
+          </>
+        )}
+      </span>
+    </div>
+  </div>
+</header>

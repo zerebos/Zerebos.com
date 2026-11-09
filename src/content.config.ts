@@ -11,7 +11,11 @@ const blog = defineCollection({
         updated: z.coerce.date().optional(),
         draft: z.boolean().default(false),
         tags: z.array(z.string()).default([]),
+        primaryTag: z.string().optional(), // shown after `Blog` in the post's breadcrumb
         banner: image().optional()
+    }).refine((data) => !data.primaryTag || data.tags.includes(data.primaryTag), {
+        message: "primaryTag must be one of the post's tags",
+        path: ["primaryTag"],
     })
 });
 

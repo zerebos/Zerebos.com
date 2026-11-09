@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHeader from "../../components/PageHeader.astro";
+import PostHeader from "../../components/PostHeader.astro";
 import TagList from "../../components/TagList.astro";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
@@ -32,38 +32,47 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
   author={PSEUDONYM}
   size="large"
 >
-  <PageHeader title={post.data.title} date={post.data.date} updated={post.data.updated} blurb={post.data.blurb} readingTime={readingTime(post.body!)} titleTransitionName={`post-title-${post.id}`} />
+  <article class="flex column post-page">
+    <PostHeader
+      title={post.data.title}
+      blurb={post.data.blurb}
+      date={post.data.date}
+      updated={post.data.updated}
+      readingTime={readingTime(post.body!)}
+      primaryTag={post.data.primaryTag}
+      titleTransitionName={`post-title-${post.id}`}
+    />
 
-  {post.data.banner && (
-    <section class="flex column flex-align-center banner">
+    {post.data.banner && (
       <Image
         src={post.data.banner}
+        class="post-banner"
         alt={post.data.title}
-        widths={[640, 960, 1280]}
-        sizes="(max-width: 768px) 92vw, 960px"
+        widths={[640, 980, 1280, 1960]}
+        sizes="(max-width: 1012px) 92vw, 980px"
       />
-    </section>
-  )}
+    )}
 
-  <section class="container blog-content project-markdown">
-    <div class="content">
-      <Content />
+    <div class="post-body">
+      <section class="project-markdown">
+        <div class="content">
+          <Content />
+        </div>
+      </section>
+
+      <footer class="flex post-footer">
+        <TagList tags={post.data.tags ?? []} wrapperClass="flex post-tags" />
+
+        <div class="flex post-share">
+          <span class="share-label">Share</span>
+          <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(post.data.title)}`} target="_blank" rel="noopener noreferrer">
+            <Image src={twitterIcon} alt="Share on X" width={20} height={20} />
+          </a>
+          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noopener noreferrer">
+            <Image src={linkedinIcon} alt="Share on LinkedIn" width={20} height={20} />
+          </a>
+        </div>
+      </footer>
     </div>
-  </section>
-
-  <section class="flex container blog-navigation">
-    <TagList tags={post.data.tags ?? []} />
-
-    <div class="flex column blog-share">
-      <span>Share this post:</span>
-      <div class="flex share-links" id="links-icons">
-        <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(post.data.title)}`} target="_blank" rel="noopener noreferrer">
-          <Image src={twitterIcon} alt="Share on X" width={24} height={24} />
-        </a>
-        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noopener noreferrer">
-          <Image src={linkedinIcon} alt="Share on LinkedIn" width={24} height={24} />
-        </a>
-      </div>
-    </div>
-  </section>
+  </article>
 </BaseLayout>
