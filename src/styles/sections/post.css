@@ -100,6 +100,7 @@
 
 /* Post page */
 .post-page {
+    flex-wrap: nowrap; /* no wrapping because a wrapping column sizes each child to its content instead of the page width */
     gap: 56px;
     margin-top: 56px;
 }
@@ -203,12 +204,16 @@
 /*
  * Markdown column plus a side column (the contents box, and the repository card on project pages).
  * The side column comes first in the markup, so keyboard and screen reader users reach the contents
- * before the post. Above 900px it moves to the right and sticks while the post scrolls past.
+ * before the post. Above 1000px it moves to the right, and the contents box sticks while the post scrolls past.
  */
 .post-layout {
     display: flex;
     flex-direction: column;
     gap: 40px;
+}
+
+.post-side {
+    gap: 16px;
 }
 
 @media only screen and (min-width: 1001px) {
@@ -224,10 +229,14 @@
         max-width: 680px;
     }
 
-    .post-layout > .post-toc {
+    .post-layout > .post-side {
         order: 2;
         flex: 1 1 200px;
         min-width: 0;
+        align-self: stretch; /* makes it as tall as the post, so the contents box inside has room to stick */
+    }
+
+    .post-side > .post-toc {
         position: sticky;
         top: 24px;
         max-height: calc(100vh - 48px); /* force the contents box to stay within the viewport height */
@@ -235,6 +244,8 @@
     }
 }
 
+/* TODO: consider using the same styling for "active" links as in the links page */
+/* TODO: also consider using a `#` on the selected link */
 .post-toc {
     gap: 12px;
     padding: 20px 12px 12px;

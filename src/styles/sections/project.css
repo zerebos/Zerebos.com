@@ -1,3 +1,57 @@
+/* Project page header: icon, title and blurb on the left, actions on the right */
+.project-head {
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.project-identity {
+    align-items: center;
+    gap: 24px;
+    min-width: 0;
+}
+
+.project-heading {
+    gap: 8px;
+    min-width: 0;
+}
+
+/* same tile as the project card's icon, so the two morph into each other */
+.project-icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 12px;
+    background-color: #14151B;
+}
+
+.project-actions {
+    gap: 12px;
+}
+
+.project-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 20px;
+}
+
+/* project banners come in every shape, so each one is centered in a 16:9 tile without cropping or enlarging it */
+.project-banner {
+    display: flex;
+    aspect-ratio: 16 / 9;
+    border-radius: 32px;
+    background-color: #14151B;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 11px 0px, rgba(59, 59, 59, 0.29) 17px 21px 31px -11px;
+    overflow: hidden;
+}
+
+.project-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+
 .stats-wrap {
     margin-bottom: 24px;
     gap: 12px;

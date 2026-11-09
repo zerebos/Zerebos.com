@@ -55,7 +55,9 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
     )}
 
     <div class="post-layout">
-      <ContentsBox label="In this post" headings={headings} />
+      <aside class="flex column post-side">
+        <ContentsBox label="In this post" headings={headings} />
+      </aside>
       <section class="project-markdown post-body">
         <div class="content">
           <Content />

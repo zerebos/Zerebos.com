@@ -15,6 +15,7 @@ const { project } = Astro.props;
       <Image
         src={project.data.icon}
         class="icon"
+        transition:name={`project-icon-${project.id}`}
         alt={project.data.title}
         widths={[128, 256]}
         sizes="(max-width: 768px) 128px, 256px"
@@ -22,7 +23,7 @@ const { project } = Astro.props;
     )}
     <div class="flex column info">
       <h3 transition:name={`project-title-${project.id}`}>{project.data.title}</h3>
-      <p>{project.data.blurb}</p>
+      <p transition:name={`project-blurb-${project.id}`}>{project.data.blurb}</p>
     </div>
   </a>
 </div>
