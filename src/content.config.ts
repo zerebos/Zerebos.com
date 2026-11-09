@@ -28,8 +28,12 @@ const projects = defineCollection({
         draft: z.boolean().default(false),
         icon: image().optional(),
         repo: z.string().optional(),
-        demo: z.url().optional(),
+        website: z.url().optional(),
+        websiteLabel: z.string().optional(), // the website button's text, "Visit the website" when unset
         banner: image().optional()
+    }).refine((data) => !data.websiteLabel || data.website, {
+        message: "websiteLabel needs a website",
+        path: ["websiteLabel"],
     })
 });
 

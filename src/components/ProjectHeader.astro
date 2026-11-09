@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, blurb, icon, repo, demo } = project.data;
+const { title, blurb, icon, repo, website, websiteLabel } = project.data;
 const repoUrl = repo && `https://github.com/${repo.includes("/") ? repo : `${GITHUB_USERNAME}/${repo}`}`;
 ---
 
@@ -28,9 +28,9 @@ const repoUrl = repo && `https://github.com/${repo.includes("/") ? repo : `${GIT
         <p class="post-blurb" transition:name={`project-blurb-${project.id}`}>{blurb}</p>
       </div>
     </div>
-    {(demo || repoUrl) && (
+    {(website || repoUrl) && (
       <div class="flex project-actions">
-        {demo && <a class="btn btn-primary" href={demo} target="_blank" rel="noopener noreferrer">Play the demo</a>}
+        {website && <a class="btn btn-primary" href={website} target="_blank" rel="noopener noreferrer">{websiteLabel ?? "Visit the website"}</a>}
         {repoUrl && (
           <a class="btn btn-outline hover-fill" href={repoUrl} target="_blank" rel="noopener noreferrer">
             <Image src={getIconByName("github")} alt="" width={18} height={18} />
