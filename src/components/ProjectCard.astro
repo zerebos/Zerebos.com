@@ -9,7 +9,7 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<div class="flex project">
+<div class="flex project" transition:name={`project-card-${project.id}`}>
   <a href={`/projects/${project.id}`} class="flex column gradient">
     {project.data.icon && (
       <Image
