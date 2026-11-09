@@ -27,14 +27,6 @@ button.expand img {
     padding: 0;
 }
 
-#links-container {
-    max-width: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    padding-bottom: 32px;
-}
 
 #main-nav {
     display: flex;
@@ -172,5 +164,36 @@ button.expand img {
         height: 106px;
         /* height: 232px; */
         background-color: rgba(28, 22, 47, 0.9);
+    }
+}
+
+/*
+ * During a view transition the browser animates the nav's box from its old size to its new one.
+ * The box is drawn on the group itself instead of using the old and new snapshots, because stretching
+ * a snapshot distorts the rounded corners. The links and socials have their own transition names, so
+ * they slide to their new positions at full size. Without those names they would be part of the
+ * hidden snapshots and would vanish for the length of the animation.
+ */
+::view-transition-group(main-nav) {
+    background-color: var(--background-secondary);
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    border-radius: 12px;
+    animation-duration: 0.3s;
+}
+
+::view-transition-old(main-nav),
+::view-transition-new(main-nav) {
+    display: none;
+}
+
+::view-transition-group(main-nav-links),
+::view-transition-group(main-nav-socials) {
+    animation-duration: 0.3s;
+}
+
+/* Astro already skips its own animations for reduced motion, but not the browser's default morph. */
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*) {
+        animation: none;
     }
 }

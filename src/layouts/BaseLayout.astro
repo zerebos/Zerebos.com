@@ -17,6 +17,7 @@ interface Props {
   ogImage?: string | ImageMetadata;
   publishedTime?: Date;
   author?: string;
+  size?: "default" | "large";
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   ogImage,
   publishedTime,
   author,
+  size = "default",
 } = Astro.props;
 
 const displayTitle = title && title !== SITE_TITLE ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
@@ -42,7 +44,7 @@ const navSocialLinks = links.icons.map((link) => ({
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -81,12 +83,12 @@ const navSocialLinks = links.icons.map((link) => ({
     <link rel="canonical" href={canonicalUrl} />
     <title>{displayTitle}</title>
   </head>
-  <body class="dark">
+  <body>
     <div class="gradient-banner"></div>
     <div class="gradient-banner bottom"></div>
-    <div id="main-wrapper" class="container">
-      <nav id="main-nav" class="collapse">
-        <div class="nav">
+    <div id="main-wrapper" class:list={["container", size !== "default" && size]}>
+      <nav id="main-nav" class="collapse" transition:name="main-nav">
+        <div class="nav" transition:name="main-nav-links">
           <a href="/">
             <Image
               src={zSwipeImage}
@@ -104,7 +106,7 @@ const navSocialLinks = links.icons.map((link) => ({
             <li class="nav-item"><a href="/links" class="nav-link">links</a></li>
           </ul>
         </div>
-        <div class="nav-socials">
+        <div class="nav-socials" transition:name="main-nav-socials">
           {navSocialLinks.map((link) => (
             <a href={link.href} class={link.icon.toLowerCase()} target="_blank" rel="noopener noreferrer">
               <Image src={link.asset} class="social-icon" alt={link.icon} width={18} height={18} />

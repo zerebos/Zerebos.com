@@ -13,7 +13,7 @@
     --gradient-blur: 100px;
 }
 
-body.dark {
+html.dark {
     --text-heading: #fff;
     --text-primary: #ECEDEE;
     --text-muted: #888;

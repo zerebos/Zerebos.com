@@ -35,6 +35,15 @@
     height: 24px;
 }
 
+#links-container {
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding-bottom: 32px;
+}
+
 #links-container .listbox {
     gap: 12px;
 }

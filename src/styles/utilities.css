@@ -16,6 +16,10 @@
     max-width: 400px;
 }
 
+.container.large {
+    max-width: 1012px;
+}
+
 .flex {
     display: flex;
     flex-wrap: wrap;
