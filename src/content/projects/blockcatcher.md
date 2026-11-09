@@ -1,93 +1,49 @@
 ---
 order: 2
 title: Block Catcher
-blurb: A retro style WebGL game.
+blurb: A tiny arcade game about catching falling blocks.
 icon: ../../assets/projects/icons/blockcatcher.png
 repo:  zerebos/BlockCatcher
 website: https://zerebos.github.io/BlockCatcher/
 websiteLabel: Play the demo
 banner: ../../assets/projects/images/blockcatcher.png
+tags: ["typescript", "webgl", "bun"]
 ---
 
-## 🎮 **How to Play**
+You get a paddle, sixty seconds, and a steady rain of colored blocks. Pink blocks are big, slow, and worth 1 point. Purple ones are worth 5. The small, fast cyan blocks are worth 25. Reach 500 points before the clock runs out and you win. The arrow keys move the paddle, and space starts and pauses the game.
 
-### Controls
-```
-← → Arrow Keys    Move your paddle
-SPACE             Start game / Pause
-Audio Button      Toggle sound
-```
+That's it. That's the whole game. It's small on purpose, which is exactly what makes it useful.
 
-### Strategy Tips
+## Where it started
 
-- **Start with pink blocks** to build momentum
-- **Chase cyan blocks** when you're confident
-- **Watch the timer** - panic leads to mistakes
-- **Use audio cues** to anticipate block drops
+Block Catcher began in 2016 as a group project for a graduate-level computer graphics class. It was plain WebGL built on the helper libraries from the course. Initial design had a green paddle, blocks in red, blue, and white, and a win at 250 points. Each block type had its own fragment shader, and everything moved by way of a translation matrix in the vertex shader. It got one patch in 2018 to fix a jittery paddle and a screen flicker whenever you caught a block, and then it sat untouched for five years.
 
-### 🎯 **The Challenge**
+## Rewrites
 
-Time is ticking. Neon blocks cascade from the digital sky. Your mission? **Catch them all.**
+I've come back to it a couple times since then. A small, finished game turns out to be a great place to try new tooling, because nothing important breaks if an experiment goes sideways.
 
-In this retro-futuristic arena, you control a sleek white paddle in a race against time. Each block type demands different strategies:
+### 2023
+The loose scripts and prototypes became classes, the build moved to webpack, the code got linted, and a GitHub Actions workflow started publishing it to GitHub Pages. Around the same time, I dug up a [JavaFX version](https://github.com/zerebos/BlockCatcherFX) from the same era, which lives in its own repo.
 
-- **🌸 Pink Blocks** → *1 point* • Large & leisurely • Perfect for beginners
-- **🟣 Purple Blocks** → *5 points* • Medium challenge • The sweet spot
-- **🔷 Cyan Blocks** → *25 points* • Lightning fast • High risk, high reward
+### 2025
+The whole thing moved to TypeScript and [Bun](https://bun.sh), picked up a test suite, and gained pausing, sound effects, a volume slider, and the current neon look. The goal also went up to 500 points after tweaking the block spawn rate.
 
-**Goal:** Score **500 points** in **60 seconds**. Sounds easy? Think again.
+### 2026
+Added a local leaderboard, built around a small provider interface so a global leaderboard can be added later without touching the game itself.
 
-## Architecture Highlights
+## How it's built
 
-### 🏗️ **Clean Architecture**
-```
-src/
-├── managers/    # System orchestration (audio, DOM, input, rendering, pools)
-├── entities/    # Game objects (player, blocks) with behavior
-├── utils/       # Pure functions (math, geometry, vectors)
-├── audio/       # Modular sound effect system
-├── types/       # TypeScript definitions
-└── styles/      # Synthwave CSS architecture
-```
+### No engine
+Rendering is raw WebGL with a single, very small shader pair. Each block's vertex buffer is built when it spawns, and from then on it only moves by way of position uniforms, so nothing gets re-uploaded to the GPU frame by frame.
 
-### 🧪 **Testing Philosophy**
-- **Unit tests** for individual components
-- **Integration tests** for game mechanics
-- **DOM tests** using Happy-DOM for realistic environments
-- **Edge case coverage** including accessibility scenarios
+### No audio files
+Every sound is synthesized at runtime with the Web Audio API. Catching a block plays a short square-wave blip whose pitch rises with the block's value, so a cyan catch sounds a lot more satisfying than a pink one.
 
-### 🚀 **Performance Features**
-- **Object pooling** prevents garbage collection hitches
-- **Efficient collision detection** using AABB algorithms
-- **Minimal DOM manipulation** with batch updates
-- **Optimized bundle** under 20KB total
-- **WebGL Shaders** for hardware acceleration
+### Object pooling
+Blocks come from a pre-allocated pool and go back into it when they're caught or fall off the screen. The game isn't constantly creating and throwing away objects mid-round, so the garbage collector has nothing to interrupt it with.
 
----
+### Accessible where possible
+A canvas game is a hard case for screen readers, so the score, the timer, and the game status are announced through ARIA live regions. The canvas itself is focusable and describes its controls. Labels are added to the volume slider and the leaderboard form too.
 
-## 📊 **Technical Stats**
-
-<!-- <div align="center"> -->
-
-| Metric | Value |
-|:--------|-------:|
-| **Bundle Size** | 18.81 KB (JS) + 13.40 KB (CSS) |
-| **Test Coverage** | 141 tests, 100% core functionality |
-| **Performance** | 60 FPS WebGL rendering |
-| **Accessibility** | WCAG 2.1 AA compliant |
-| **Browser Support** | All modern browsers with WebGL |
-
-<!-- </div> -->
-
----
-
-## 🌟 **The Tech Stack**
-
-**Why these choices?**
-
-- **[Bun](https://bun.sh)** → Lightning-fast runtime and bundler
-- **[TypeScript](https://typescriptlang.org)** → Type safety without complexity
-- **[WebGL](https://webgl.org)** → Hardware-accelerated graphics
-- **[Web Audio API](https://webaudio.github.io/web-audio-api/)** → Immersive sound design
-- **[Happy-DOM](https://github.com/capricorn86/happy-dom)** → Realistic testing environment
-- **[GitHub Actions](https://github.com/features/actions)** → Automated deployment
+### Tested
+About 150 tests run on Bun's test runner, with Happy DOM standing in for the browser. The same GitHub Actions workflow runs them before every deploy.
