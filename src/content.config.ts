@@ -37,4 +37,19 @@ const projects = defineCollection({
     })
 });
 
-export const collections = {blog, projects};
+const pages = defineCollection({
+    loader: glob({pattern: "**/*.md", base: "./src/content/pages"}),
+    schema: ({image}) => z.object({
+        title: z.string(),
+        blurb: z.string(),
+        updated: z.coerce.date().optional(),
+        banner: image().optional(),
+        bannerAlt: z.string().optional(), // the banner's alt text, empty when unset
+        bannerCaption: z.string().optional(), // shown under the banner in text-muted
+    }).refine((data) => data.banner || (!data.bannerAlt && !data.bannerCaption), {
+        message: "bannerAlt and bannerCaption need a banner",
+        path: ["banner"],
+    })
+});
+
+export const collections = {blog, projects, pages};

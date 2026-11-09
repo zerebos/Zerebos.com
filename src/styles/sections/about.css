@@ -1,20 +1,13 @@
-#about {
+.about-updated {
+    font-size: 14px;
+}
+
+.about-banner {
     gap: 12px;
+    margin: 0;
 }
 
-#about .paragraph {
-    gap: 12px;
-}
-
-#about .paragraph p {
-    padding: 2rem;
-    background-color: var(--background-secondary);
-    backdrop-filter: blur(var(--glass-blur));
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-subtle);
-    letter-spacing: -0.09px;
-}
-
-#about .paragraph + .paragraph {
-    margin-top: 30px;
+.about-banner figcaption {
+    font-size: 14px;
+    text-align: center;
 }
