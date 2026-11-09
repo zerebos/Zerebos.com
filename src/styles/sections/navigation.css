@@ -178,17 +178,11 @@ button.expand img {
     background-color: var(--background-secondary);
     border: 1px solid rgba(82, 82, 82, 0.2);
     border-radius: 12px;
-    animation-duration: 0.3s;
 }
 
 ::view-transition-old(main-nav),
 ::view-transition-new(main-nav) {
     display: none;
-}
-
-::view-transition-group(main-nav-links),
-::view-transition-group(main-nav-socials) {
-    animation-duration: 0.3s;
 }
 
 /* Astro already skips its own animations for reduced motion, but not the browser's default morph. */
