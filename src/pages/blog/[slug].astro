@@ -45,8 +45,8 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
     </section>
   )}
 
-  <section class="flex column container blog-content project-markdown">
-    <div class="flex column content">
+  <section class="container blog-content project-markdown">
+    <div class="content">
       <Content />
     </div>
   </section>

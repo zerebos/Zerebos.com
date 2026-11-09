@@ -167,13 +167,6 @@ button.expand img {
     }
 }
 
-/*
- * During a view transition the browser animates the nav's box from its old size to its new one.
- * The box is drawn on the group itself instead of using the old and new snapshots, because stretching
- * a snapshot distorts the rounded corners. The links and socials have their own transition names, so
- * they slide to their new positions at full size. Without those names they would be part of the
- * hidden snapshots and would vanish for the length of the animation.
- */
 ::view-transition-group(main-nav) {
     background-color: var(--background-secondary);
     border: 1px solid rgba(82, 82, 82, 0.2);

@@ -1,3 +1,16 @@
+/* Theme-independent type and layout values */
+:root {
+    --container-small: 400px;
+    --container-medium: 500px;
+    --container-default: 708px;
+    --container-large: 1012px;
+
+    --font-size-markdown: 17px;
+    --line-height-markdown: 1.7;
+    --font-size-h2: 28px;
+    --line-height-h2: calc(var(--font-size-h2) * 1.2);
+}
+
 :root {
     --accent-color: #018BBC;
     --accent-color-hover: #0f9fd4;

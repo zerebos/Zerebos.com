@@ -1,5 +1,5 @@
 .container {
-    max-width: 708px;
+    max-width: var(--container-default);
     margin: 0 auto;
     width: 100%;
     padding-right: 16px;
@@ -8,16 +8,16 @@
     margin-left: auto;
 }
 
+.container.large {
+    max-width: var(--container-large);
+}
+
 .container.medium {
-    max-width: 500px;
+    max-width: var(--container-medium);
 }
 
 .container.small {
-    max-width: 400px;
-}
-
-.container.large {
-    max-width: 1012px;
+    max-width: var(--container-small);
 }
 
 .flex {
