@@ -85,7 +85,7 @@ const marqueeStats = Object.entries(github.stats);
                     />
                   )}
                   <div class="flex column info">
-                    <h3>{project.data.title}</h3>
+                    <h3 transition:name={`project-title-${project.id}`}>{project.data.title}</h3>
                     <p>{project.data.blurb}</p>
                   </div>
                 </a>

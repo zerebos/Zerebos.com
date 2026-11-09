@@ -21,7 +21,9 @@
     gap: 4px;
 }
 
+/* Shrinks the title's box to its text, so the morph into the project header moves the text instead of a full-width box. */
 #projects .project .info h3 {
+    align-self: flex-start;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: -0.11px;
