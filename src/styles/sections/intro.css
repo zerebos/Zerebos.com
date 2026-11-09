@@ -56,11 +56,11 @@
     font-size: 18px;
     font-weight: 500;
     letter-spacing: -0.25px;
-    color: rgba(114, 120, 136, 0.6);
+    color: var(--text-label-faint);
 }
 
 #intro .profile span {
-    background-image: linear-gradient(90deg, #4589FF 0%, #08BDBA 100%);
+    background-image: var(--gradient-heading);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -73,7 +73,7 @@
     margin: 0 16px;
     position: relative;
     height: 64px;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
 }
 
 #marquee::before,
@@ -85,14 +85,14 @@
     left: 0;
     bottom: 0;
     width: 10%;
-    background-image: linear-gradient(to right, #0A0A0D, transparent);
+    background-image: linear-gradient(to right, var(--background-main), transparent);
     z-index: 10;
 }
 
 #marquee::after {
     left: unset;
     right: 0;
-    background-image: linear-gradient(to left, #0A0A0D, transparent);
+    background-image: linear-gradient(to left, var(--background-main), transparent);
 }
 
 #marquee > div {

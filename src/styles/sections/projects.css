@@ -11,10 +11,10 @@
     max-width: 200px;
     height: 200px;
     /* background-image: linear-gradient(45deg, rgba(0,255,241,1) 0%, rgba(244,0,232,1) 100%); */
-    border-radius: 12px;
-    background-color: #14151B;
+    border-radius: var(--border-radius);
+    background-color: var(--background-tile);
     /* background-color: #517FA4; */
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(var(--glass-blur));
 }
 
 #projects .project .info {

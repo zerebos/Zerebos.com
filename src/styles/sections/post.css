@@ -2,14 +2,14 @@
 .tag,
 .tag.gradient {
     width: auto;
-    border: 1px solid rgba(82, 82, 82, 0.5);
+    border: 1px solid var(--border-strong);
     display: inline-block;
     padding: 4px 8px;
     margin: 2px;
     background: none;
     color: white;
     text-decoration: none;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     font-size: 0.85em;
     font-weight: 500;
     /* transition: none; */
@@ -45,7 +45,7 @@
 /* Blog post preview card */
 .blog-post-preview {
     padding: 1.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-hairline);
     gap: 1rem;
 }
 
@@ -123,7 +123,7 @@
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: rgb(114, 120, 136);
+    color: var(--text-label);
 }
 
 .crumb a {
@@ -142,7 +142,7 @@
     line-height: 1.1;
     letter-spacing: -1.25px;
     text-wrap: balance;
-    background-image: linear-gradient(90deg, #4589FF 0%, #08BDBA 100%);
+    background-image: var(--gradient-heading);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -197,8 +197,8 @@
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: 32px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 11px 0px, rgba(59, 59, 59, 0.29) 17px 21px 31px -11px;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-banner);
 }
 
 /*
@@ -251,9 +251,9 @@
     gap: 12px;
     padding: 20px 12px 12px;
     background: var(--background-secondary);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(82, 82, 82, 0.2);
-    border-radius: 12px;
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
 }
 
 /* Small uppercase label at the top of a side column box */
@@ -263,7 +263,7 @@
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: rgb(114, 120, 136);
+    color: var(--text-label);
 }
 
 .post-toc ol {
@@ -278,7 +278,7 @@
 .post-toc a {
     display: block;
     padding: 8px 12px;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     color: var(--text-muted);
     font-size: 14px;
     line-height: 1.35;
@@ -286,7 +286,7 @@
 
 .post-toc a:hover {
     color: var(--text-heading);
-    background-image: linear-gradient(90deg, #1B1A26, #23171C); /* TODO: another theme token candidate */
+    background-image: var(--gradient-hover);
 }
 
 .post-toc a[aria-current="true"] {
@@ -298,7 +298,7 @@
     align-items: center;
     gap: 20px;
     padding-top: 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-hairline);
 }
 
 .post-tags,
@@ -313,7 +313,7 @@
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: rgb(114, 120, 136);
+    color: var(--text-label);
 }
 
 .post-share a {

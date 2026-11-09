@@ -9,9 +9,9 @@
 #about .paragraph p {
     padding: 2rem;
     background-color: var(--background-secondary);
-    backdrop-filter: blur(12px); /* TODO: make this a theme token*/
-    border-radius: 12px; /* TODO: probably this too */
-    border: 1px solid rgba(82, 82, 82, 0.2); /* TODO: probably this too */
+    backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-subtle);
     letter-spacing: -0.09px;
 }
 

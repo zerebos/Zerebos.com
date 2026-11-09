@@ -15,7 +15,7 @@
     color: #fff;
     transition: color 200ms ease-in-out, background-color 200ms ease-in-out, border-color 200ms ease-in-out;
     /* clip-path: polygon(20px 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 20px 100%, 0 50%); */
-    border-radius: 12px;
+    border-radius: var(--border-radius);
 }
 
 .btn.btn-primary {
@@ -44,11 +44,11 @@
 
 /* TODO: redo this de-duping with the links page */
 .btn.btn-ghost {
-    border: 1px solid rgba(82, 82, 82, 0.5);
+    border: 1px solid var(--border-strong);
     color: var(--text-heading);
 }
 
 .btn.btn-ghost:hover {
     border-color: transparent;
-    background-image: linear-gradient(90deg, #1B1A26, #23171C);
+    background-image: var(--gradient-hover);
 }

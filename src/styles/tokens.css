@@ -9,6 +9,10 @@
     --line-height-markdown: 1.7;
     --font-size-h2: 28px;
     --line-height-h2: calc(var(--font-size-h2) * 1.2);
+
+    --border-radius: 12px;
+    --border-radius-large: 32px;
+    --glass-blur: 12px;
 }
 
 :root {
@@ -34,4 +38,18 @@ html.dark {
     --background-secondary: rgba(28, 22, 47, 0.4);
     /* --background-secondary: rgba(32, 18, 36, 0.4); */
     --background-tertiary: #1D1D1D;
+    --background-tile: #14151B;
+
+    --border-subtle: rgba(82, 82, 82, 0.2);
+    --border-medium: rgba(82, 82, 82, 0.35);
+    --border-strong: rgba(82, 82, 82, 0.5);
+    --border-hairline: rgba(255, 255, 255, 0.1);
+
+    --text-label: rgb(114, 120, 136);
+    --text-label-faint: rgba(114, 120, 136, 0.6);
+
+    --gradient-heading: linear-gradient(90deg, #4589FF 0%, #08BDBA 100%);
+    --gradient-hover: linear-gradient(90deg, #1B1A26, #23171C);
+
+    --shadow-banner: rgba(0, 0, 0, 0.15) 0px 4px 11px 0px, rgba(59, 59, 59, 0.29) 17px 21px 31px -11px;
 }

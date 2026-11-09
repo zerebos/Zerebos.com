@@ -7,12 +7,12 @@ a.gradient {
     /* background-size: 0% 0%; */
     /* background-position: 50% 50%; */
     /* transition: background-size 500ms ease; */
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     position: relative;
 }
 
 a.gradient.outline {
-    border: 1px solid rgba(82, 82, 82, 0.2);
+    border: 1px solid var(--border-subtle);
 }
 
 a.gradient.outline:hover {
@@ -27,12 +27,12 @@ a.gradient::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: linear-gradient(90deg, #1B1A26, #23171C);
-    backdrop-filter: blur(12px);
+    background-image: var(--gradient-hover);
+    backdrop-filter: blur(var(--glass-blur));
     transform: scale(60%);
     transform-origin: 50% 50% 0px;
     transition: transform 200ms ease-out, opacity 200ms ease-out;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     opacity: 0;
     z-index: -1;
 }

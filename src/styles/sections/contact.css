@@ -28,9 +28,9 @@
     padding: 2rem;
     gap: 12px;
     background-color: var(--background-secondary);
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
-    border: 1px solid rgba(82, 82, 82, 0.2);
+    backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-subtle);
     flex: 1;
 }
 
@@ -67,20 +67,20 @@
 
 /* #contactform .btn {
     background-color: rgba(var(--accent-rgb), 1);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(82, 82, 82, 0.2);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border-subtle);
 } */
 
 .text-input {
     height: 52px;
     background: var(--background-secondary);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(var(--glass-blur));
     color: #fff;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     outline: none;
     font-size: 16px;
     padding: 0.375rem 0.75rem;
-    border: 1px solid rgba(82, 82, 82, 0.2);
+    border: 1px solid var(--border-subtle);
     transition: border-color 0.15s ease-in-out;
     font-family: inherit;
     max-width: 100%;
@@ -107,10 +107,10 @@ textarea.text-input {
     left: 50%;
     transform: translateX(-50%) scaleY(0);
     background: var(--accent-color);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(82, 82, 82, 0.2);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border-subtle);
     padding: 0.375rem 0.75rem;
-    border-radius: 12px 12px 0 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     opacity: 0;
     transition: top 200ms ease, opacity 200ms ease, transform 200ms ease;
     display: flex;

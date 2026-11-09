@@ -3,14 +3,14 @@
 }
 
 .banner img {
-    border-radius: 32px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 11px 0px, rgba(59, 59, 59, 0.29) 17px 21px 31px -11px;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-banner);
 }
 
 .banner p {
     font-size: 14px;
     color: rgba(74, 87, 111, 0.7);
-    color: rgba(114, 120, 136, 0.6);
+    color: var(--text-label-faint);
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;

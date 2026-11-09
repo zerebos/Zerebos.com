@@ -34,9 +34,9 @@ button.expand img {
     margin: 24px 0;
     padding: 16px;
     background-color: var(--background-secondary);
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
-    border: 1px solid rgba(82, 82, 82, 0.2);
+    backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-subtle);
     z-index: 100;
 }
 
@@ -169,8 +169,8 @@ button.expand img {
 
 ::view-transition-group(main-nav) {
     background-color: var(--background-secondary);
-    border: 1px solid rgba(82, 82, 82, 0.2);
-    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
 }
 
 ::view-transition-old(main-nav),
