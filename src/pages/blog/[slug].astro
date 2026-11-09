@@ -32,7 +32,7 @@ const canonical = new URL(`/blog/${post.id}`, Astro.site ?? SITE_URL).toString()
   author={PSEUDONYM}
   size="large"
 >
-  <PageHeader title={post.data.title} date={post.data.date} updated={post.data.updated} blurb={post.data.blurb} readingTime={readingTime(post.body!)} />
+  <PageHeader title={post.data.title} date={post.data.date} updated={post.data.updated} blurb={post.data.blurb} readingTime={readingTime(post.body!)} titleTransitionName={`post-title-${post.id}`} />
 
   {post.data.banner && (
     <section class="flex column flex-align-center banner">

@@ -5,13 +5,16 @@ interface Props {
   date?: Date;
   updated?: Date;
   readingTime?: number;
+  /** Matches the title to the same name on another page, so the browser morphs one into the other. */
+  titleTransitionName?: string;
 }
 
-const { title, blurb, date, updated, readingTime } = Astro.props;
+const { title, blurb, date, updated, readingTime, titleTransitionName } = Astro.props;
 ---
 
 <section class="flex column flex-align-center container" id="page-header">
-  <h2>{title}</h2>
+  {/* Astro makes up a name when `transition:name` is undefined, and that name would match the header on every page. */}
+  {titleTransitionName ? <h2 transition:name={titleTransitionName}>{title}</h2> : <h2>{title}</h2>}
   <div class="flex text-muted" id="page-subheader">
     {date && (
       <span>

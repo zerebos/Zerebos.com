@@ -53,7 +53,9 @@
     border-bottom: none;
 }
 
+/* Shrinks the title's box to its text, so the morph into the post header moves the text instead of a full-width box. */
 .blog-post-preview h3 {
+    align-self: flex-start;
 }
 
 .blog-post-preview h3 a {
