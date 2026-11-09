@@ -1,0 +1,84 @@
+---
+import type { GitHubRepo } from "../lib/github";
+
+interface Props {
+  git: GitHubRepo;
+  /** Language name to percentage of the repo's code */
+  languages: Record<string, number> | null;
+  branches: string[] | null;
+}
+
+const { git, languages, branches } = Astro.props;
+const repoUrl = `https://github.com/${git.full_name}`;
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+
+// Feather icon contents, drawn in a 24×24 box with the shared stroke settings below.
+const icons = {
+  license: `<rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>`,
+  clock: `<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>`,
+  star: `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>`,
+  fork: `<circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line>`,
+  eye: `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`,
+  issue: `<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>`,
+  branch: `<line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path>`,
+};
+
+interface Stat {
+  label: string;
+  value: string;
+  href: string;
+  icon: keyof typeof icons;
+  /** Takes a whole row, for values too long to share one */
+  wide?: boolean;
+}
+
+const count = (value: number) => value.toLocaleString("en-US");
+const stats: Stat[] = [];
+if (git.license?.name) {
+  stats.push({ label: "License", value: git.license.spdx_id, href: `${repoUrl}/blob/${git.default_branch}/LICENSE`, icon: "license", wide: true });
+}
+stats.push(
+  { label: "Last push", value: formatDate(git.pushed_at), href: `${repoUrl}/commits/`, icon: "clock", wide: true },
+  { label: "Stars", value: count(git.stargazers_count), href: `${repoUrl}/stargazers/`, icon: "star" },
+  { label: "Forks", value: count(git.forks), href: `${repoUrl}/network/members/`, icon: "fork" },
+  { label: "Watchers", value: count(git.subscribers_count), href: `${repoUrl}/watchers/`, icon: "eye" },
+  { label: "Issues", value: count(git.open_issues), href: `${repoUrl}/issues/`, icon: "issue" },
+);
+if (branches) {
+  stats.push({ label: "Branches", value: count(branches.length), href: `${repoUrl}/branches/`, icon: "branch" });
+}
+
+const languageRows = Object.entries(languages ?? {});
+---
+
+<section class="repo-card" aria-labelledby="repo-card-label">
+  <span class="side-label" id="repo-card-label">Repository</span>
+  <div class="repo-stats">
+    {stats.map((stat) => (
+      <a class:list={["repo-stat", { wide: stat.wide }]} href={stat.href} target="_blank" rel="noopener noreferrer">
+        <span class="flex repo-stat-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[stat.icon]} />
+          {stat.label}
+        </span>
+        <span class="repo-stat-value">{stat.value}</span>
+      </a>
+    ))}
+  </div>
+  {languageRows.length > 0 && (
+    <>
+      <div class="repo-divider"></div>
+      <span class="side-label">Languages</span>
+      <ul class="repo-languages">
+        {languageRows.map(([language, percent]) => (
+          <li>
+            <span class="flex repo-language-row"><span>{language}</span><span class="text-muted">{percent}%</span></span>
+            <span class="repo-language-bar" aria-hidden="true"><span style={`width: ${percent}%`}></span></span>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</section>

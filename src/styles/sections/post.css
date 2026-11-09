@@ -212,7 +212,9 @@
     gap: 40px;
 }
 
+/* No wrapping, because a wrapping column measures its children at their narrowest and keeps that height. */
 .post-side {
+    flex-wrap: nowrap;
     gap: 16px;
 }
 
@@ -255,7 +257,9 @@
     border-radius: 12px;
 }
 
-.post-toc-label {
+/* Small uppercase label at the top of a side column box */
+.post-toc-label,
+.side-label {
     padding: 0 12px;
     font-size: 12px;
     font-weight: 600;
