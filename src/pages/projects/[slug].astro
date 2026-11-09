@@ -6,7 +6,7 @@ import RepositoryCard from "../../components/RepositoryCard.astro";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getGitHubData } from "../../lib/github";
+import { getGitHubData, getOpenPullRequestCount } from "../../lib/github";
 import { GITHUB_USERNAME } from "../../lib/config";
 import { getOrderedProjects } from "../../lib/projects";
 
@@ -25,6 +25,7 @@ const repo = project.data.repo;
 let git = null;
 let langs: Record<string, number> | null = null;
 let branches: string[] | null = null;
+let pulls: number | null = null;
 
 if (repo) {
   const fullName = repo.includes("/") ? repo : `${GITHUB_USERNAME}/${repo}`;
@@ -32,6 +33,7 @@ if (repo) {
   git = github.projects.find(p => p.full_name === fullName) ?? null;
   langs = github.languages[fullName] ?? null;
   branches = github.branches[fullName] ?? null;
+  pulls = await getOpenPullRequestCount(repo);
 }
 ---
 
@@ -52,7 +54,7 @@ if (repo) {
 
     <div class="post-layout">
       <aside class="flex column post-side">
-        {git && <RepositoryCard git={git} languages={langs} branches={branches} />}
+        {git && <RepositoryCard git={git} languages={langs} branches={branches} pulls={pulls} />}
         <ContentsBox label="On this page" headings={headings} />
       </aside>
       <section class="project-markdown post-body">

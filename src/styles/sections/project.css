@@ -54,8 +54,6 @@
 
 /* Repository card */
 .repo-card {
-    display: flex;
-    flex-direction: column;
     gap: 16px;
     padding: 20px 12px 16px;
     background: var(--background-secondary);
@@ -66,13 +64,17 @@
 
 .repo-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2px;
+}
+/* adjust repo stats grid for small and large screens */
+@media only screen and (max-width: 600px), (min-width: 1001px) {
+    .repo-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .repo-stat {
-    display: flex;
-    flex-direction: column;
     gap: 2px;
     padding: 8px 12px;
     border-radius: var(--border-radius);
@@ -83,8 +85,11 @@
     color: var(--text-heading);
 }
 
-.repo-stat.wide {
-    grid-column: 1 / -1;
+/* the dates share one row in the three-column grid and take a whole row in the two-column one */
+@media only screen and (max-width: 600px), (min-width: 1001px) {
+    .repo-stat.wide {
+        grid-column: 1 / -1;
+    }
 }
 
 .repo-stat-label {
@@ -115,8 +120,6 @@
 }
 
 .repo-languages {
-    display: flex;
-    flex-direction: column;
     gap: 2px;
     margin: 0;
     padding: 0;
@@ -124,8 +127,6 @@
 }
 
 .repo-language {
-    display: flex;
-    flex-direction: column;
     gap: 5px;
     padding: 6px 12px 8px;
     border-radius: var(--border-radius);

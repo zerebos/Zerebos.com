@@ -13,6 +13,7 @@ export interface GitHubRepo {
     description: string | null;
     default_branch: string;
     pushed_at: string;
+    created_at: string;
     stargazers_count: number;
     watchers_count: number;
     subscribers_count: number;
@@ -173,6 +174,20 @@ async function buildGitHubData(): Promise<GitHubData> {
             licenses: new Set(repoResults.map((r) => r.license?.key ?? "None")).size,
         },
     };
+}
+
+/**
+ * Counts a repo's open pull requests from one page of results, so 100 or more counts as unknown. GitHub's
+ * `open_issues` includes open pull requests, so this is what separates the two.
+ */
+export async function getOpenPullRequestCount(repo: string): Promise<number | null> {
+    const name = fullName(repo);
+    const pulls = await githubFetch<unknown[]>(
+        `https://api.github.com/repos/${name}/pulls?state=open&per_page=100`,
+        `pulls-${name.replace("/", "-")}`
+    );
+    if (!pulls || pulls.length >= 100) return null;
+    return pulls.length;
 }
 
 export async function getGitHubData(): Promise<GitHubData> {
