@@ -21,7 +21,7 @@ const sections = headings
 
 {sections.length > 0 && (
   <nav class="flex column post-toc" aria-label={label}>
-    <span class="post-toc-label">{label}</span>
+    <span class="side-label">{label}</span>
     <ol>
       {sections.map((section) => (
         <li><a href={`#${section.slug}`}>{section.text}</a></li>

@@ -118,16 +118,24 @@
 .repo-languages {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 2px;
     margin: 0;
-    padding: 0 12px;
+    padding: 0;
     list-style: none;
 }
 
-.repo-languages li {
+.repo-language {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    padding: 6px 12px 8px;
+    border-radius: 12px;
+    color: var(--text-primary);
+}
+
+.repo-language:hover {
+    color: var(--text-heading);
+    background-image: linear-gradient(90deg, #1B1A26, #23171C);
 }
 
 .repo-language-row {
