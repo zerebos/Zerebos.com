@@ -58,7 +58,7 @@ const languageRows = Object.entries(languages ?? {});
   <span class="side-label" id="repo-card-label">Repository</span>
   <div class="repo-stats">
     {stats.map((stat) => (
-      <a class:list={["repo-stat", { wide: stat.wide }]} href={stat.href} target="_blank" rel="noopener noreferrer">
+      <a class:list={["repo-stat", "hover-fill", { wide: stat.wide }]} href={stat.href} target="_blank" rel="noopener noreferrer">
         <span class="flex repo-stat-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[stat.icon]} />
           {stat.label}
@@ -74,7 +74,7 @@ const languageRows = Object.entries(languages ?? {});
       <ul class="repo-languages">
         {languageRows.map(([language, percent]) => (
           <li>
-            <a class="repo-language" href={`${repoUrl}/search?l=${encodeURIComponent(language.toLowerCase())}`} target="_blank" rel="noopener noreferrer">
+            <a class="repo-language hover-fill" href={`${repoUrl}/search?l=${encodeURIComponent(language.toLowerCase())}`} target="_blank" rel="noopener noreferrer">
               <span class="flex repo-language-row"><span>{language}</span><span class="text-muted">{percent}%</span></span>
               <span class="repo-language-bar" aria-hidden="true"><span style={`width: ${percent}%`}></span></span>
             </a>

@@ -81,7 +81,6 @@
 
 .repo-stat:hover {
     color: var(--text-heading);
-    background-image: var(--gradient-hover);
 }
 
 .repo-stat.wide {
@@ -135,7 +134,6 @@
 
 .repo-language:hover {
     color: var(--text-heading);
-    background-image: var(--gradient-hover);
 }
 
 .repo-language-row {

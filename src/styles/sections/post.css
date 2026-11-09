@@ -284,7 +284,6 @@
 
 .post-toc a:hover {
     color: var(--text-heading);
-    background-image: var(--gradient-hover);
 }
 
 .post-toc a[aria-current="true"] {

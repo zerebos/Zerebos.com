@@ -24,7 +24,7 @@ const sections = headings
     <span class="side-label">{label}</span>
     <ol>
       {sections.map((section) => (
-        <li><a href={`#${section.slug}`}>{section.text}</a></li>
+        <li><a class="hover-fill" href={`#${section.slug}`}>{section.text}</a></li>
       ))}
     </ol>
   </nav>
