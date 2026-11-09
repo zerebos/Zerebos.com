@@ -17,6 +17,41 @@
     gap: 20px;
 }
 
+/* Index pages put the header straight in the page, so it takes the detail page's top spacing itself */
+:not(.detail-page) > .page-header {
+    margin-top: 56px;
+}
+
+@media only screen and (max-width: 1000px) {
+    :not(.detail-page) > .page-header {
+        margin-top: 32px;
+        padding: 0 24px;
+    }
+}
+
+/* muted line under the blurb, its parts joined by " · " */
+.page-meta {
+    font-size: 14px;
+}
+
+.feed-link {
+    color: inherit;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+}
+
+.feed-link:hover {
+    color: var(--text-heading);
+    text-decoration-style: solid;
+}
+
+.feed-link svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    vertical-align: -2px;
+}
+
 .crumb {
     gap: 10px;
     font-size: 13px;

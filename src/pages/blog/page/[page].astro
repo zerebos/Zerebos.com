@@ -3,6 +3,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import BlogPostPreview from "../../../components/BlogPostPreview.astro";
 import TagList from "../../../components/TagList.astro";
 import PageHeader from "../../../components/PageHeader.astro";
+import FeedLink from "../../../components/FeedLink.astro";
+import { countLabel } from "../../../lib/text";
 import type { CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
 import { getOrderedBlogPosts, getOrderedTags, getTagCounts } from "../../../lib/blog";
@@ -36,7 +38,9 @@ const totalPages = page.lastPage;
 ---
 
 <BaseLayout title={`Blog - Page ${currentPage}`} description={BLOG_DESCRIPTION}>
-  <PageHeader title="Blog" blurb={BLOG_DESCRIPTION} />
+  <PageHeader title="Blog" blurb={BLOG_DESCRIPTION}>
+    {countLabel(page.total, "post")} · <FeedLink />{totalPages > 1 && ` · Page ${currentPage} of ${totalPages}`}
+  </PageHeader>
 
   <section class="flex column container" id="blog-posts">
     {posts.map((post) => <BlogPostPreview post={post} />)}

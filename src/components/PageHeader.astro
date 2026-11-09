@@ -2,43 +2,26 @@
 interface Props {
   title: string;
   blurb?: string;
-  date?: Date;
-  updated?: Date;
-  readingTime?: number;
+  /** Shows a breadcrumb link above the title, like "Blog" on tag pages */
+  crumb?: { label: string; href: string };
   /** Matches the title to the same name on another page, so the browser morphs one into the other. */
   titleTransitionName?: string;
 }
 
-const { title, blurb, date, updated, readingTime, titleTransitionName } = Astro.props;
+const { title, blurb, crumb, titleTransitionName } = Astro.props;
 ---
 
-<section class="flex column flex-align-center container" id="page-header">
+{/* The default slot is the muted meta line under the blurb, such as "6 projects" or "Updated Jul 20, 2023". */}
+<header class="flex column detail-header page-header">
+  {crumb && (
+    <nav class="flex crumb" aria-label="Breadcrumb">
+      <a href={crumb.href}>{crumb.label}</a>
+    </nav>
+  )}
   {/* Astro makes up a name when `transition:name` is undefined, and that name would match the header on every page. */}
-  {titleTransitionName ? <h2 transition:name={titleTransitionName}>{title}</h2> : <h2>{title}</h2>}
-  <div class="flex text-muted" id="page-subheader">
-    {date && (
-      <span>
-        Published <time datetime={date.toISOString()}>
-          {date.toLocaleDateString("en-US", { dateStyle: "long" })}
-        </time>
-      </span>
-    )}
-    {date && updated && <span class="separator">&bull;</span>}
-    {updated && (
-      <span>
-        Updated <time datetime={updated.toISOString()}>
-          {updated.toLocaleDateString("en-US", { dateStyle: "long" })}
-        </time>
-      </span>
-    )}
-    {date && readingTime && readingTime > 0 && <span class="separator">&bull;</span>}
-    {readingTime && readingTime > 0 && (
-      <span>
-        {readingTime} min read
-      </span>
-    )}
-  </div>
-  {blurb && <p>{blurb}</p>}
-</section>
-
-<hr class="flex container medium" />
+  {titleTransitionName
+    ? <h1 class="detail-title" transition:name={titleTransitionName}>{title}</h1>
+    : <h1 class="detail-title">{title}</h1>}
+  {blurb && <p class="detail-blurb">{blurb}</p>}
+  {Astro.slots.has("default") && <p class="text-muted page-meta"><slot /></p>}
+</header>

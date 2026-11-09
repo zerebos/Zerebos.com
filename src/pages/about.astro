@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
 import { Image } from "astro:assets";
 import { getEntry, render } from "astro:content";
 
@@ -11,16 +12,14 @@ const { Content } = await render(page);
 
 <BaseLayout title="About" description="About Zerebos" ogImage={banner}>
   <article class="flex column detail-page" id="about">
-    <header class="flex column detail-header">
-      <h1 class="detail-title">{title}</h1>
-      <p class="detail-blurb">{blurb}</p>
+    <PageHeader title={title} blurb={blurb}>
       {updated && (
-        <p class="text-muted about-updated">
+        <>
           {/* the date has no time, so it's read as UTC midnight and shown in UTC to stay on the same day */}
           Updated <time datetime={updated.toISOString().slice(0, 10)}>{updated.toLocaleDateString("en-US", { dateStyle: "medium", timeZone: "UTC" })}</time>
-        </p>
+        </>
       )}
-    </header>
+    </PageHeader>
 
     {banner && (
       <figure class="flex column about-banner">
