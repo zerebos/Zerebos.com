@@ -10,6 +10,14 @@
     align-items: center;
 }
 
+/*
+ * Shrinks the name and tagline to their text. They morph between the home page and the links page,
+ * and stretched boxes on one page would scale the text during the morph.
+ */
+.avatar-container > div {
+    align-items: flex-start;
+}
+
 #links-header .avatar-container div {
     align-items: center;
 }
@@ -99,4 +107,14 @@
 #marquee .stat {
     color: var(--text-muted);
     text-transform: capitalize;
+}
+
+/*
+ * The two pages have different blurbs, so the snapshots are drawn at their own size inside the morphing
+ * box instead of being stretched to fit it.
+ */
+::view-transition-old(intro-blurb),
+::view-transition-new(intro-blurb) {
+    height: 100%;
+    object-fit: none;
 }

@@ -29,17 +29,18 @@ const marqueeStats = Object.entries(github.stats);
       <Image
         src={avatarImage}
         class="intro-avatar"
+        transition:name="intro-avatar"
         alt="Picture of me"
         widths={[96, 192]}
         sizes="96px"
         loading="eager"
       />
       <div class="flex column">
-        <h1>Zerebos</h1>
-        <p>Engineer, Creator, Educator</p>
+        <h1 transition:name="intro-name">Zerebos</h1>
+        <p transition:name="intro-tagline">Engineer, Creator, Educator</p>
       </div>
     </div>
-    <div class="flex column blurb">
+    <div class="flex column blurb" transition:name="intro-blurb">
       <p>
         A programmer with a mind that never stops ticking. Never sticks to just one language, use the
         right tools for the job. Works on multiple <strong>open-source</strong> projects. Always looks

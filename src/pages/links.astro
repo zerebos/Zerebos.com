@@ -18,17 +18,18 @@ const categories = links.categories;
         <Image
           src={avatarImage}
           class="intro-avatar"
+          transition:name="intro-avatar"
           alt="Picture of me"
           widths={[96, 192]}
           sizes="96px"
           loading="eager"
         />
         <div class="flex column">
-          <h1>Zerebos</h1>
-          <p>Engineer, Creator, Educator</p>
+          <h1 transition:name="intro-name">Zerebos</h1>
+          <p transition:name="intro-tagline">Engineer, Creator, Educator</p>
         </div>
       </div>
-      <div class="flex column blurb">
+      <div class="flex column blurb" transition:name="intro-blurb">
         <p>
           Creating tools for developers and users <span> ✦ </span>
           Trying out new libraries <span> ✦ </span>
