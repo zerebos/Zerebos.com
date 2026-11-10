@@ -41,6 +41,8 @@ I picked it back up and rebuilt the frontend from scratch on SvelteKit and Svelt
 #### February 2026
 Added a new configuration page with real repair options, backups of key files before a repair, keyboard navigation, and the first proper backend and frontend test suites.
 
+![The installer's Configure Repair step, with checkboxes to disable all plugins, disable all themes, and reset BetterDiscord settings](../../assets/projects/images/installer/repair-config.webp)
+
 #### July 2026
 Releases moved to GoReleaser, which builds every platform from one config and publishes to winget and Homebrew. A full pre-merge review of the branch fixed bugs, hardened the backend, and rewrote the docs.
 

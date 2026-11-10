@@ -1,0 +1,86 @@
+/* Inline SVG bar charts in markdown content. The markup carries a wide and a
+   narrow SVG, and only one shows at a time, so the axis text stays readable
+   on phones instead of shrinking with the whole chart. */
+
+.bar-chart {
+    --chart-series-1: #3987e5;
+    --chart-series-2: #d95926;
+    margin: 32px 0;
+}
+
+.bar-chart svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.bar-chart .chart-narrow {
+    display: none;
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text-label);
+}
+
+.chart-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-legend i {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.bar-chart .chart-grid {
+    stroke: var(--border-hairline);
+}
+
+.bar-chart .chart-baseline {
+    stroke: var(--border-strong);
+}
+
+.bar-chart .chart-axis {
+    fill: var(--text-label);
+    font-size: 13px;
+}
+
+.bar-chart .chart-value {
+    fill: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.bar-chart path.chart-series-1,
+.chart-legend i.chart-series-1 {
+    fill: var(--chart-series-1);
+    background: var(--chart-series-1);
+}
+
+.bar-chart path.chart-series-2,
+.chart-legend i.chart-series-2 {
+    fill: var(--chart-series-2);
+    background: var(--chart-series-2);
+}
+
+.bar-chart path:hover {
+    opacity: 0.8;
+}
+
+@media only screen and (max-width: 600px) {
+    .bar-chart .chart-wide {
+        display: none;
+    }
+
+    .bar-chart .chart-narrow {
+        display: block;
+    }
+}
