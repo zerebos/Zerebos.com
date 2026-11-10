@@ -13,7 +13,7 @@ const { post, tagLimit = 4 } = Astro.props;
 <article class="flex no-wrap blog-post-preview" transition:name={`post-preview-${post.id}`}>
   <div class="blog-post-meta">
     <time datetime={post.data.date.toISOString().slice(0, 10)}>
-      {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium" })}
+      {post.data.date.toLocaleDateString("en-US", { dateStyle: "medium", timeZone: "UTC" })}
     </time>
     {post.data.tags && <TagList tags={post.data.tags} limit={tagLimit} />}
   </div>

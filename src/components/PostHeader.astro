@@ -18,7 +18,7 @@ interface Props {
 const { title, blurb, date, updated, readingTime, primaryTag, titleTransitionName } = Astro.props;
 
 function formatDate(value: Date): string {
-  return value.toLocaleDateString("en-US", { dateStyle: "medium" });
+  return value.toLocaleDateString("en-US", { dateStyle: "medium", timeZone: "UTC" });
 }
 ---
 
