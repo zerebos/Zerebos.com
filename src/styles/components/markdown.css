@@ -307,7 +307,8 @@
     border-bottom: 0;
 }
 
-.markdown img {
+.markdown img,
+.markdown video {
     display: block;
     max-width: 100%;
     height: auto;
