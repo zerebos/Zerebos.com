@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 6
 title: Installer
 blurb: A desktop app that puts BetterDiscord into Discord.
 icon: ../../assets/projects/icons/installer.png

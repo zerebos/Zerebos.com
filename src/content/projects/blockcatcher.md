@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 4
 title: Block Catcher
 blurb: A tiny arcade game about catching falling blocks.
 icon: ../../assets/projects/icons/blockcatcher.png
