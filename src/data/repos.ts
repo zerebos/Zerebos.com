@@ -46,6 +46,8 @@ export const personal = [
     "WireMap",
     "Zerebos.com",
     "ZackRauen.com",
+    "zinc",
+    "zincterminal.dev"
 ];
 
 

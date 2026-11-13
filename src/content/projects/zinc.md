@@ -3,6 +3,7 @@ order: 3
 title: Zinc
 blurb: A precise, native terminal for Windows.
 icon: ../../assets/projects/icons/zinc.webp
+repo: zerebos/zinc
 website: https://zincterminal.dev
 websiteLabel: Try the alpha
 banner: ../../assets/projects/images/zinc.webp
